@@ -40,6 +40,7 @@
                             <i class="iconfont icon-dizhi1"></i>
                             <span>北京市朝阳区</span>
                         </p>
+                        <p @click="toactive">跳转</p>
                     </dd>
                 </dl>
             </div>
@@ -70,6 +71,11 @@ export default {
                 label: '北京烤鸭'
             }],
             value: ''
+        }
+    },
+    methods: {
+        toactive() {
+            this.$router.push("/activedetail");
         }
     }
 }

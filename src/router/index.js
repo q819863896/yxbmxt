@@ -12,6 +12,9 @@ import Message from "../views/components/message/message.vue";
 import PersonInfo from "../views/components/personInfo/personInfo.vue";
 import Logoout from "../views/components/logoout/logoout.vue";
 
+import Signup from "../views/components/mine/signUp.vue";   // 报名
+import Activedetail from "../views/components/message/activedetail.vue";    // 活动详情
+
 Vue.use(Router)
 
 export default new Router({
@@ -39,7 +42,14 @@ export default new Router({
         {
             path: '/mine',
             name: 'Mine',
-            component: Mine
+            component: Mine,
+            children: [
+                {
+                    path: '/signup',
+                    name: 'Signup',
+                    component: Signup
+                }
+            ]
         },
         {
             path: '/reactivities',
@@ -62,6 +72,11 @@ export default new Router({
                     component: Logoout
                 }
             ]
+        },
+        {
+            path: '/activedetail',
+            name: 'Activedetail',
+            component: Activedetail,
         }
     ]
 })

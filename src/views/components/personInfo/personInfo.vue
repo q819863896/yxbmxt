@@ -1,8 +1,8 @@
 <template>
     <div class="personInfo">
-
         <h3>账户信息</h3>
-        <div class="wrap">
+        
+        <div class="wrap" >
             <div class="left">
                 <h4>详细资料</h4>
                 <div class="zsInfo" v-if="zsflag">
@@ -86,6 +86,76 @@ export default {
     name: "personInfo",
     data() {
         return {
+            pickPeo: {
+                userName: "",
+                email: "",
+                tel: "",
+                position: "",
+                country: "",
+                schoolName: ""
+            },
+            pickPeoRules: {
+                userName: [
+                    { required: true, message: '请输入姓名', trigger: 'blur' },
+                ],
+                email: [
+                    { required: true, message: '请输入电子邮箱', trigger: 'blur' },
+                ],
+                tel: [
+                    { required: true, message: '请输入电话', trigger: 'blur' },
+                ],
+                position: [
+                    { required: true, message: '请输入职位', trigger: 'blur' },
+                ],
+                country: [
+                    { required: true, message: '请输入国别', trigger: 'blur' },
+                ],
+                schoolName: [
+                    { required: true, message: '请输入院校名称', trigger: 'blur' },
+                ],
+                lecture: [
+                    { required: true, message: '请输入选择', trigger: 'blur' },
+                ]
+            },
+            options: [
+                {
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                },
+            ],
+            value: "",
+            zloptions: [
+                {
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                },
+            ],
+            zlvalue: "",
+            checked: false,
             zsflag: true,
             detailedInfo: {
                 userName: "",
@@ -139,6 +209,14 @@ export default {
         },
         cancelBtn () {
             this.zsflag = true;
+        },
+        // 报名
+        pickContueBtn () {
+
+        },
+        // 取消报名
+        pickCancelBtn () {
+
         }
     }
 }
@@ -154,6 +232,7 @@ export default {
         font-size: 18px;
         padding: 3% 0 2% 5%;
     }
+
     .content{
         margin-top: 50px;
     }
