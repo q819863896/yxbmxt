@@ -205,7 +205,7 @@ export default {
                 display: flex;
                 padding: 1% 0;
                 .mr{
-                    margin-left: 15px;
+                    margin-left: 12px;
                 }
             }
             .toDetail{

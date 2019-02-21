@@ -13,7 +13,7 @@
                 <router-link to="/personInfo" class="personInfo" ref="personInfo" @click.native.prevent="personInfo"><!--  -->
                     <img class="personPic" src="@/assets/images/personInfo.png" alt="">
                 </router-link>
-                <div to="/logoout" class="logoout" ref="logoout" @click.native.prevent="logoout"><!-- @click.native.prevent="logoout" -->
+                <div to="/logoout" class="logoout" ref="logoout" @click.native.prevent="logoout">
                     <img src="@/assets/images/logoout.png" alt="">
                 </div>
             </div>
@@ -25,10 +25,12 @@
             </p>
             <div class="top">
                 <div class="left">
-                    <p>您报名参加的活动审核已通过</p>
+                    <p class="txt">您报名参加的活动审核已通过</p>
                     <p class="fontC">2018/08/01</p>
                 </div>
-                <div class="right">立即报名</div>
+                <div class="right">
+                    <p>立即报名</p>
+                </div>
             </div>
             <div class="itemDetail">
                 <p>
@@ -96,5 +98,62 @@ export default {
 .activedetail{
     width: 100%;
     height: 100%;
+    .topHeader{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        .logoBox{
+            width: 85%;
+        }
+        .right{
+            flex: 1;
+            height: 100%;
+            display: flex;
+        }
+    }
+    .wrap{
+        padding: 2%;
+        .back{
+            cursor: pointer;
+            padding: 1% 0 3% 0;
+        }
+        .top{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 2%;
+            .left{
+                width: 90%;
+                .txt{
+                    font-weight: 500;
+                }
+                .fontC{
+                    font-size: 14px;
+                    color: #586D90;
+                }
+            }
+            
+            .right{
+                flex: 1;
+                height: 30px;
+                line-height: 30px;
+                p{
+                    width: 90px;
+                    text-align: center;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid #006960;
+                    border-radius: 4px;
+                    background: #006960;
+                    color: #ffffff;
+                }
+            }
+        }
+        .tit{
+            width: 100%;
+            background: #F3F6F9;
+        }
+    }
 }
 </style>
