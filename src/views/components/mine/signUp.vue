@@ -99,8 +99,9 @@
                         :before-remove="beforeRemove"
                         multiple
                         :limit="3"
-                        :on-exceed="handleExceed"
+                        :on-change="upChange"
                         :file-list="fileList">
+                        <!-- :on-exceed="handleExceed" -->
                         <el-button size="small" type="primary">点击上传</el-button>
                     </el-upload>
                     <!-- 上传附件 -->
@@ -197,7 +198,8 @@ export default {
             ],
             zlvalue: '',
             checked: false,
-            state4: ""
+            state4: "",
+            fileList: []
         }
     },
     mounted() {
@@ -273,6 +275,20 @@ export default {
             if (item) {
                 this.pickPeoRules.schoolName[0].message = ""
             }
+        },
+        handlePreview (file) {
+            console.log(file);
+            console.log("handlePreview");
+        },
+        handleRemove (file, fileList) {
+            console.log(file, fileList);
+            console.log("handleRemove");
+        },
+        beforeRemove(file, fileList) {
+            return this.$confirm(`确定移除 ${ file.name }？`);
+        },
+        upChange (file, fileList) {
+            console.log(file, fileList);
         },
         pickContueBtn() {
             
