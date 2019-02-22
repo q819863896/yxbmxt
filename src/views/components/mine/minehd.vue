@@ -5,22 +5,24 @@
             <img src="@/assets/images/find.png" alt="">
         </div>
         <div class="mid">
-            <el-select v-model="value" placeholder="按创建时间排序">
-                <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                </el-option>
-            </el-select>
-            <el-select v-model="value" placeholder="所有地区">
-                <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                </el-option>
-            </el-select>
+            <div class="sstj">
+                <el-select v-model="value" placeholder="按创建时间排序">
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+                <el-select v-model="value" placeholder="所有地区">
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
             <div class="ddpic">
                 <dl>
                     <dt>
@@ -54,22 +56,24 @@ export default {
     data() {
         return {
             name: "",
-            options: [{
-                value: '选项1',
-                label: '黄金糕'
-            }, {
-                value: '选项2',
-                label: '双皮奶'
-            }, {
-                value: '选项3',
-                label: '蚵仔煎'
-            }, {
-                value: '选项4',
-                label: '龙须面'
-            }, {
-                value: '选项5',
-                label: '北京烤鸭'
-            }],
+            options: [
+                {
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }
+            ],
             value: ''
         }
     },
@@ -86,9 +90,11 @@ export default {
     width: 100%;
     height: 100%;
     list-style: none;
+    padding: 2%;
     .search{
         width: 33.3%;
         position: relative;
+        margin-bottom: 2%;
         img{
             position: absolute;
             right: 0;
@@ -98,9 +104,16 @@ export default {
             cursor: pointer;
         }
     }
+    .mid{
+        background: #F9F9FB;
+        .sstj{
+            margin-bottom: 2%;
+        }
+    }
     .ddpic{
         dl{
             display: flex;
+            padding: 2% 0;
             dt{
                 width: 128px;
                 height: 128px;

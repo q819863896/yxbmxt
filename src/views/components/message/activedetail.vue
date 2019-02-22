@@ -1,7 +1,7 @@
 <template>
     <div class="activedetail">
         <!-- <topheader /> -->
-        <div class="topHeader">
+        <div class="topHeader" ref="tophead">
             <div class="logoBox" ref="logoBox">
                 <img class="logo" src="@/assets/images/logo.png" alt="">
             </div>
@@ -28,7 +28,7 @@
                     <p class="txt">您报名参加的活动审核已通过</p>
                     <p class="fontC">2018/08/01</p>
                 </div>
-                <div class="right">
+                <div class="right" @click="bmBtn">
                     <p>立即报名</p>
                 </div>
             </div>
@@ -57,24 +57,35 @@
             <!-- 活动对接人 -->
             <div class="activedjr">
                 <div class="tit">活动对接人</div>
-                <p>
-                    <span>姓名</span>：<span>李女士</span>
-                </p>
-                <p>
-                    <span>联系电话</span>：
-                </p>
-                <div class="pic">
-                    <img src="@/assets/images/success.png" alt="">
+                <div class="djrDiv">
+                    <p>
+                        <span>姓名</span>：<span>李女士</span>
+                    </p>
+                    <p>
+                        <span>联系电话</span>：
+                    </p>
+                    <div class="pic">
+                        <img src="@/assets/images/success.png" alt="">
+                    </div>
                 </div>
             </div>
             <!-- 会场图片 -->
             <div class="picwrap">
                 <div class="tit">会场图片</div>
                 <div class="picDiv">
-                    <img src="@/assets/images/success.png" alt="">
-                    <img src="@/assets/images/success.png" alt="">
-                    <img src="@/assets/images/success.png" alt="">
+                    <div class="picT">
+                        <img src="@/assets/images/success.png" alt="">
+                    </div>
+                    <div class="picT">
+                        <img src="@/assets/images/success.png" alt="">
+                    </div>
+                    <div class="picT">
+                        <img src="@/assets/images/success.png" alt="">
+                    </div>
                 </div>
+            </div>
+            <div class="bmBtn right">
+                <p @click="bmBtn">立即报名</p>
             </div>
         </div>
     </div>
@@ -90,7 +101,11 @@ export default {
 
         }
     },
-
+    methods: {
+        bmBtn () {
+            this.$router.push("/signup");
+        }
+    }
 }
 </script>
 
@@ -104,16 +119,30 @@ export default {
         display: flex;
         .logoBox{
             width: 85%;
+            // border-bottom: 1px solid #D8D8D8;
         }
         .right{
             flex: 1;
             height: 100%;
             display: flex;
+            // border-top: 1px solid #D8D8D8;
+            // .message{
+            //     border-left: 1px solid #D8D8D8;
+            // }
+            // .personInfo{
+            //     border-left: 1px solid #D8D8D8;
+            //     border-bottom: 1px solid #D8D8D8;
+            // }
+            // .logoout{
+            //     border-left: 1px solid #D8D8D8;
+            //     border-bottom: 1px solid #D8D8D8;
+            // }
         }
     }
     .wrap{
         padding: 2%;
         .back{
+            width: 15%;
             cursor: pointer;
             padding: 1% 0 3% 0;
         }
@@ -122,6 +151,7 @@ export default {
             display: flex;
             justify-content: space-between;
             padding-bottom: 2%;
+            border-bottom: 1px solid #D8DDE6;
             .left{
                 width: 90%;
                 .txt{
@@ -137,6 +167,7 @@ export default {
                 flex: 1;
                 height: 30px;
                 line-height: 30px;
+                cursor: pointer;
                 p{
                     width: 90px;
                     text-align: center;
@@ -148,6 +179,53 @@ export default {
                     background: #006960;
                     color: #ffffff;
                 }
+            }
+        }
+        .itemDetail{
+            padding: 1% 0;
+            p{
+                line-height: 30px;
+            }
+        }
+        .activejs{
+            p{
+                padding: 1.5% 0;
+            }
+        }
+        .activedjr{
+            .djrDiv{
+                padding: 1.5% 0;
+            }
+        }
+        .picwrap{
+            .picDiv{
+                padding: 1.5% 0;
+                display: flex;
+                .picT{
+                    flex: 1;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+        .bmBtn{
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2%;
+            p{
+                width: 90px;
+                height: 100%;
+                text-align: center;
+                background: #006960;
+                border-radius: 4px;
+                color: #ffffff;
+                cursor: pointer;
             }
         }
         .tit{

@@ -43,13 +43,11 @@ export default new Router({
             path: '/mine',
             name: 'Mine',
             component: Mine,
-            children: [
-                {
-                    path: '/signup',
-                    name: 'Signup',
-                    component: Signup
-                }
-            ]
+        },
+        {
+            path: '/signup',
+            name: 'Signup',
+            component: Signup
         },
         {
             path: '/reactivities',

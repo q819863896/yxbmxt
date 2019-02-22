@@ -4,10 +4,10 @@
         <div class="content">
             <persons @change="setSty" v-if="asd" />
             <el-tabs @change="setSty" v-if="asd" type="card">
-                <el-tab-pane label="我的活动">
+                <el-tab-pane label="我的活动" @click.native.prevent="mineHd" ref="mineHd">
                     <minehd />
                 </el-tab-pane>
-                <el-tab-pane label="活动预览">
+                <el-tab-pane label="活动预览" @click="hdyl" ref="hdyl">
                     <active-pre />
                 </el-tab-pane>
             </el-tabs>
@@ -31,6 +31,14 @@ export default {
     methods: {
         setSty () {
             this.$emit("transferSty", this.asd);
+        },
+        mineHd () {
+            console.log("as");
+            this.$refs.mineHd.$el.style = 'border:1px solid #006960';
+            this.$refs.mineHd.$el.style = 'border-radius:8px 8px 0px 0px;';
+        },
+        hdyl () {
+
         }
     }
 }
@@ -50,9 +58,39 @@ export default {
         width: 100%;
         flex: 1;
         padding: 0 2%;
+        display: flex;
+        flex-direction: column;
         .person{
             padding:  4% 0;
         }
+        .el-tabs{
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
     }
+    .content /deep/ .is-active{
+        border: 1px solid #006960;
+        border-radius: 8px 8px 0px 0px;
+        border-bottom: none;
+    }
+    .content /deep/ .is-top{
+        border-radius: 8px 8px 0px 0px;
+    }
+    .content /deep/ .el-tabs__header{
+        margin: 0 0 0%;
+        border-bottom: 1px solid #006960;
+    }
+    .content /deep/ .el-tabs__content{
+        width: 100%;
+        flex: 1;
+        border: 1px solid #006960;
+        border-top: none;
+    }
+    // .active{
+    //     border: 1px solid #006960;
+    //     border-radius: 8px 8px 0px 0px;
+    // }
 }
 </style>

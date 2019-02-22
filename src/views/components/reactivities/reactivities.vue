@@ -16,12 +16,6 @@
                     <img src="@/assets/images/logoout.png" alt="">
                 </div>
             </div>
-            <!-- <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
-                <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-                <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-                <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-                <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
-            </el-tabs> -->
         </div>
         <div class="content">
             <router-view />
@@ -38,21 +32,21 @@ export default {
         }
     },
     methods: {
-        message () {
-            // this.$refs.logoBox.$el.style = 'border-bottom:1px solid #D8D8D8';
-            this.$refs.message.$el.style = 'border-bottom:none';
-            this.$refs.personInfo.$el.style = 'border-bottom:1px solid #D8D8D8';
-            this.$refs.logoout.$el.style = 'border-bottom:1px solid #D8D8D8';
-        },
-        personInfo () {
-            // this.$refs.logoBox.$el.style = 'border-bottom:1px solid #D8D8D8';
-            this.$refs.message.$el.style = 'border-bottom:1px solid #D8D8D8';
-            this.$refs.personInfo.$el.style = 'border-bottom:none';
-            this.$refs.logoout.$el.style = 'border-bottom:1px solid #D8D8D8';
-        },
-        logoout () {
+        // message () {
+        //     // this.$refs.logoBox.$el.style = 'border-bottom:1px solid #D8D8D8';
+        //     this.$refs.message.$el.style = 'border-bottom:none';
+        //     this.$refs.personInfo.$el.style = 'border-bottom:1px solid #D8D8D8';
+        //     this.$refs.logoout.$el.style = 'border-bottom:1px solid #D8D8D8';
+        // },
+        // personInfo () {
+        //     // this.$refs.logoBox.$el.style = 'border-bottom:1px solid #D8D8D8';
+        //     this.$refs.message.$el.style = 'border-bottom:1px solid #D8D8D8';
+        //     this.$refs.personInfo.$el.style = 'border-bottom:none';
+        //     this.$refs.logoout.$el.style = 'border-bottom:1px solid #D8D8D8';
+        // },
+        // logoout () {
             
-        }
+        // }
     }
 }
 </script>
