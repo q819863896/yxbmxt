@@ -20,21 +20,25 @@
         <div class="txt">
             <h4>账户信息</h4>
         </div>
-        <el-form :model="pickPeo" :rules="pickPeoRules" ref="pickPeo" class="demo-ruleForm login-container">
+        <el-form :model="pickPeo" ref="pickPeo" class="demo-ruleForm login-container"><!-- :rules="pickPeoRules" -->
             <div class="top">
                 <h4>对接人基本信息</h4>
                 <div class="listDiv">
                     <el-form-item label="姓名" prop="userName" style="position: relative">
+                        <i class="iconfont icon-zhongdian"></i>
                         <el-input type="text" name="userName" v-model.trim="pickPeo.userName" placeholder="姓名">
                         </el-input>
                     </el-form-item>
                     <el-form-item label="职位" prop="position">
+                        <i class="iconfont icon-zhongdian"></i>
                         <el-input type="text" name="position" v-model.trim="pickPeo.position" auto-complete="off" placeholder="职位"></el-input>
                     </el-form-item>
                     <el-form-item label="电子邮箱" prop="email">
+                        <i class="iconfont icon-zhongdian"></i>
                         <el-input type="text" name="email" v-model.trim="pickPeo.email" auto-complete="off" placeholder="电子邮箱"></el-input>
                     </el-form-item>
                     <el-form-item label="国别" prop="country">
+                        <i class="iconfont icon-zhongdian"></i>
                         <el-select v-model="value" placeholder="请选择">
                             <el-option
                                 v-for="item in options"
@@ -45,12 +49,14 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="电话" prop="tel">
+                        <i class="iconfont icon-zhongdian"></i>
                         <el-input type="text" name="tel" v-model.trim="pickPeo.tel" auto-complete="off" placeholder="电话"></el-input>
                     </el-form-item>
                     <!-- <el-form-item label="院校名称" prop="schoolName">
                         <el-input type="text" name="schoolName" v-model.trim="pickPeo.schoolName" auto-complete="off" placeholder="院校名称"></el-input>
                     </el-form-item> -->
                     <el-form-item label="院校名称" prop="schoolName">
+                        <i class="iconfont icon-zhongdian"></i>
                         <el-autocomplete
                             v-model="state4"
                             :fetch-suggestions="querySearchAsync"
@@ -64,6 +70,7 @@
                 <h4>其他信息</h4>
                 <div class="listDiv">
                     <el-form-item label="参考资料" prop="country">
+                        <i class="iconfont icon-zhongdian"></i>
                         <el-select v-model="zlvalue" placeholder="请选择">
                             <el-option
                                 v-for="item in zloptions"
@@ -74,6 +81,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="是否讲座" prop="lecture"><br>
+                        <i class="iconfont icon-zhongdian"></i>
                         <el-checkbox v-model="checked"></el-checkbox>
                     </el-form-item>
                 </div>
@@ -83,7 +91,19 @@
                     <h4>附件信息</h4><span class="fontR">(备注：LOGO、PPT、其他)</span>
                 </div>
                 <div class="upLoad">
-                    上传附件
+                    <el-upload
+                        class="upload-demo"
+                        action="https://jsonplaceholder.typicode.com/posts/"
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :before-remove="beforeRemove"
+                        multiple
+                        :limit="3"
+                        :on-exceed="handleExceed"
+                        :file-list="fileList">
+                        <el-button size="small" type="primary">点击上传</el-button>
+                    </el-upload>
+                    <!-- 上传附件 -->
                 </div>
             </div>
             <div class="pickbtnGroup">
@@ -106,31 +126,30 @@ export default {
                 country: "",
                 tel: "",
                 schoolName: "",
-
             },
-            pickPeoRules: {
-                userName: [
-                    { required: true, message: '请输入姓名', trigger: 'blur' },
-                ],
-                position: [
-                    { required: true, message: '请输入职位', trigger: 'blur' },
-                ],
-                email: [
-                    { required: true, message: '请输入电子邮箱', trigger: 'blur' },
-                ],
-                country: [
-                    { required: true, message: '请选择国别', trigger: 'blur' },
-                ],
-                tel: [
-                    { required: true, message: '请输入电话', trigger: 'blur' },
-                ],
-                schoolName: [
-                    { required: true, message: '请输入院校名称', trigger: 'blur' },
-                ],
-                lecture: [
-                    { required: true, message: '请选择', trigger: 'blur' },
-                ]
-            },
+            // pickPeoRules: {
+            //     userName: [
+            //         { required: true, message: '请输入姓名', trigger: 'blur' },
+            //     ],
+            //     position: [
+            //         { required: true, message: '请输入职位', trigger: 'blur' },
+            //     ],
+            //     email: [
+            //         { required: true, message: '请输入电子邮箱', trigger: 'blur' },
+            //     ],
+            //     country: [
+            //         { required: true, message: '请选择国别', trigger: 'blur' },
+            //     ],
+            //     tel: [
+            //         { required: true, message: '请输入电话', trigger: 'blur' },
+            //     ],
+            //     schoolName: [
+            //         { required: true, message: '请输入院校名称', trigger: 'blur' },
+            //     ],
+            //     lecture: [
+            //         { required: true, message: '请选择', trigger: 'blur' },
+            //     ]
+            // },
             options: [
                 {
                     value: '选项1',
@@ -177,15 +196,89 @@ export default {
                 }
             ],
             zlvalue: '',
-            checked: false
+            checked: false,
+            state4: ""
         }
     },
+    mounted() {
+      this.restaurants = this.loadAll();
+    },
     methods: {
+        loadAll() {
+            return [
+            { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
+            { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
+            { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
+            { "value": "泷千家(天山西路店)", "address": "天山西路438号" },
+            { "value": "胖仙女纸杯蛋糕（上海凌空店）", "address": "上海市长宁区金钟路968号1幢18号楼一层商铺18-101" },
+            { "value": "贡茶", "address": "上海市长宁区金钟路633号" },
+            { "value": "豪大大香鸡排超级奶爸", "address": "上海市嘉定区曹安公路曹安路1685号" },
+            { "value": "茶芝兰（奶茶，手抓饼）", "address": "上海市普陀区同普路1435号" },
+            { "value": "十二泷町", "address": "上海市北翟路1444弄81号B幢-107" },
+            { "value": "星移浓缩咖啡", "address": "上海市嘉定区新郁路817号" },
+            { "value": "阿姨奶茶/豪大大", "address": "嘉定区曹安路1611号" },
+            { "value": "新麦甜四季甜品炸鸡", "address": "嘉定区曹安公路2383弄55号" },
+            { "value": "Monica摩托主题咖啡店", "address": "嘉定区江桥镇曹安公路2409号1F，2383弄62号1F" },
+            { "value": "浮生若茶（凌空soho店）", "address": "上海长宁区金钟路968号9号楼地下一层" },
+            { "value": "NONO JUICE  鲜榨果汁", "address": "上海市长宁区天山西路119号" },
+            { "value": "CoCo都可(北新泾店）", "address": "上海市长宁区仙霞西路" },
+            { "value": "快乐柠檬（神州智慧店）", "address": "上海市长宁区天山西路567号1层R117号店铺" },
+            { "value": "Merci Paul cafe", "address": "上海市普陀区光复西路丹巴路28弄6号楼819" },
+            { "value": "猫山王（西郊百联店）", "address": "上海市长宁区仙霞西路88号第一层G05-F01-1-306" },
+            { "value": "枪会山", "address": "上海市普陀区棕榈路" },
+            { "value": "纵食", "address": "元丰天山花园(东门) 双流路267号" },
+            { "value": "钱记", "address": "上海市长宁区天山西路" },
+            { "value": "壹杯加", "address": "上海市长宁区通协路" },
+            { "value": "唦哇嘀咖", "address": "上海市长宁区新泾镇金钟路999号2幢（B幢）第01层第1-02A单元" },
+            { "value": "爱茜茜里(西郊百联)", "address": "长宁区仙霞西路88号1305室" },
+            { "value": "爱茜茜里(近铁广场)", "address": "上海市普陀区真北路818号近铁城市广场北区地下二楼N-B2-O2-C商铺" },
+            { "value": "鲜果榨汁（金沙江路和美广店）", "address": "普陀区金沙江路2239号金沙和美广场B1-10-6" },
+            { "value": "开心丽果（缤谷店）", "address": "上海市长宁区威宁路天山路341号" },
+            { "value": "超级鸡车（丰庄路店）", "address": "上海市嘉定区丰庄路240号" },
+            { "value": "妙生活果园（北新泾店）", "address": "长宁区新渔路144号" },
+            { "value": "香宜度麻辣香锅", "address": "长宁区淞虹路148号" },
+            { "value": "凡仔汉堡（老真北路店）", "address": "上海市普陀区老真北路160号" },
+            { "value": "港式小铺", "address": "上海市长宁区金钟路968号15楼15-105室" },
+            { "value": "蜀香源麻辣香锅（剑河路店）", "address": "剑河路443-1" },
+            { "value": "北京饺子馆", "address": "长宁区北新泾街道天山西路490-1号" },
+            { "value": "饭典*新简餐（凌空SOHO店）", "address": "上海市长宁区金钟路968号9号楼地下一层9-83室" },
+            { "value": "焦耳·川式快餐（金钟路店）", "address": "上海市金钟路633号地下一层甲部" },
+            { "value": "动力鸡车", "address": "长宁区仙霞西路299弄3号101B" },
+            { "value": "浏阳蒸菜", "address": "天山西路430号" },
+            { "value": "四海游龙（天山西路店）", "address": "上海市长宁区天山西路" },
+            { "value": "樱花食堂（凌空店）", "address": "上海市长宁区金钟路968号15楼15-105室" },
+            { "value": "壹分米客家传统调制米粉(天山店)", "address": "天山西路428号" },
+            { "value": "福荣祥烧腊（平溪路店）", "address": "上海市长宁区协和路福泉路255弄57-73号" },
+            { "value": "速记黄焖鸡米饭", "address": "上海市长宁区北新泾街道金钟路180号1层01号摊位" },
+            { "value": "红辣椒麻辣烫", "address": "上海市长宁区天山西路492号" },
+            { "value": "(小杨生煎)西郊百联餐厅", "address": "长宁区仙霞西路88号百联2楼" },
+            { "value": "阳阳麻辣烫", "address": "天山西路389号" },
+            { "value": "南拳妈妈龙虾盖浇饭", "address": "普陀区金沙江路1699号鑫乐惠美食广场A13" }
+            ];
+        },
+        querySearchAsync(queryString, cb) {
+            var restaurants = this.restaurants;
+            var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+            cb(results);
+            }, 3000 * Math.random());
+        },
+        createStateFilter(queryString) {
+            return (state) => {
+            return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+            };
+        },
+        handleSelect(item) {
+            if (item) {
+                this.pickPeoRules.schoolName[0].message = ""
+            }
+        },
         pickContueBtn() {
             
         },
         pickCancelBtn() {
-
+            this.$router.go(-1);
         }
     }
 }
@@ -229,6 +322,10 @@ export default {
             padding: 2% 6%;
             margin: 0 6%;
             box-shadow: 0px 0px 10px #cccccc;
+            .iconfont{
+                color: #CC0202;
+                float: left;
+            }
             .top{
                 border-bottom: 1px dashed #D8DDE6;
                 padding: 2% 0;
@@ -262,15 +359,26 @@ export default {
                     height: 30px;
                     text-align: center;
                     line-height: 30px;
-                    border: 1px solid #006960;
+                    // border: 1px solid #006960;
                     color: #006960;
                     border-radius: 4px;
+                    cursor: pointer;
+                    margin: 2% 0;
+                    button{
+                        border: 1px solid #006960;
+                        color: #006960;
+                        background: #ffffff;
+                    }
                 }
             }
             .pickbtnGroup{
                 width: 50%;
                 display: flex;
                 margin-left: 22%;
+                .contue{
+                    background: #006960;
+                    color: #ffffff;
+                }
                 div{
                     width: 60px;
                     height: 30px;
@@ -278,6 +386,8 @@ export default {
                     line-height: 30px;
                     margin-left: 30%;
                     border: 1px solid #006960;
+                    border-radius: 4px;
+                    cursor: pointer;
                 }
             }
             .el-form-item{
@@ -287,6 +397,17 @@ export default {
                     width: 100%;
                 }
             }
+        }
+        .el-form /deep/ .el-form-item{
+            position: relative;
+        }
+        .el-form /deep/ .el-form-item__label{
+            margin-left: 4%;
+        }
+        .el-form-item i{
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         .listDiv /deep/ .el-autocomplete{
             display: block;

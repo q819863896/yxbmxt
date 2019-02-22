@@ -100,20 +100,22 @@ export default {
                     align-items: center;
                     margin-left: 5%;
                     .cancel{
-                        width: 64px;
+                        width: 90px;
                         border: 1px solid #006960;
                         border-radius: 4px;
                         padding: 1% 4%;
                         cursor: pointer;
+                        text-align: center;
                     }
                     .continue{
-                        width: 62px;
+                        width: 90px;
                         background: #006960;
                         color: #ffffff;
                         border-radius: 4px;
                         margin-left: 5%;
                         padding: 1% 4%;
                         cursor: pointer;
+                        text-align: center;
                     }
                 }
             }

@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="wrap">
-            <p class="back">
+            <p class="back" @click="backBtn">
                 <i class="iconfont icon-fanhui"></i>
                 返回活动列表
             </p>
@@ -102,6 +102,9 @@ export default {
         }
     },
     methods: {
+        backBtn() {
+            this.$router.go(-1);
+        },
         bmBtn () {
             this.$router.push("/signup");
         }

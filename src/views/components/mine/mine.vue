@@ -4,11 +4,14 @@
         <div class="content">
             <persons @change="setSty" v-if="asd" />
             <el-tabs @change="setSty" v-if="asd" type="card">
-                <el-tab-pane label="我的活动" @click.native.prevent="mineHd" ref="mineHd">
-                    <minehd />
+                <el-tab-pane label="教育展" >
+                    <education />
                 </el-tab-pane>
-                <el-tab-pane label="活动预览" @click="hdyl" ref="hdyl">
-                    <active-pre />
+                <el-tab-pane label="专业展" >
+                    <major />
+                </el-tab-pane>
+                <el-tab-pane label="我的活动" >
+                    <minehd />
                 </el-tab-pane>
             </el-tabs>
         </div>
@@ -19,7 +22,9 @@
 import Reactivities from "../reactivities/reactivities.vue";
 import Persons from "./persons.vue";
 import Minehd from "./minehd.vue";
-import ActivePre from "./activePre.vue";
+import Major from "./major.vue";
+import Education from "./education.vue";
+// import ActivePre from "./activePre.vue";
 export default {
     name: "mine",
     data() {
@@ -27,15 +32,15 @@ export default {
             asd: true
         }
     },
-    components: { Reactivities, Persons, Minehd, ActivePre },
+    components: { Reactivities, Persons, Minehd, Major, Education },
     methods: {
         setSty () {
             this.$emit("transferSty", this.asd);
         },
         mineHd () {
-            console.log("as");
-            this.$refs.mineHd.$el.style = 'border:1px solid #006960';
-            this.$refs.mineHd.$el.style = 'border-radius:8px 8px 0px 0px;';
+            // console.log("as");
+            // this.$refs.mineHd.$el.style = 'border:1px solid #006960';
+            // this.$refs.mineHd.$el.style = 'border-radius:8px 8px 0px 0px;';
         },
         hdyl () {
 
@@ -73,7 +78,7 @@ export default {
     .content /deep/ .is-active{
         border: 1px solid #006960;
         border-radius: 8px 8px 0px 0px;
-        border-bottom: none;
+        border-bottom: 2px solid #ffffff;
     }
     .content /deep/ .is-top{
         border-radius: 8px 8px 0px 0px;
