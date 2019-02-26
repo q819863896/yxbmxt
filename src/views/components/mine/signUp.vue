@@ -291,7 +291,7 @@ export default {
             console.log(file, fileList);
         },
         pickContueBtn() {
-            
+            this.$router.push("/signsuccess");
         },
         pickCancelBtn() {
             this.$router.go(-1);

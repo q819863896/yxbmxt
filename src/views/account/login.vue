@@ -27,6 +27,7 @@
 
 <script>
 import Headers from "../../components/header.vue";
+import { Login } from "../../api/api.js";
 export default {
     name: "login",
     components: {
@@ -51,9 +52,25 @@ export default {
     },
     methods: {
         handleSubmit2() {
-            // this.$refs.loginInfo.validate((valid) => {
-                this.$router.push("/mine");
-            // })
+            this.$refs.loginInfo.validate((valid) => {
+                if (valid) {
+                    let params = {
+                        name: this.loginInfo.account,
+                        password: this.loginInfo.password
+                    };
+                    Login(params).then((res) => {
+                        if (res.message == "密码正确") {
+                            this.$router.push("/mine");
+                        } else {
+                            this.$message({
+                                message: res.message,
+                                type: 'warning'
+                            });
+                        }
+                    })
+                }
+                // this.$router.push("/mine");
+            })
         },
         forget() {
             console.log("asd");
@@ -72,7 +89,7 @@ export default {
     width: 100%;
     height: 100%;
     .el-form{
-        padding: 9% 6% 0;
+        padding: 9% 15% 0;
         .forget{
             color: #006960;
             cursor: pointer;
@@ -95,12 +112,12 @@ export default {
         }
     }
     .quick{
-        width: 88%;
+        width: 70%;
         height: 30px;
         padding: 0 6%;
         text-align: center;
         line-height: 30px;
-        margin-left: 6%;
+        margin-left: 15%;
         border: 2px solid #006960;
         border-radius: 5px;
         cursor: pointer;

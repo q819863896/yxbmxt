@@ -36,6 +36,7 @@
 
 <script>
 import Headers from "../../components/header.vue";
+import { forgetPwd } from "../../api/api.js";
 export default {
     name: "retrievepass",
     components: {Headers},
@@ -60,7 +61,25 @@ export default {
         },
         // 继续
         continueBtn () {
-            this.findPass = false;
+            this.$refs.retrieve.validate((valid) => {
+                if (valid) {
+                    let params = {
+                        email: this.retrieve.email
+                    };
+                    forgetPwd(params).then((res) => {
+                        if (res.statu == 0) {
+                            this.$message({
+                                message: res.message,
+                                type: 'warning'
+                            });
+                        } else {
+                            this.findPass = false;
+                        }
+                    })
+                } else {
+                    return false;
+                }
+            })
         },
         loginBtn () {
             this.$router.push("/login");

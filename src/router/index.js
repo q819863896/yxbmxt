@@ -13,6 +13,7 @@ import PersonInfo from "../views/components/personInfo/personInfo.vue";
 import Logoout from "../views/components/logoout/logoout.vue";
 
 import Signup from "../views/components/mine/signUp.vue";   // 报名
+import Signsuccess from "../views/components/mine/signsucc.vue";    // 报名成功
 import Activedetail from "../views/components/message/activedetail.vue";    // 活动详情
 
 Vue.use(Router)
@@ -48,6 +49,11 @@ export default new Router({
             path: '/signup',
             name: 'Signup',
             component: Signup
+        },
+        {
+            path: '/signsuccess',
+            name: 'Signsuccess',
+            component: Signsuccess
         },
         {
             path: '/reactivities',

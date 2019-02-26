@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { showbmxx } from "../../../api/api.js";
 export default {
     name: "minehd",
     data() {
@@ -80,7 +81,15 @@ export default {
     methods: {
         toactive() {
             this.$router.push("/activedetail");
-        }
+        },
+        getAllData() {
+            showbmxx().then((res) => {
+                console.log(res);
+            })
+        },
+    },
+    mounted () {
+        this.getAllData();
     }
 }
 </script>
