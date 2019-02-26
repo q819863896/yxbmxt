@@ -60,6 +60,7 @@ export default {
                     };
                     Login(params).then((res) => {
                         if (res.message == "密码正确") {
+                            // sessionStorage.setItem("userName", this.loginInfo.account);
                             this.$router.push("/mine");
                         } else {
                             this.$message({
@@ -69,7 +70,6 @@ export default {
                         }
                     })
                 }
-                // this.$router.push("/mine");
             })
         },
         forget() {

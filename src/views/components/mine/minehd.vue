@@ -29,7 +29,7 @@
                         <img src="@/assets/images/success.png" alt="">
                     </dt>
                     <dd>
-                        <p class="fontBlue">新湖三亚活动</p>
+                        <p class="fontBlue">新湖三亚活动assasasa</p>
                         <p>
                             <i class="iconfont icon-dizhi"></i>
                             <span>北京市朝阳区</span>
