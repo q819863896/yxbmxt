@@ -4,9 +4,9 @@
             <img src="@/assets/images/logo.png" alt="">
         </div>
         <!-- <div class="main"> -->
-            <h3>注册</h3>
-            <el-form :model="ruleForm" :rules="loginRules" ref="ruleForm" class="demo-ruleForm login-container">
-                <el-form-item label="姓名" prop="name">
+            <h3>{{lang === 'zh' ? '注册' : 'Register'}}</h3>
+            <el-form :model="ruleForm" :rules="lang === 'zh' ? zhloginRules : enloginRules" ref="ruleForm" class="demo-ruleForm login-container">
+                <el-form-item :label="lang === 'zh' ? '姓名' : 'Full name'" prop="name">
                     <el-input v-model="ruleForm.name"></el-input>
                 </el-form-item>
                 <el-form-item label="电子邮箱" prop="email">
@@ -28,30 +28,6 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="院校名称" prop="schoolName" class="schoolName">
-                    <!-- <el-input v-model="ruleForm.schoolName"></el-input>
-                    <img src="../../assets/images/find.png" alt=""> -->
-                    <!-- <el-autocomplete
-                        class="inline-input"
-                        v-model="state2"
-                        :fetch-suggestions="querySearch"
-                        :trigger-on-focus="false"
-                        @select="handleSelect"
-                    ></el-autocomplete> -->
-                    <!-- <el-select
-                        v-model="value9"
-                        multiple
-                        filterable
-                        remote
-                        reserve-keyword
-                        :remote-method="remoteMethod"
-                        :loading="loading">
-                        <el-option
-                            v-for="item in options4"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select> -->
                     <el-select v-model="ruleForm.schoolName" placeholder="" @change="checkSchool">
                         <el-option
                             v-for="item in schoolNameOptions"
@@ -68,9 +44,7 @@
                     <el-input v-model="ruleForm.password"></el-input>
                 </el-form-item>
                 <div class="agreeClick">
-                    <!-- <input type="checkbox" name="category" id="asd" value="1" /> -->
                     <el-checkbox v-model="checked" @change="flagSubmitBtn">点击快速注册则表示您同意本网站</el-checkbox>
-                    <!-- <label for="asd">点击快速注册则表示您同意本网站</label> -->
                     <p class="server">服务条款</p>
                 </div>
                 
@@ -98,6 +72,7 @@ export default {
             }
         }
         return {
+            lang: "",
             ruleForm: {
                 name: "",
                 email: "",
@@ -107,7 +82,7 @@ export default {
                 position: "",
                 password: "",
             },
-            loginRules: {
+            zhloginRules: {
                 name: [
                     { required: true, message: '必须填', trigger: 'blur' }
                 ],
@@ -129,6 +104,30 @@ export default {
                 ],
                 password: [
                     { required: true, message: '必须填', trigger: 'blur' }
+                ]
+            },
+            enloginRules: {
+                name: [
+                    { required: true, message: 'Must fill in', trigger: 'blur' }
+                ],
+                email: [
+                    { required: true, message: 'Must fill in', trigger: 'blur' },
+                    {validator: checkEmail, trigger: 'blur'}
+                ],
+                tel: [
+                    { required: true, message: 'Must fill in', trigger: 'blur' }
+                ],
+                country: [
+                    { required: true, message: 'Must fill in', trigger: 'blur' }
+                ],
+                schoolName: [
+                    { required: true, message: 'Must fill in', trigger: 'blur' }
+                ],
+                position: [
+                    { required: true, message: 'Must fill in', trigger: 'blur' }
+                ],
+                password: [
+                    { required: true, message: 'Must fill in', trigger: 'blur' }
                 ]
             },
             titletrue: false,
@@ -268,6 +267,9 @@ export default {
     },
     computed: {
         
+    },
+    created () {
+        this.lang = sessionStorage.getItem("lange");
     },
     mounted() {
         // this.restaurants = this.loadAll();

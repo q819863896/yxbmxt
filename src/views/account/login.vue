@@ -99,7 +99,6 @@ export default {
     },
     created() {
         this.lang = sessionStorage.getItem("lange");
-
     },
     // computed: {
     //     lang: {

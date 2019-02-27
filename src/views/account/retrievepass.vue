@@ -4,18 +4,18 @@
         <div class="main" v-if="findPass">
             <h3>找回密码</h3>
             <div class="wrap">
-                <p>登陆有问题?</p>
+                <p>{{lang === 'zh' ? '登陆有问题' : 'What is wrong with landing?'}}</p>
                 <ul>
-                    <li>用户名的形式是电子邮箱地址。</li>
-                    <li>密码区分大小写</li>
+                    <li>{{lang === 'zh' ? '用户名的形式是电子邮箱地址。' : 'User names are in the form of e-mail addresses.'}}</li>
+                    <li>{{lang === 'zh' ? '密码区分大小写' : 'Passwords are case sensitive'}}</li>
                 </ul>
-                <el-form :model="retrieve" :rules="loginRules" ref="retrieve" class="demo-ruleForm login-container">
-                    <el-form-item label="电子邮箱" prop="email">
-                        <el-input type="email" name="email" v-model.trim="retrieve.email" auto-complete="off" placeholder="密码"></el-input>
+                <el-form :model="retrieve" :rules="lang === 'zh' ? zhloginRules : enloginRules" ref="retrieve" class="demo-ruleForm login-container">
+                    <el-form-item :label="lang === 'zh' ? '电子邮箱' : 'e-mail'" prop="email">
+                        <el-input type="email" name="email" v-model.trim="retrieve.email" auto-complete="off" :placeholder="lang === 'zh' ? '电子邮箱' : 'e-mail'"></el-input>
                     </el-form-item>
                     <div class="btnGroup">
-                        <div class="cancel" @click="cancelBtn">取消</div>
-                        <div class="continue" @click="continueBtn">继续</div>
+                        <div class="cancel" @click="cancelBtn">{{lang === 'zh' ? '取消' : 'Cancel'}}</div>
+                        <div class="continue" @click="continueBtn">{{lang === 'zh' ? '继续' : 'Continue'}}</div>
                     </div>
                 </el-form>
             </div>
@@ -47,9 +47,14 @@ export default {
             retrieve: {
                 email: ""
             },
-            loginRules: {
+            zhloginRules: {
                 email: [
                     { required: true, message: '请输入电子邮箱', trigger: 'blur' }
+                ]
+            },
+            enloginRules: {
+                email: [
+                    { required: true, message: 'Please enter your e-mail', trigger: 'blur' }
                 ]
             }
         }
@@ -84,6 +89,9 @@ export default {
         loginBtn () {
             this.$router.push("/login");
         }
+    },
+    created() {
+        this.lang = sessionStorage.getItem("lange");
     }
 }
 </script>
