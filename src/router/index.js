@@ -16,7 +16,9 @@ import Signup from "../views/components/mine/signUp.vue";   // 报名
 import Signsuccess from "../views/components/mine/signsucc.vue";    // 报名成功
 import Activedetail from "../views/components/message/activedetail.vue";    // 活动详情
 
-Vue.use(Router)
+import NotFound from "../views/exception/404.vue";
+
+Vue.use(Router);
 
 export default new Router({
     routes: [
@@ -81,6 +83,16 @@ export default new Router({
             path: '/activedetail',
             name: 'Activedetail',
             component: Activedetail,
+        },
+        {
+            path: '/404',
+            name: '404',
+            component: NotFound,
+        },
+        {
+           path: '*',
+           hidden: true,
+           redirect: { path: '/404' },
         }
     ]
 })

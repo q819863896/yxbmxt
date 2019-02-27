@@ -6,11 +6,11 @@
                 <img class="logo" src="@/assets/images/logo.png" alt="">
             </div>
             <div class="right">
-                <router-link to="/message" class="message" ref="message" @click.native.prevent="message"><!--   -->
+                <router-link to="/message" class="message" ref="message">
                     <img src="@/assets/images/message.png" alt="">
                     <p></p>
                 </router-link>
-                <router-link to="/personInfo" class="personInfo" ref="personInfo" @click.native.prevent="personInfo"><!--  -->
+                <router-link to="/personInfo" class="personInfo" ref="personInfo">
                     <img class="personPic" src="@/assets/images/personInfo.png" alt="">
                 </router-link>
                 <div to="/logoout" class="logoout" ref="logoout" @click.native.prevent="logoout">
@@ -18,14 +18,14 @@
                 </div>
             </div>
         </div>
-        <div class="wrap">
+        <div class="wrap" v-for="(item, index) in items" :key="index">
             <p class="back" @click="backBtn">
                 <i class="iconfont icon-fanhui"></i>
                 返回活动列表
             </p>
             <div class="top">
                 <div class="left">
-                    <p class="txt">您报名参加的活动审核已通过</p>
+                    <p class="txt">{{item.txt}}</p>
                     <p class="fontC">2018/08/01</p>
                 </div>
                 <div class="right" @click="bmBtn">
@@ -59,7 +59,7 @@
                 <div class="tit">活动对接人</div>
                 <div class="djrDiv">
                     <p>
-                        <span>姓名</span>：<span>李女士</span>
+                        <span>姓名</span><em>不是</em>：<span>李女士</span>
                     </p>
                     <p>
                         <span>联系电话</span>：
@@ -93,12 +93,17 @@
 
 <script>
 import topheader from "../reactivities/reactivities.vue";
+import { bmxxjl } from "../../../api/api.js";
 export default {
     name: "activedetail",
     components: { topheader },
     data() {
         return {
-
+            items: [
+                {
+                    txt: "通过"
+                }
+            ]
         }
     },
     methods: {
@@ -108,6 +113,13 @@ export default {
         bmBtn () {
             this.$router.push("/signup");
         }
+    },
+    mounted() {
+        let params = this.$route.query;
+        console.log(params);
+        bmxxjl(params).then((res) => {
+            console.log(res);
+        })
     }
 }
 </script>
@@ -122,24 +134,25 @@ export default {
         display: flex;
         .logoBox{
             width: 85%;
-            // border-bottom: 1px solid #D8D8D8;
         }
         .right{
             flex: 1;
             height: 100%;
             display: flex;
-            // border-top: 1px solid #D8D8D8;
-            // .message{
-            //     border-left: 1px solid #D8D8D8;
-            // }
-            // .personInfo{
-            //     border-left: 1px solid #D8D8D8;
-            //     border-bottom: 1px solid #D8D8D8;
-            // }
-            // .logoout{
-            //     border-left: 1px solid #D8D8D8;
-            //     border-bottom: 1px solid #D8D8D8;
-            // }
+            .message, .personInfo, .logoout{
+                width: 3rem;
+                height: 3rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                img{
+                    width: 2.8rem;
+                }
+                .personPic{
+                    width: 2rem;
+                }
+            }
         }
     }
     .wrap{
@@ -198,6 +211,9 @@ export default {
         .activedjr{
             .djrDiv{
                 padding: 1.5% 0;
+                em{
+                    visibility: hidden;
+                }
             }
         }
         .picwrap{

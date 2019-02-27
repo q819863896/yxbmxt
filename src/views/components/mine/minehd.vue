@@ -6,17 +6,17 @@
         </div>
         <div class="mid">
             <div class="sstj">
-                <el-select v-model="value" placeholder="按创建时间排序">
+                <el-select v-model="creatTimeValue" placeholder="按创建时间排序">
                     <el-option
-                        v-for="item in options"
+                        v-for="item in creatTimeOptions"
                         :key="item.value"
                         :label="item.label"
                         :value="item.value">
                     </el-option>
                 </el-select>
-                <el-select v-model="value" placeholder="所有地区">
+                <el-select v-model="allAreaValue" placeholder="所有地区">
                     <el-option
-                        v-for="item in options"
+                        v-for="item in allAreaOptions"
                         :key="item.value"
                         :label="item.label"
                         :value="item.value">
@@ -24,26 +24,28 @@
                 </el-select>
             </div>
             <div class="ddpic">
-                <dl>
-                    <dt>
-                        <img src="@/assets/images/success.png" alt="">
-                    </dt>
-                    <dd>
-                        <p class="fontBlue">新湖三亚活动assasasa</p>
-                        <p>
-                            <i class="iconfont icon-dizhi"></i>
-                            <span>北京市朝阳区</span>
-                        </p>
-                        <p>
-                            <i class="iconfont icon-shijian"></i>
-                            <span>北京市朝阳区</span>
-                        </p>
-                        <p>
-                            <i class="iconfont icon-dizhi1"></i>
-                            <span>北京市朝阳区</span>
-                        </p>
-                        <p @click="toactive">跳转</p>
-                    </dd>
+                <dl v-for="(item,index) in items" :key="index">
+                    <!-- activedetail -->
+                    <router-link :to="{path:'/activedetail',query:{cid:item.id}}">
+                        <dt>
+                            <img src="@/assets/images/success.png" alt="">
+                        </dt>
+                        <dd>
+                            <p class="fontBlue">{{item.name}}</p>
+                            <p>
+                                <i class="iconfont icon-dizhi"></i>
+                                <span>{{item.area}}</span>
+                            </p>
+                            <p>
+                                <i class="iconfont icon-shijian"></i>
+                                <span>{{item.startDate}}</span>-<span>{{item.endDate}}</span>
+                            </p>
+                            <p>
+                                <i class="iconfont icon-dizhi1"></i>
+                                <span>{{item.building}}</span>
+                            </p>
+                        </dd>
+                    </router-link>
                 </dl>
             </div>
         </div>
@@ -57,7 +59,8 @@ export default {
     data() {
         return {
             name: "",
-            options: [
+            // 创建时间
+            creatTimeOptions: [
                 {
                     value: '选项1',
                     label: '黄金糕'
@@ -75,7 +78,28 @@ export default {
                     label: '北京烤鸭'
                 }
             ],
-            value: ''
+            creatTimeValue: "",
+            // 所有地区
+            allAreaOptions: [
+                {
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }
+            ],
+            allAreaValue: "",
+            items: []
         }
     },
     methods: {
@@ -84,7 +108,14 @@ export default {
         },
         getAllData() {
             showbmxx().then((res) => {
-                console.log(res);
+                if(res.statu == 1) {
+                    this.items = res.data;
+                } else {
+                    this.$message({
+                        message: res.message,
+                        type: 'warning'
+                    });
+                }
             })
         },
     },
@@ -123,24 +154,30 @@ export default {
         dl{
             display: flex;
             padding: 2% 0;
-            dt{
-                width: 128px;
-                height: 128px;
-                img{
-                    width: 100%;
-                    height: 100%;
+            a{
+                display: inline-block;
+                width: 100%;
+                display: flex;
+                dt{
+                    width: 128px;
+                    height: 128px;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                dd{
+                    margin-left: 8px;
+                    p{
+                        line-height: 30px;
+                    }
+                    .fontBlue{
+                        color: #0070D2;
+                        font-size: 14px;
+                    }
                 }
             }
-            dd{
-                margin-left: 8px;
-                p{
-                    line-height: 30px;
-                }
-                .fontBlue{
-                    color: #0070D2;
-                    font-size: 14px;
-                }
-            }
+            
         }
         
     }

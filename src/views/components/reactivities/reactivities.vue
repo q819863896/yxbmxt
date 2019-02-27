@@ -5,14 +5,14 @@
                 <img class="logo" src="@/assets/images/logo.png" alt="">
             </div>
             <div class="right">
-                <router-link to="/message" class="message" ref="message" @click.native.prevent="message"><!--   -->
+                <router-link to="/message" class="message" ref="message">
                     <img src="@/assets/images/message.png" alt="">
                     <p></p>
                 </router-link>
-                <router-link to="/personInfo" class="personInfo" ref="personInfo" @click.native.prevent="personInfo"><!--  -->
+                <router-link to="/personInfo" class="personInfo" ref="personInfo">
                     <img class="personPic" src="@/assets/images/personInfo.png" alt="">
                 </router-link>
-                <div to="/logoout" class="logoout" ref="logoout" @click="logoout"><!-- @click.native.prevent="logoout" -->
+                <div to="/logoout" class="logoout" ref="logoout" @click="logoout">
                     <img src="@/assets/images/logoout.png" alt="">
                 </div>
             </div>
@@ -32,18 +32,6 @@ export default {
         }
     },
     methods: {
-        // message () {
-        //     // this.$refs.logoBox.$el.style = 'border-bottom:1px solid #D8D8D8';
-        //     this.$refs.message.$el.style = 'border-bottom:none';
-        //     this.$refs.personInfo.$el.style = 'border-bottom:1px solid #D8D8D8';
-        //     this.$refs.logoout.$el.style = 'border-bottom:1px solid #D8D8D8';
-        // },
-        // personInfo () {
-        //     // this.$refs.logoBox.$el.style = 'border-bottom:1px solid #D8D8D8';
-        //     this.$refs.message.$el.style = 'border-bottom:1px solid #D8D8D8';
-        //     this.$refs.personInfo.$el.style = 'border-bottom:none';
-        //     this.$refs.logoout.$el.style = 'border-bottom:1px solid #D8D8D8';
-        // },
         logoout () {
             this.$confirm('确认退出吗?', '提示', {
                confirmButtonText: '退出',
@@ -73,7 +61,6 @@ export default {
         .logoBox{
             width: 85%;
             height: 100%;
-            // border-bottom: 1px solid #D8D8D8;
         }
         .right{
             flex: 1;
@@ -86,8 +73,6 @@ export default {
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
-                // border: 1px solid #D8D8D8;
-                // border-right: none;
                 img{
                     width: 2.8rem;
                 }

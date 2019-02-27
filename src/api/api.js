@@ -7,6 +7,7 @@ axios.defaults.validateStatus = status => {
 
 // 接口错误拦截
 axios.interceptors.response.use(res => {
+    console.log(res);
     if (res.status === 401) {
         // sessionStorage.removeItem('user');
         router.push({ path: '/login' });
@@ -20,7 +21,9 @@ axios.interceptors.response.use(res => {
 
 axios.defaults.baseURL = "http://10.150.117.151:8080";
 
-axios.defaults.timeout = 1000 * 30;
+axios.defaults.timeout = 1000 * 5;
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 axios.defaults.headers.get['Content-Type'] = 'application/json';
 
@@ -37,6 +40,10 @@ var _axios = axios.create({
 // 登录
 export const Login = params => {
     return _axios.post('/login/log.do', stringify(params)).then(res => res.data);
+}
+
+export const showlogin = params => {
+    return _axios.post('/login/show.do', stringify(params)).then(res => res.data);
 }
 
 // 忘记密码
@@ -70,4 +77,8 @@ export const showbmxx = params => {
     return _axios.post('/campaign/showbmxx.do', stringify(params)).then(res => res.data);
 }
 
+// 我的活动--活动详情
+export const bmxxjl = params => {
+    return _axios.post('/campaign/bmxxjl.do', stringify(params)).then(res => res.data);
+}
 

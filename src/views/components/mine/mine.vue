@@ -37,11 +37,6 @@ export default {
         setSty () {
             this.$emit("transferSty", this.asd);
         },
-        mineHd () {
-            // console.log("as");
-            // this.$refs.mineHd.$el.style = 'border:1px solid #006960';
-            // this.$refs.mineHd.$el.style = 'border-radius:8px 8px 0px 0px;';
-        },
         hdyl () {
 
         }

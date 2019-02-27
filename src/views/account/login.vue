@@ -1,33 +1,37 @@
 <template>
     <div class="login_box" >
         <headers></headers>
-        <el-form :model="loginInfo" :rules="loginRules" ref="loginInfo" class="demo-ruleForm login-container">
-            <el-form-item label="用户名" prop="account" style="position: relative">
-                <el-input type="text" name="account" v-model.trim="loginInfo.account" placeholder="账号">
+        <!-- <el-radio-group v-model="lang" size="small">
+            <el-radio label="zh" border>简体中文</el-radio>
+            <el-radio label="en" border>English</el-radio>
+        </el-radio-group> -->
+        <el-form :model="loginInfo" :rules="lang === 'zh' ? zhloginRules : enloginRules" ref="loginInfo" class="demo-ruleForm login-container">
+            <el-form-item :label="lang === 'zh' ? '用户名' : 'userName'" prop="account" style="position: relative">
+                <el-input type="text" name="account" v-model.trim="loginInfo.account" :placeholder="lang === 'zh' ? '用户名' : 'userName'">
                 </el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="password">
-                <el-input type="password" name="password" v-model.trim="loginInfo.password" auto-complete="off" placeholder="密码"></el-input>
+            <el-form-item :label="lang === 'zh' ? '密码' : 'password'" prop="password">
+                <el-input type="password" name="password" v-model.trim="loginInfo.password" auto-complete="off" :placeholder="lang === 'zh' ? '密码' : 'password'"></el-input>
             </el-form-item>
             <!-- <el-checkbox v-model="isRememberPsw" class="remember">记住密码</el-checkbox> -->
             <el-form-item style="width:100%;">
-                <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">登录</el-button>
+                <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">{{lang === "zh" ? "登录" : "Sign In"}}</el-button>
             </el-form-item>
-            <el-form-item class="forget" @click.native.prevent="forget">忘记密码</el-form-item>
+            <el-form-item class="forget" @click.native.prevent="forget">{{lang === "zh" ? "忘记密码" : "Forget Password"}}</el-form-item>
             <!-- <div class="ordiv">
                 <div class="left">- - - - - - - - - - </div>
                 <div class="center">或</div>
                 <div class="right"> - - - - - - - - - -</div>
             </div> -->
-            
         </el-form>
-        <div class="quick" @click="quick">快速注册</div>
+        <div class="quick" @click="quick">{{lang === "zh" ? "快速注册" : "Rapid Registration"}}</div>
     </div>
 </template>
 
 <script>
 import Headers from "../../components/header.vue";
 import { Login } from "../../api/api.js";
+import local from "./local.js";
 export default {
     name: "login",
     components: {
@@ -36,21 +40,34 @@ export default {
     data() {
         return {
             logining: false,
+            lang: "",
             loginInfo: {
                 account: "",
                 password: ""
             },
-            loginRules: {
-               account: [
-                  { required: true, message: '请输入账号', trigger: 'blur' },
-               ],
-               password: [
-                  { required: true, message: '请输入密码', trigger: 'blur' },
-               ]
+            zhloginRules: {
+                account: [
+                    { required: true, message: '请输入用户名', trigger: 'blur' },
+                ],
+                password: [
+                    { required: true, message: '请输入密码', trigger: 'blur' },
+                ]
+            },
+            enloginRules: {
+                account: [
+                    { required: true, message: "Please enter the username", trigger: 'blur' },
+                ],
+                password: [
+                    { required: true, message: 'Please input a password', trigger: 'blur' },
+                ]
             },
         }
     },
     methods: {
+        // 切换语言
+        checkLang () {
+
+        },
         handleSubmit2() {
             this.$refs.loginInfo.validate((valid) => {
                 if (valid) {
@@ -60,7 +77,7 @@ export default {
                     };
                     Login(params).then((res) => {
                         if (res.message == "密码正确") {
-                            // sessionStorage.setItem("userName", this.loginInfo.account);
+                            localStorage.setItem("userName", this.loginInfo.account);
                             this.$router.push("/mine");
                         } else {
                             this.$message({
@@ -79,7 +96,22 @@ export default {
         quick(){
             this.$router.push("/register")
         }
-    }
+    },
+    created() {
+        this.lang = sessionStorage.getItem("lange");
+
+    },
+    // computed: {
+    //     lang: {
+    //         get() {
+    //             return this.$store.state.app.language
+    //         },
+    //         set(lang) {
+    //             this.$i18n.locale = lang
+    //             this.$store.dispatch('setLanguage', lang)
+    //         }
+    //     }
+    // }
 }
 </script>
 

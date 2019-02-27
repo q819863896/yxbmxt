@@ -10,7 +10,6 @@
                     <p>您报名参加的活动审核已通过</p><p class="newaa">new</p>
                 </div>
                 <div class="center">
-                    <!-- <span>活动名称：</span><span>新湖三亚活动</span> -->
                     <p>
                         <em>活动名称：</em>
                         <span>新湖三亚活动</span>
@@ -62,7 +61,6 @@
                     <p>您报名参加的活动审核已通过</p><p class="newaa">new</p>
                 </div>
                 <div class="center">
-                    <!-- <span>活动名称：</span><span>新湖三亚活动</span> -->
                     <p>
                         <em>活动名称：</em>
                         <span>新湖三亚活动</span>
@@ -88,7 +86,6 @@
                     <p>您报名参加的活动审核已通过</p>
                 </div>
                 <div class="center">
-                    <!-- <span>活动名称：</span><span>新湖三亚活动</span> -->
                     <p>
                         <em>活动名称：</em>
                         <span>新湖三亚活动</span>
