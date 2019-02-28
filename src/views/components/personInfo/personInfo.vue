@@ -314,6 +314,11 @@ export default {
                     });
                 })
             }
+        },
+        cancelBtn() {},
+        
+        continueBtn () {
+
         }
     },
     created () {

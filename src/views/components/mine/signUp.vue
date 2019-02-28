@@ -18,7 +18,8 @@
             </div>
         </div> -->
         <div class="txt">
-            <h4>账户信息</h4>
+            <!-- <h4>账户信息</h4> -->
+            <h4></h4>
         </div>
         <el-form :model="pickPeo" ref="pickPeo" class="demo-ruleForm login-container"><!-- :rules="pickPeoRules" -->
             <div class="top">
