@@ -2,16 +2,16 @@
     <div class="retrievepass">
         <headers />
         <div class="main" v-if="findPass">
-            <h3>找回密码</h3>
+            <h3>{{lang === 'zh' ? '找回密码' : 'Reset Password'}}</h3>
             <div class="wrap">
-                <p>{{lang === 'zh' ? '登陆有问题' : 'What is wrong with landing?'}}</p>
+                <p>{{lang === 'zh' ? '登陆有问题' : 'Login failed??'}}</p>
                 <ul>
-                    <li>{{lang === 'zh' ? '用户名的形式是电子邮箱地址。' : 'User names are in the form of e-mail addresses.'}}</li>
-                    <li>{{lang === 'zh' ? '密码区分大小写' : 'Passwords are case sensitive'}}</li>
+                    <li>{{lang === 'zh' ? '用户名的形式是电子邮箱地址。' : 'The user name is email address'}}</li>
+                    <li>{{lang === 'zh' ? '密码区分大小写' : 'Password is case-sensitive'}}</li>
                 </ul>
                 <el-form :model="retrieve" :rules="lang === 'zh' ? zhloginRules : enloginRules" ref="retrieve" class="demo-ruleForm login-container">
-                    <el-form-item :label="lang === 'zh' ? '电子邮箱' : 'e-mail'" prop="email">
-                        <el-input type="email" name="email" v-model.trim="retrieve.email" auto-complete="off" :placeholder="lang === 'zh' ? '电子邮箱' : 'e-mail'"></el-input>
+                    <el-form-item :label="lang === 'zh' ? '电子邮箱' : 'Email'" prop="email">
+                        <el-input type="email" name="email" v-model.trim="retrieve.email" auto-complete="off" :placeholder="lang === 'zh' ? '电子邮箱' : 'Email'"></el-input>
                     </el-form-item>
                     <div class="btnGroup">
                         <div class="cancel" @click="cancelBtn">{{lang === 'zh' ? '取消' : 'Cancel'}}</div>
@@ -22,12 +22,13 @@
         </div>
 
         <div class="checkmail" v-else>
-            <h3>查看电子邮箱</h3>
+            <h3>{{lang === 'zh' ? '查看电子邮箱' : 'Please check your email'}}</h3>
             <div class="checkBox">
-                <p>我们已向您发送一封包含完成重置密码链接的。</p>
-                <p>无法找到电子邮件？请检查您的垃圾邮件文件夹。</p>
+                <p>{{lang === 'zh' ? '我们已向您发送一封包含完成重置密码链接的。' : 'We have just sent an email contains a link to reset the password.'}}</p>
+                <!-- <p>无法找到电子邮件？请检查您的垃圾邮件文件夹。</p> -->
+                <p>{{lang === 'zh' ? '无法找到电子邮件？请检查您的垃圾邮件文件夹。' : 'Can not find the email? Please check your junk mail box.'}}</p>
                 <div class="loginBtn" @click="loginBtn">
-                    登录
+                    {{lang === 'zh' ? '登录' : 'Login'}}
                 </div>
             </div>
         </div>
@@ -43,7 +44,7 @@ export default {
     data() {
         return{
             findPass: true,
-
+            lang: "",
             retrieve: {
                 email: ""
             },
@@ -127,7 +128,7 @@ export default {
                     align-items: center;
                     margin-left: 5%;
                     .cancel{
-                        width: 90px;
+                        width: 130px;
                         border: 1px solid #006960;
                         border-radius: 4px;
                         padding: 1% 4%;
@@ -135,7 +136,7 @@ export default {
                         text-align: center;
                     }
                     .continue{
-                        width: 90px;
+                        width: 130px;
                         background: #006960;
                         color: #ffffff;
                         border-radius: 4px;

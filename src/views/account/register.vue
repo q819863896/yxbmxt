@@ -9,15 +9,18 @@
                 <el-form-item :label="lang === 'zh' ? '姓名' : 'Full name'" prop="name">
                     <el-input v-model="ruleForm.name"></el-input>
                 </el-form-item>
-                <el-form-item label="电子邮箱" prop="email">
+                <!-- 电子邮箱 -->
+                <el-form-item :label="lang === 'zh' ? '电子邮箱' : 'Email'" prop="email">
                     <el-input v-model="ruleForm.email" @blur="checkMail"></el-input>
                     <div class="greetitle" v-if="titletrue">{{titletruetxt}}</div>
                     <div class="redtitle" v-if="titlefalse">{{titlefalsetxt}}</div>
                 </el-form-item>
-                <el-form-item label="电话" prop="tel">
+                <!-- 电话 -->
+                <el-form-item :label="lang === 'zh' ? '电话' : 'Contact Number'" prop="tel">
                     <el-input v-model.number="ruleForm.tel"></el-input>
                 </el-form-item>
-                <el-form-item label="国别" prop="country">
+                <!-- 国别 -->
+                <el-form-item :label="lang === 'zh' ? '国别' : 'Country'" prop="country">
                     <el-select v-model="ruleForm.country" placeholder="" @change="checkCountry">
                         <el-option
                             v-for="item in countryOptions"
@@ -27,7 +30,8 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="院校名称" prop="schoolName" class="schoolName">
+                <!-- 院校名称 -->
+                <el-form-item :label="lang === 'zh' ? '院校名称' : 'Institution Name'" prop="schoolName" class="schoolName">
                     <el-select v-model="ruleForm.schoolName" placeholder="" @change="checkSchool">
                         <el-option
                             v-for="item in schoolNameOptions"
@@ -37,19 +41,21 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="职位" prop="position">
+                <!-- 职位 -->
+                <el-form-item :label="lang === 'zh' ? '职位' : 'Job Title'" prop="position">
                     <el-input v-model="ruleForm.position"></el-input>
                 </el-form-item>
-                <el-form-item label="密码" prop="password">
+                <!-- 密码 -->
+                <el-form-item :label="lang === 'zh' ? '密码' : 'password'" prop="password">
                     <el-input v-model="ruleForm.password"></el-input>
                 </el-form-item>
                 <div class="agreeClick">
-                    <el-checkbox v-model="checked" @change="flagSubmitBtn">点击快速注册则表示您同意本网站</el-checkbox>
-                    <p class="server">服务条款</p>
+                    <el-checkbox v-model="checked" @change="flagSubmitBtn">{{lang == "zh" ? "点击快速注册则表示您同意本网站" : "By clicking quick registration, you agree with the website "}}</el-checkbox>
+                    <p class="server">{{lang == "zh" ? "服务条款" : "terms of service"}}</p>
                 </div>
                 
             </el-form>
-            <el-button @click="submitForm('ruleForm')" :disabled="disFlag">快速注册</el-button>
+            <el-button @click="submitForm('ruleForm')" :disabled="disFlag">{{lang == "zh" ? "快速注册" : "Rapid registration"}}</el-button>
         <!-- </div> -->
         
     </div>

@@ -1,12 +1,12 @@
 <template>
     <div class="major">
         <div class="search">
-            <el-input v-model="name" placeholder="会议名称"></el-input>
+            <el-input v-model="name" :placeholder="lang=='zh' ? '会议名称' : 'Event Name'"></el-input>
             <img src="@/assets/images/find.png" alt="">
         </div>
         <div class="mid">
             <div class="sstj">
-                <el-select v-model="value" placeholder="按创建时间排序">
+                <el-select v-model="value" :placeholder="lang=='zh' ? '按创建时间排序' : 'Sort by Creation Time'">
                     <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -14,7 +14,7 @@
                         :value="item.value">
                     </el-option>
                 </el-select>
-                <el-select v-model="value" placeholder="所有地区">
+                <el-select v-model="value" :placeholder="lang=='zh' ? '所有地区' : 'Location'">
                     <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -25,7 +25,7 @@
                 <el-date-picker
                     v-model="value4"
                     type="month"
-                    placeholder="选择月">
+                    :placeholder="lang=='zh' ? '选择日期' : 'Date'">
                 </el-date-picker>
             </div>
             <div class="ddpic">
@@ -60,6 +60,7 @@ export default {
     name: "major",
     data() {
         return {
+            lang: "",
             name: "",
             options: [
                 {
@@ -87,6 +88,9 @@ export default {
         toactive() {
             this.$router.push("/activedetail");
         }
+    },
+    created () {
+        this.lang = sessionStorage.getItem("lange");
     }
 }
 </script>

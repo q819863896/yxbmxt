@@ -1,22 +1,22 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Login from "../views/account/login.vue";     // 登录
-import Register from "../views/account/register.vue";   // 注册
-import Retrievepass from "../views/account/retrievepass.vue";   // 忘记密码
+const Login = () => import('../views/account/login.vue');   // // 登录\
+const Register = () => import('../views/account/register.vue');   // 注册
+const Retrievepass = () => import('../views/account/retrievepass.vue'); // 忘记密码
 
-import Reactivities from "../views/components/reactivities/reactivities.vue";
+const Reactivities = () => import('../views/components/reactivities/reactivities.vue');
 
-import Mine from "../views/components/mine/mine.vue";
-import Message from "../views/components/message/message.vue";
-import PersonInfo from "../views/components/personInfo/personInfo.vue";
-import Logoout from "../views/components/logoout/logoout.vue";
+const Mine = () => import('../views/components/mine/mine.vue');
+const Message = () => import('../views/components/message/message.vue');
+const PersonInfo = () => import('../views/components/personInfo/personInfo.vue');
+const Logoout = () => import('../views/components/logoout/logoout.vue');
 
-import Signup from "../views/components/mine/signUp.vue";   // 报名
-import Signsuccess from "../views/components/mine/signsucc.vue";    // 报名成功
-import Activedetail from "../views/components/message/activedetail.vue";    // 活动详情
+const Signup = () => import('../views/components/mine/signUp.vue'); // 报名
+const Signsuccess = () => import('../views/components/mine/signsucc.vue');  // 报名成功
+const Activedetail = () => import('../views/components/message/activedetail.vue');  // 活动详情
 
-import NotFound from "../views/exception/404.vue";
+const NotFound = () => import('../views/exception/404.vue');
 
 Vue.use(Router);
 

@@ -3,6 +3,7 @@
         <div class="topHeader">
             <div class="logoBox" ref="logoBox">
                 <img class="logo" src="@/assets/images/logo.png" alt="">
+                <p>{{lang === 'zh' ? '展会院校报名系统' : 'Fair & Event Registration System'}}</p>
             </div>
             <div class="right">
                 <router-link to="/message" class="message" ref="message">
@@ -20,6 +21,7 @@
         <div class="content">
             <router-view />
         </div>
+        
     </div>
 </template>
 
@@ -28,7 +30,7 @@ export default {
     name: "reactivities",
     data () {
         return {
-            isCollapse: false,
+            lang: ""
         }
     },
     methods: {
@@ -42,7 +44,10 @@ export default {
             }).catch((err) => {
                console.error('loginErr', err);
             });
-        },
+        }
+    },
+    created () {
+        this.lang = sessionStorage.getItem("lange");
     }
 }
 </script>
@@ -56,11 +61,16 @@ export default {
     .topHeader{
         width: 100%;
         height: 50px;
+        line-height: 50px;
         display: flex;
         justify-content: space-between;
+        position: absolute;
+        top: 0;
+        left: 0;
         .logoBox{
             width: 85%;
             height: 100%;
+            display: flex;
         }
         .right{
             flex: 1;

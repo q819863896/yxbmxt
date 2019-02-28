@@ -1,22 +1,22 @@
 <template>
     <div class="pickPeo">
-        <div class="topHeader" ref="tophead">
+        <!-- <div class="topHeader" ref="tophead">
             <div class="logoBox" ref="logoBox">
                 <img class="logo" src="@/assets/images/logo.png" alt="">
             </div>
             <div class="right">
-                <router-link to="/message" class="message" ref="message" @click.native.prevent="message"><!--   -->
+                <router-link to="/message" class="message" ref="message" @click.native.prevent="message">
                     <img src="@/assets/images/message.png" alt="">
                     <p></p>
                 </router-link>
-                <router-link to="/personInfo" class="personInfo" ref="personInfo" @click.native.prevent="personInfo"><!--  -->
+                <router-link to="/personInfo" class="personInfo" ref="personInfo" @click.native.prevent="personInfo">
                     <img class="personPic" src="@/assets/images/personInfo.png" alt="">
                 </router-link>
                 <div to="/logoout" class="logoout" ref="logoout" @click.native.prevent="logoout">
                     <img src="@/assets/images/logoout.png" alt="">
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="txt">
             <h4>账户信息</h4>
         </div>
@@ -128,29 +128,29 @@ export default {
                 tel: "",
                 schoolName: "",
             },
-            // pickPeoRules: {
-            //     userName: [
-            //         { required: true, message: '请输入姓名', trigger: 'blur' },
-            //     ],
-            //     position: [
-            //         { required: true, message: '请输入职位', trigger: 'blur' },
-            //     ],
-            //     email: [
-            //         { required: true, message: '请输入电子邮箱', trigger: 'blur' },
-            //     ],
-            //     country: [
-            //         { required: true, message: '请选择国别', trigger: 'blur' },
-            //     ],
-            //     tel: [
-            //         { required: true, message: '请输入电话', trigger: 'blur' },
-            //     ],
-            //     schoolName: [
-            //         { required: true, message: '请输入院校名称', trigger: 'blur' },
-            //     ],
-            //     lecture: [
-            //         { required: true, message: '请选择', trigger: 'blur' },
-            //     ]
-            // },
+            pickPeoRules: {
+                userName: [
+                    { required: true, message: '请输入姓名', trigger: 'blur' },
+                ],
+                position: [
+                    { required: true, message: '请输入职位', trigger: 'blur' },
+                ],
+                email: [
+                    { required: true, message: '请输入电子邮箱', trigger: 'blur' },
+                ],
+                country: [
+                    { required: true, message: '请选择国别', trigger: 'blur' },
+                ],
+                tel: [
+                    { required: true, message: '请输入电话', trigger: 'blur' },
+                ],
+                schoolName: [
+                    { required: true, message: '请输入院校名称', trigger: 'blur' },
+                ],
+                lecture: [
+                    { required: true, message: '请选择', trigger: 'blur' },
+                ]
+            },
             options: [
                 {
                     value: '选项1',

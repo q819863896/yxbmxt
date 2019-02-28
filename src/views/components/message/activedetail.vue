@@ -1,9 +1,10 @@
 <template>
     <div class="activedetail">
         <!-- <topheader /> -->
-        <div class="topHeader" ref="tophead">
+        <div class="topHeader">
             <div class="logoBox" ref="logoBox">
                 <img class="logo" src="@/assets/images/logo.png" alt="">
+                <p>展会院校报名系统</p>
             </div>
             <div class="right">
                 <router-link to="/message" class="message" ref="message">
@@ -13,7 +14,7 @@
                 <router-link to="/personInfo" class="personInfo" ref="personInfo">
                     <img class="personPic" src="@/assets/images/personInfo.png" alt="">
                 </router-link>
-                <div to="/logoout" class="logoout" ref="logoout" @click.native.prevent="logoout">
+                <div to="/logoout" class="logoout" ref="logoout" @click="logoout">
                     <img src="@/assets/images/logoout.png" alt="">
                 </div>
             </div>
@@ -25,19 +26,20 @@
             </p>
             <div class="top">
                 <div class="left">
-                    <p class="txt">{{item.txt}}</p>
+                    <p class="txt" v-if="statu == 1">通过</p>
+                    <p class="txt" v-else>未通过</p>
                     <p class="fontC">2018/08/01</p>
                 </div>
-                <div class="right" @click="bmBtn">
-                    <p>立即报名</p>
+                <div class="right" @click="qxbmBtn">
+                    <p>取消报名</p>
                 </div>
             </div>
             <div class="itemDetail">
                 <p>
-                    <span>活动名称</span>：<span>新湖三亚活动</span>
+                    <span>活动名称</span>：<span>{{item.name}}</span>
                 </p>
                 <p>
-                    <span>所在地点</span>：<span>北京市</span>
+                    <span>所在地点</span>：<span>{{item.city}}</span>
                 </p>
                 <p>
                     <span>活动地点</span>：<span>新湖财富</span>
@@ -99,14 +101,27 @@ export default {
     components: { topheader },
     data() {
         return {
-            items: [
-                {
-                    txt: "通过"
-                }
-            ]
+            lang: "",
+            statu: "",
+            items: []
         }
     },
     methods: {
+        // 退出
+        logoout () {
+            this.$confirm('确认退出吗?', '提示', {
+               confirmButtonText: '退出',
+               cancelButtonText: '取消',
+            }).then(() => {
+               sessionStorage.removeItem('user');
+               this.$router.push('/login');
+            }).catch((err) => {
+               console.error('loginErr', err);
+            });
+        },
+        qxbmBtn () {
+            this.$router.go(-1);
+        },
         backBtn() {
             this.$router.go(-1);
         },
@@ -114,11 +129,15 @@ export default {
             this.$router.push("/signup");
         }
     },
-    mounted() {
+    created() {
+        this.lang = sessionStorage.getItem("lange");
         let params = this.$route.query;
         console.log(params);
         bmxxjl(params).then((res) => {
-            console.log(res);
+            if (res.statu == 1) {
+                this.statu = res.data.statu;
+                this.items = res.data.campaign;
+            }
         })
     }
 }
@@ -131,9 +150,13 @@ export default {
     .topHeader{
         width: 100%;
         height: 50px;
+        line-height: 50px;
         display: flex;
+        justify-content: space-between;
         .logoBox{
             width: 85%;
+            height: 100%;
+            display: flex;
         }
         .right{
             flex: 1;
@@ -151,6 +174,19 @@ export default {
                 }
                 .personPic{
                     width: 2rem;
+                }
+            }
+            .message{
+                position: relative;
+                border-bottom: none;
+                p{
+                    position: absolute;
+                    top: 16%;
+                    right: 16%;
+                    width: 6px;
+                    height: 6px;
+                    background: #CC0202;
+                    border-radius: 50%;
                 }
             }
         }

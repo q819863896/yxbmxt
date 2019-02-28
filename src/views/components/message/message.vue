@@ -1,8 +1,8 @@
 <template>
     <div class="message">
         <div class="title">
-            <p>消息通知</p>
-            <span class="fontR" ref="numtit">(<span>{{num}}</span>条新信息)</span>
+            <p>{{lang == 'zh' ? '消息通知' : 'Notification Message'}}</p>
+            <span class="fontR" ref="numtit">(<span>{{num}}</span>{{lang == 'zh' ? '条新信息' : 'new messages'}})</span>
         </div>
         <div class="wrap" v-if="showFlag">
             <div class="item">
@@ -11,23 +11,23 @@
                 </div>
                 <div class="center">
                     <p>
-                        <em>活动名称：</em>
+                        <em>{{lang == 'zh' ? '活动名称' : 'Activity Name'}}</em>
                         <span>新湖三亚活动</span>
                     </p>
                     <p class="mr">
-                        <em>所在地区：</em>
+                        <em>{{lang == 'zh' ? '所在地区' : 'Location'}}</em>
                         <span>新湖三亚活动</span>
                     </p>
                     <p class="mr">
-                        <em>活动地点：</em>
+                        <em>{{lang == 'zh' ? '活动地点' : 'Place of activity'}}</em>
                         <span>新湖三亚活动</span>
                     </p>
                     <p class="mr">
-                        <em>参会时间：</em>
+                        <em>{{lang == 'zh' ? '参会时间' : 'Attendance time'}}</em>
                         <span>2019/09/20 10：00</span>
                     </p>
                 </div>
-                <p class="toDetail" @click="onetodetail">详情></p>
+                <p class="toDetail" @click="onetodetail">{{lang == 'zh' ? '详情' : 'details'}}></p>
             </div>
 
             <div class="item">
@@ -35,7 +35,6 @@
                     <p>您报名参加的活动审核已通过</p><p class="newaa">new</p>
                 </div>
                 <div class="center">
-                    <!-- <span>活动名称：</span><span>新湖三亚活动</span> -->
                     <p>
                         <em>活动名称：</em>
                         <span>新湖三亚活动</span>
@@ -141,8 +140,9 @@ export default {
     name: "message",
     data() {
         return {
-            num: "",
-            showFlag: true
+            num: "3",
+            showFlag: true,
+            lang: ""
         }
     },
     methods: {
@@ -150,6 +150,9 @@ export default {
             this.showFlag = false;
             this.$refs.numtit.style = 'display:none;'
         }
+    },
+    created () {
+        this.lang = sessionStorage.getItem("lange");
     }
 }
 </script>

@@ -1,16 +1,33 @@
 <template>
     <div class="mine">
-        <reactivities />
+        <div class="topHeader">
+            <div class="logoBox" ref="logoBox">
+                <img class="logo" src="@/assets/images/logo.png" alt="">
+                <p>{{lang === 'zh' ? '展会院校报名系统' : 'Fair & Event Registration System'}}</p>
+            </div>
+            <div class="right">
+                <router-link to="/message" class="message" ref="message">
+                    <img src="@/assets/images/message.png" alt="">
+                    <p></p>
+                </router-link>
+                <router-link to="/personInfo" class="personInfo" ref="personInfo">
+                    <img class="personPic" src="@/assets/images/personInfo.png" alt="">
+                </router-link>
+                <div to="/logoout" class="logoout" ref="logoout" @click="logoout">
+                    <img src="@/assets/images/logoout.png" alt="">
+                </div>
+            </div>
+        </div>
         <div class="content">
             <persons @change="setSty" v-if="asd" />
             <el-tabs @change="setSty" v-if="asd" type="card">
-                <el-tab-pane label="教育展" >
+                <el-tab-pane :label="lang=='zh' ? '教育展' : 'Education Fair'" >
                     <education />
                 </el-tab-pane>
-                <el-tab-pane label="专业展" >
+                <el-tab-pane :label="lang=='zh' ? '专项展' : 'Special Event'" >
                     <major />
                 </el-tab-pane>
-                <el-tab-pane label="我的活动" >
+                <el-tab-pane :label="lang=='zh' ? '我的活动' : 'My Event'" >
                     <minehd />
                 </el-tab-pane>
             </el-tabs>
@@ -29,17 +46,33 @@ export default {
     name: "mine",
     data() {
         return {
-            asd: true
+            asd: true,
+            lang: ""
         }
     },
     components: { Reactivities, Persons, Minehd, Major, Education },
     methods: {
+        // 退出
+        logoout () {
+            this.$confirm('确认退出吗?', '提示', {
+               confirmButtonText: '退出',
+               cancelButtonText: '取消',
+            }).then(() => {
+               sessionStorage.removeItem('user');
+               this.$router.push('/login');
+            }).catch((err) => {
+               console.error('loginErr', err);
+            });
+        },
         setSty () {
             this.$emit("transferSty", this.asd);
         },
         hdyl () {
 
         }
+    },
+    created () {
+        this.lang = sessionStorage.getItem("lange");
     }
 }
 </script>
@@ -50,6 +83,55 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    overflow-y: scroll;
+    .topHeader{
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        display: flex;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        left: 0;
+        .logoBox{
+            width: 85%;
+            height: 100%;
+            display: flex;
+        }
+        .right{
+            flex: 1;
+            height: 100%;
+            display: flex;
+            .message, .personInfo, .logoout{
+                width: 3rem;
+                height: 3rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                img{
+                    width: 2.8rem;
+                }
+                .personPic{
+                    width: 2rem;
+                }
+            }
+            .message{
+                position: relative;
+                border-bottom: none;
+                p{
+                    position: absolute;
+                    top: 16%;
+                    right: 16%;
+                    width: 6px;
+                    height: 6px;
+                    background: #CC0202;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
     .reactivities{
         width: 100%;
         height: 50px;
@@ -87,6 +169,7 @@ export default {
         flex: 1;
         border: 1px solid #006960;
         border-top: none;
+        
     }
     // .active{
     //     border: 1px solid #006960;

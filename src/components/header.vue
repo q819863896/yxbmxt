@@ -19,8 +19,8 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
-        width: 35%;
-        height: 80%;
+        width: 190px;
+        height: 50px;
     }
 }
 </style>

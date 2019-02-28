@@ -10,7 +10,7 @@ export default {
     name: 'App',
     methods: {
         showLang() {
-            var language = (navigator.browserLanguage || navigator.language).toLowerCase();
+            let language = (navigator.browserLanguage || navigator.language).toLowerCase();
             if(language.indexOf('zh')>-1){
                 console.log('中文');
                 sessionStorage.setItem("lange", "zh");
@@ -23,9 +23,9 @@ export default {
         }
     },
     created() {
-        showlogin().then(res => {
-            this.$router.push("/login");
-        })
+        // showlogin().then(res => {
+        //     this.$router.push("/login");
+        // })
         this.showLang();
     },
     beforeCreate () {

@@ -9,7 +9,7 @@ axios.defaults.validateStatus = status => {
 axios.interceptors.response.use(res => {
     console.log(res);
     if (res.status === 401) {
-        // sessionStorage.removeItem('user');
+        sessionStorage.removeItem('user');
         router.push({ path: '/login' });
         return res;
     } else {
@@ -21,7 +21,7 @@ axios.interceptors.response.use(res => {
 
 axios.defaults.baseURL = "http://10.150.117.151:8080";
 
-axios.defaults.timeout = 1000 * 5;
+axios.defaults.timeout = 1000 * 50;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -29,7 +29,7 @@ axios.defaults.headers.get['Content-Type'] = 'application/json';
 
 var _axios = axios.create({
     baseURL: axios.defaults.baseURL,
-    timeout: '7000',
+    timeout: '50000',
     headers: {
       "Content-Type": "application/json",
       "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
@@ -77,8 +77,33 @@ export const showbmxx = params => {
     return _axios.post('/campaign/showbmxx.do', stringify(params)).then(res => res.data);
 }
 
+// mine---我的活动--城市
+export const cityData = params => {
+    return _axios.post('/campaign/city.do', stringify(params)).then(res => res.data);
+}
+
+// 我的活动--按会议名称搜索
+export const byname = params => {
+    return _axios.post('/campaign/byname.do', stringify(params)).then(res => res.data);
+}
+
+// 我的活动--按----城市-----筛选
+export const filterss = params => {
+    return _axios.post('/campaign/filter.do', stringify(params)).then(res => res.data);
+}
+
 // 我的活动--活动详情
 export const bmxxjl = params => {
     return _axios.post('/campaign/bmxxjl.do', stringify(params)).then(res => res.data);
+}
+
+// 个人中心--验证初始密码
+export const updatepwd = params => {
+    return _axios.post('/login/updatepwd.do', stringify(params)).then(res => res.data);
+}
+
+// 个人中心--验证初始密码
+export const succeedpwd = params => {
+    return _axios.post('/login/succeedpwd.do', stringify(params)).then(res => res.data);
 }
 
