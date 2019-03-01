@@ -126,4 +126,8 @@ export const updateUser = params => {
     return _axios.post('/login/updateUser.do', stringify(params)).then(res => res.data);
 }
 
+// 消息通知--获取所有信息
+export const selectAll = params => {
+    return _axios.post('/notification/selectAll.do', stringify(params)).then(res => res.data);
+}
 

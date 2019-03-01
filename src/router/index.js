@@ -9,6 +9,7 @@ const Reactivities = () => import('../views/components/reactivities/reactivities
 
 const Mine = () => import('../views/components/mine/mine.vue');
 const Message = () => import('../views/components/message/message.vue');
+const Messagedetail = () => import('../views/components/message/messageDetail.vue');
 const PersonInfo = () => import('../views/components/personInfo/personInfo.vue');
 const Logoout = () => import('../views/components/logoout/logoout.vue');
 
@@ -56,6 +57,11 @@ export default new Router({
             path: '/signsuccess',
             name: 'Signsuccess',
             component: Signsuccess
+        },
+        {
+            path: '/messagedetail',
+            name: 'Messagedetail',
+            component: Messagedetail
         },
         {
             path: '/reactivities',

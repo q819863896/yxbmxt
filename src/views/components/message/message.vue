@@ -5,14 +5,14 @@
             <span class="fontR" ref="numtit">(<span>{{num}}</span>{{lang == 'zh' ? '条新信息' : 'new messages'}})</span>
         </div>
         <div class="wrap" v-if="showFlag">
-            <div class="item">
+            <div class="item" v-for="(item, index) in items" :key="index">
                 <div class="top">
-                    <p>您报名参加的活动审核已通过</p><p class="newaa">new</p>
+                    <p>{{item.title}}</p><p class="newaa" v-if="item.isRead==0">new</p>
                 </div>
                 <div class="center">
                     <p>
                         <em>{{lang == 'zh' ? '活动名称' : 'Activity Name'}}</em>
-                        <span>新湖三亚活动</span>
+                        <span>{{新湖三亚活动}}</span>
                     </p>
                     <p class="mr">
                         <em>{{lang == 'zh' ? '所在地区' : 'Location'}}</em>
@@ -27,83 +27,11 @@
                         <span>2019/09/20 10：00</span>
                     </p>
                 </div>
-                <p class="toDetail" @click="onetodetail">{{lang == 'zh' ? '详情' : 'details'}}></p>
+                <!-- <p class="toDetail" @click="onetodetail">{{lang == 'zh' ? '详情' : 'details'}}></p> -->
+                <router-link :to="{path:'/messagedetail', query:{cid:item.id}}"></router-link>
             </div>
 
-            <div class="item">
-                <div class="top">
-                    <p>您报名参加的活动审核已通过</p><p class="newaa">new</p>
-                </div>
-                <div class="center">
-                    <p>
-                        <em>活动名称：</em>
-                        <span>新湖三亚活动</span>
-                    </p>
-                    <p class="mr">
-                        <em>所在地区：</em>
-                        <span>新湖三亚活动</span>
-                    </p>
-                    <p class="mr">
-                        <em>活动地点：</em>
-                        <span>新湖三亚活动</span>
-                    </p>
-                    <p class="mr">
-                        <em>参会时间：</em>
-                        <span>2019/09/20 10：00</span>
-                    </p>
-                </div>
-                <p class="toDetail">详情></p>
-            </div>
-
-            <div class="item">
-                <div class="top">
-                    <p>您报名参加的活动审核已通过</p><p class="newaa">new</p>
-                </div>
-                <div class="center">
-                    <p>
-                        <em>活动名称：</em>
-                        <span>新湖三亚活动</span>
-                    </p>
-                    <p class="mr">
-                        <em>所在地区：</em>
-                        <span>新湖三亚活动</span>
-                    </p>
-                    <p class="mr">
-                        <em>活动地点：</em>
-                        <span>新湖三亚活动</span>
-                    </p>
-                    <p class="mr">
-                        <em>参会时间：</em>
-                        <span>2019/09/20 10：00</span>
-                    </p>
-                </div>
-                <p class="toDetail">详情></p>
-            </div>
-
-            <div class="item">
-                <div class="top">
-                    <p>您报名参加的活动审核已通过</p>
-                </div>
-                <div class="center">
-                    <p>
-                        <em>活动名称：</em>
-                        <span>新湖三亚活动</span>
-                    </p>
-                    <p class="mr">
-                        <em>所在地区：</em>
-                        <span>新湖三亚活动</span>
-                    </p>
-                    <p class="mr">
-                        <em>活动地点：</em>
-                        <span>新湖三亚活动</span>
-                    </p>
-                    <p class="mr">
-                        <em>参会时间：</em>
-                        <span>2019/09/20 10：00</span>
-                    </p>
-                </div>
-                <p class="toDetail">详情></p>
-            </div>
+            
         </div>
 
         <div class="detail" v-else>
@@ -136,23 +64,36 @@
 </template>
 
 <script>
+import { selectAll } from "../../../api/api.js";
 export default {
     name: "message",
     data() {
         return {
-            num: "3",
+            num: "",
             showFlag: true,
-            lang: ""
+            lang: "",
+            items: []
         }
     },
     methods: {
         onetodetail() {
             this.showFlag = false;
             this.$refs.numtit.style = 'display:none;'
+        },
+        getAllDate () {
+            selectAll().then((res) => {
+                if (res.statu == 1) {
+                    this.num = res.data.length;
+                    this.items = res.data;
+                }
+            })
         }
     },
     created () {
         this.lang = sessionStorage.getItem("lange");
+    },
+    mounted () {
+        this.getAllDate();
     }
 }
 </script>
