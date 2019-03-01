@@ -169,7 +169,8 @@ export default {
         flex: 1;
         border: 1px solid #006960;
         border-top: none;
-        
+        overflow: hidden;
+        overflow-y: auto;
     }
     // .active{
     //     border: 1px solid #006960;

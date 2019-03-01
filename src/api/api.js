@@ -71,6 +71,15 @@ export const checkemail = params => {
     return _axios.post('/regiset/checkemail.do', stringify(params)).then(res => res.data);
 }
 
+// mine---教育/专项--所有的数据
+export const campAll = params => {
+    return _axios.post('/campaign/campAll.do', stringify(params)).then(res => res.data);
+}
+
+// mine---教育/专项--搜索
+export const bynameandtypeCamp = params => {
+    return _axios.post('/campaign/bynameandtypeCamp.do', stringify(params)).then(res => res.data);
+}
 
 // mine---我的活动--所有的数据
 export const showbmxx = params => {
@@ -102,8 +111,19 @@ export const updatepwd = params => {
     return _axios.post('/login/updatepwd.do', stringify(params)).then(res => res.data);
 }
 
-// 个人中心--验证初始密码
+// 个人中心--修改密码
 export const succeedpwd = params => {
     return _axios.post('/login/succeedpwd.do', stringify(params)).then(res => res.data);
 }
+
+// 个人中心--修改个人信息//--获取
+export const selectUser = params => {
+    return _axios.post('/login/selectUser.do', stringify(params)).then(res => res.data);
+}
+
+// 个人中心--修改个人信息
+export const updateUser = params => {
+    return _axios.post('/login/updateUser.do', stringify(params)).then(res => res.data);
+}
+
 

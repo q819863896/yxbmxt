@@ -19,28 +19,31 @@
         </div> -->
         <div class="txt">
             <!-- <h4>账户信息</h4> -->
-            <h4></h4>
+            <h4>{{lang === "zh" ? "账户信息" : "Account Information"}}</h4>
         </div>
-        <el-form :model="pickPeo" ref="pickPeo" class="demo-ruleForm login-container"><!-- :rules="pickPeoRules" -->
+        <el-form :model="pickPeo" ref="pickPeo" :rules="lang === 'zh' ? zhpickPeoRules : enpickPeoRules" class="demo-ruleForm login-container">
             <div class="top">
-                <h4>对接人基本信息</h4>
+                <!-- 对接人基本信息 -->
+                <h4>{{lang === "zh" ? "对接人基本信息" : "Contact Person Information"}}</h4>
                 <div class="listDiv">
-                    <el-form-item label="姓名" prop="userName" style="position: relative">
-                        <i class="iconfont icon-zhongdian"></i>
-                        <el-input type="text" name="userName" v-model.trim="pickPeo.userName" placeholder="姓名">
+                    <el-form-item :label="lang === 'zh' ? '对接人基本信息' : 'Contact Person Information'" prop="userName" style="position: relative">
+                        <!-- <i class="iconfont icon-zhongdian"></i> -->
+                        <el-input type="text" v-model.trim="pickPeo.userName" :placeholder="lang === 'zh' ? '姓名' : 'Name'">
                         </el-input>
                     </el-form-item>
-                    <el-form-item label="职位" prop="position">
-                        <i class="iconfont icon-zhongdian"></i>
-                        <el-input type="text" name="position" v-model.trim="pickPeo.position" auto-complete="off" placeholder="职位"></el-input>
+                    <el-form-item :label="lang === 'zh' ? '职位' : 'Job Title'" prop="position">
+                        <!-- <i class="iconfont icon-zhongdian"></i> -->
+                        <el-input type="text" v-model.trim="pickPeo.position" auto-complete="off" :placeholder="lang === 'zh' ? '职位' : 'Job Title'"></el-input>
                     </el-form-item>
-                    <el-form-item label="电子邮箱" prop="email">
-                        <i class="iconfont icon-zhongdian"></i>
-                        <el-input type="text" name="email" v-model.trim="pickPeo.email" auto-complete="off" placeholder="电子邮箱"></el-input>
+                    <!-- 电子邮箱 -->
+                    <el-form-item :label="lang === 'zh' ? '电子邮箱' : 'Email'" prop="email">
+                        <!-- <i class="iconfont icon-zhongdian"></i> -->
+                        <el-input type="text" v-model.trim="pickPeo.email" auto-complete="off" :placeholder="lang === 'zh' ? '电子邮箱' : 'Email'"></el-input>
                     </el-form-item>
-                    <el-form-item label="国别" prop="country">
-                        <i class="iconfont icon-zhongdian"></i>
-                        <el-select v-model="value" placeholder="请选择">
+                    <!--  国别-->
+                    <el-form-item :label="lang === 'zh' ? '国别' : 'Country'" prop="country">
+                        <!-- <i class="iconfont icon-zhongdian"></i> -->
+                        <el-select v-model="value" :placeholder="lang === 'zh' ? '国别' : 'Country'">
                             <el-option
                                 v-for="item in options"
                                 :key="item.value"
@@ -49,30 +52,33 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="电话" prop="tel">
-                        <i class="iconfont icon-zhongdian"></i>
-                        <el-input type="text" name="tel" v-model.trim="pickPeo.tel" auto-complete="off" placeholder="电话"></el-input>
+                    <!-- 电话 -->
+                    <el-form-item :label="lang === 'zh' ? '电话' : 'Contact Number'" prop="tel">
+                        <!-- <i class="iconfont icon-zhongdian"></i> -->
+                        <el-input type="text" v-model.trim="pickPeo.tel" auto-complete="off" :placeholder="lang === 'zh' ? '电话' : 'Contact Number'"></el-input>
                     </el-form-item>
                     <!-- <el-form-item label="院校名称" prop="schoolName">
                         <el-input type="text" name="schoolName" v-model.trim="pickPeo.schoolName" auto-complete="off" placeholder="院校名称"></el-input>
                     </el-form-item> -->
-                    <el-form-item label="院校名称" prop="schoolName">
-                        <i class="iconfont icon-zhongdian"></i>
+                    <!-- 院校名称 -->
+                    <el-form-item :label="lang === 'zh' ? '院校名称' : 'Institution Name'" prop="schoolName">
+                        <!-- <i class="iconfont icon-zhongdian"></i> -->
                         <el-autocomplete
                             v-model="state4"
                             :fetch-suggestions="querySearchAsync"
-                            placeholder="请输入内容"
+                            :placeholder="lang === 'zh' ? '院校名称' : 'Institution Name'"
                             @select="handleSelect"
                         ></el-autocomplete>
                     </el-form-item>
                 </div>
             </div>
             <div class="mid">
-                <h4>其他信息</h4>
+                <h4>{{lang === 'zh' ? '其他信息' : 'Other Information'}}</h4>
                 <div class="listDiv">
-                    <el-form-item label="参考资料" prop="country">
-                        <i class="iconfont icon-zhongdian"></i>
-                        <el-select v-model="zlvalue" placeholder="请选择">
+                    <!-- 参考资料 -->
+                    <el-form-item :label="lang === 'zh' ? '参考资料' : 'Reference material'" prop="country">
+                        <!-- <i class="iconfont icon-zhongdian"></i> -->
+                        <el-select v-model="zlvalue" :placeholder="lang === 'zh' ? '请选择' : 'Please choose'">
                             <el-option
                                 v-for="item in zloptions"
                                 :key="item.value"
@@ -81,15 +87,18 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="是否讲座" prop="lecture"><br>
-                        <i class="iconfont icon-zhongdian"></i>
+                    <!-- 是否讲座 -->
+                    <el-form-item :label="lang === 'zh' ? '是否讲座' : 'Presentation Required'" prop="lecture"><br>
+                        <!-- <i class="iconfont icon-zhongdian"></i> -->
                         <el-checkbox v-model="checked"></el-checkbox>
                     </el-form-item>
                 </div>
             </div>
             <div class="under">
                 <div class="untop">
-                    <h4>附件信息</h4><span class="fontR">(备注：LOGO、PPT、其他)</span>
+                    <!-- 附件信息 -->
+                    <!-- 备注：LOGO、PPT、其他 -->
+                    <h4>{{lang === 'zh' ? '附件信息' : 'Attachment'}}</h4><span class="fontR">({{lang === 'zh' ? '备注：LOGO、PPT、其他' : 'e.g. LOGO、PPT、Others'}})</span>
                 </div>
                 <div class="upLoad">
                     <el-upload
@@ -103,14 +112,14 @@
                         :on-change="upChange"
                         :file-list="fileList">
                         <!-- :on-exceed="handleExceed" -->
-                        <el-button size="small" type="primary">点击上传</el-button>
+                        <el-button size="small" type="primary">{{lang === 'zh' ? '点击上传' : 'Upload Attachment'}}</el-button>
                     </el-upload>
                     <!-- 上传附件 -->
                 </div>
             </div>
             <div class="pickbtnGroup">
-                <div class="contue" @click="pickContueBtn">报名</div>
-                <div class="cancel" @click="pickCancelBtn">取消</div>
+                <div class="contue" @click="pickContueBtn">{{lang === 'zh' ? '报名' : 'Registration'}}</div>
+                <div class="cancel" @click="pickCancelBtn">{{lang === 'zh' ? '取消' : 'Cancel'}}</div>
             </div>
         </el-form>
     </div>
@@ -121,6 +130,7 @@ export default {
     name: "signUp",
     data() {
         return {
+            lang: "",
             pickPeo: {
                 userName: "",
                 position: "",
@@ -129,7 +139,7 @@ export default {
                 tel: "",
                 schoolName: "",
             },
-            pickPeoRules: {
+            zhpickPeoRules: {
                 userName: [
                     { required: true, message: '请输入姓名', trigger: 'blur' },
                 ],
@@ -150,6 +160,29 @@ export default {
                 ],
                 lecture: [
                     { required: true, message: '请选择', trigger: 'blur' },
+                ]
+            },
+            enpickPeoRules: {
+                userName: [
+                    { required: true, message: 'Please enter your name', trigger: 'blur' },
+                ],
+                position: [
+                    { required: true, message: 'Please enter the position', trigger: 'blur' },
+                ],
+                email: [
+                    { required: true, message: 'Please enter your e-mail', trigger: 'blur' },
+                ],
+                country: [
+                    { required: true, message: 'Please choose your country.', trigger: 'blur' },
+                ],
+                tel: [
+                    { required: true, message: 'Please enter the telephone number.', trigger: 'blur' },
+                ],
+                schoolName: [
+                    { required: true, message: 'Please enter the name of the institution.', trigger: 'blur' },
+                ],
+                lecture: [
+                    { required: true, message: 'Please choose', trigger: 'blur' },
                 ]
             },
             options: [
@@ -202,6 +235,9 @@ export default {
             state4: "",
             fileList: []
         }
+    },
+    created () {
+        this.lang = sessionStorage.getItem("lange");
     },
     mounted() {
       this.restaurants = this.loadAll();
@@ -317,18 +353,6 @@ export default {
                 flex: 1;
                 height: 100%;
                 display: flex;
-                // border-top: 1px solid #D8D8D8;
-                // .message{
-                //     border-left: 1px solid #D8D8D8;
-                // }
-                // .personInfo{
-                //     border-left: 1px solid #D8D8D8;
-                //     border-bottom: 1px solid #D8D8D8;
-                // }
-                // .logoout{
-                //     border-left: 1px solid #D8D8D8;
-                //     border-bottom: 1px solid #D8D8D8;
-                // }
             }
         }
         .txt{
@@ -392,19 +416,19 @@ export default {
                 width: 50%;
                 display: flex;
                 margin-left: 22%;
-                .contue{
-                    background: #006960;
-                    color: #ffffff;
-                }
+                height: 30px;
+                line-height: 30px;
                 div{
-                    width: 60px;
-                    height: 30px;
+                    padding: 0.5% 1% 5% 1%;
                     text-align: center;
-                    line-height: 30px;
                     margin-left: 30%;
                     border: 1px solid #006960;
                     border-radius: 4px;
                     cursor: pointer;
+                }
+                .contue{
+                    background: #006960;
+                    color: #ffffff;
                 }
             }
             .el-form-item{
@@ -419,7 +443,7 @@ export default {
             position: relative;
         }
         .el-form /deep/ .el-form-item__label{
-            margin-left: 4%;
+            // margin-left: 4%;
         }
         .el-form-item i{
             position: absolute;

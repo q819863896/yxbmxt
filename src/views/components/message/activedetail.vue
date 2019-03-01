@@ -4,7 +4,7 @@
         <div class="topHeader">
             <div class="logoBox" ref="logoBox">
                 <img class="logo" src="@/assets/images/logo.png" alt="">
-                <p>展会院校报名系统</p>
+                <p>{{lang === 'zh' ? '展会院校报名系统' : 'Fair & Event Registration System'}}</p>
             </div>
             <div class="right">
                 <router-link to="/message" class="message" ref="message">
@@ -19,75 +19,80 @@
                 </div>
             </div>
         </div>
-        <div class="wrap" v-for="(item, index) in items" :key="index">
+        <div class="wrap">
             <p class="back" @click="backBtn">
                 <i class="iconfont icon-fanhui"></i>
-                返回活动列表
+                {{lang === 'zh' ? '返回活动列表' : 'Returns the list of activities'}}
             </p>
             <div class="top">
                 <div class="left">
-                    <p class="txt" v-if="statu == 1">通过</p>
-                    <p class="txt" v-else>未通过</p>
+                    <p class="txt" v-if="statu == 1">{{lang === 'zh' ? '您报名参加的活动审核已通过' : 'Your event registration is approved'}}</p>
+                    <p class="txt" v-else>{{lang === 'zh' ? '您报名参加的活动审核未通过' : 'The activity you signed up for failed to pass the examination'}}</p>
                     <p class="fontC">2018/08/01</p>
                 </div>
                 <div class="right" @click="qxbmBtn">
-                    <p>取消报名</p>
+                    <p>{{lang === 'zh' ? '取消报名' : 'Cancel Registration'}}</p>
                 </div>
             </div>
-            <div class="itemDetail">
-                <p>
-                    <span>活动名称</span>：<span>{{item.name}}</span>
-                </p>
-                <p>
-                    <span>所在地点</span>：<span>{{item.city}}</span>
-                </p>
-                <p>
-                    <span>活动地点</span>：<span>新湖财富</span>
-                </p>
-                <p>
-                    <span>详细地址</span>：<span>海淀区上地三街</span>
-                </p>
-                <p>
-                    <span>活动时间</span>：<span>2018/09/01 13:00:00-2018/09/03 14:00:00</span>
-                </p>
-            </div>
-            <!-- 活动介绍 -->
-            <div class="activejs">
-                <div class="tit">活动介绍</div>
-                <p>凯撒活动和零六年初就你就回答不垃圾啊后来还得零八陆军海军飒飒的八十八立刻就会三零搭载了阿贾克斯登陆报错京哈的沙龙不支持</p>
-            </div>
-            <!-- 活动对接人 -->
-            <div class="activedjr">
-                <div class="tit">活动对接人</div>
-                <div class="djrDiv">
+            <div class="details">
+                <div class="itemDetail">
                     <p>
-                        <span>姓名</span><em>不是</em>：<span>李女士</span>
+                        <span>{{lang === 'zh' ? '活动名称' : 'Event Name'}}</span>：<span>{{this.items.name}}</span>
                     </p>
                     <p>
-                        <span>联系电话</span>：
+                        <span>{{lang === 'zh' ? '所在地点' : 'Location'}}</span>：<span>{{this.items.city}}</span>
                     </p>
-                    <div class="pic">
-                        <img src="@/assets/images/success.png" alt="">
+                    <p>
+                        <span>{{lang === 'zh' ? '活动地点' : 'Venue Address'}}</span>：<span>{{this.items.area}}</span>
+                    </p>
+                    <p>
+                        <span>{{lang === 'zh' ? '详细地址' : 'Address Details'}}</span>：<span>{{this.items.building}}</span>
+                    </p>
+                    <p>
+                        <span>{{lang === 'zh' ? '活动时间' : 'Event Time'}}</span>：<span>{{this.items.startDate}}-{{this.items.endDate}}</span>
+                    </p>
+                </div>
+                <!-- 活动介绍 -->
+                <div class="activejs">
+                    <div class="tit">{{lang === 'zh' ? '活动介绍' : 'Activity introduction'}}</div>
+                    <p>{{this.items.remark}}</p>
+                </div>
+                <!-- 活动对接人 -->
+                <div class="activedjr">
+                    <div class="tit">{{lang === 'zh' ? '活动对接人' : 'Activity docker'}}</div>
+                    <div class="djrDiv">
+                        <p>
+                            <!-- 姓名 -->
+                            <span>{{lang === 'zh' ? '姓名' : 'Full name'}}</span><em>不是</em>：<span>{{this.items.activityLeader}}</span>
+                        </p>
+                        <p>
+                            <!-- 联系电话 -->
+                            <span>{{lang === 'zh' ? '联系电话' : 'Contact number'}}</span>：<span>{{this.items.activityLeaderPhone}}</span>
+                        </p>
+                        <div class="pic">
+                            <img src="@/assets/images/success.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <!-- 会场图片 -->
+                <div class="picwrap">
+                    <div class="tit">{{lang === 'zh' ? '会场图片' : 'Venue photos'}}</div>
+                    <div class="picDiv">
+                        <div class="picT">
+                            <img src="@/assets/images/success.png" alt="">
+                        </div>
+                        <div class="picT">
+                            <img src="@/assets/images/success.png" alt="">
+                        </div>
+                        <div class="picT">
+                            <img src="@/assets/images/success.png" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- 会场图片 -->
-            <div class="picwrap">
-                <div class="tit">会场图片</div>
-                <div class="picDiv">
-                    <div class="picT">
-                        <img src="@/assets/images/success.png" alt="">
-                    </div>
-                    <div class="picT">
-                        <img src="@/assets/images/success.png" alt="">
-                    </div>
-                    <div class="picT">
-                        <img src="@/assets/images/success.png" alt="">
-                    </div>
-                </div>
-            </div>
+            
             <div class="bmBtn right">
-                <p @click="bmBtn">立即报名</p>
+                <p @click="bmBtn">{{lang === 'zh' ? '立即报名' : 'Sign Up Now'}}</p>
             </div>
         </div>
     </div>
@@ -194,7 +199,7 @@ export default {
     .wrap{
         padding: 2%;
         .back{
-            width: 15%;
+            width: 45%;
             cursor: pointer;
             padding: 1% 0 3% 0;
         }
@@ -205,7 +210,7 @@ export default {
             padding-bottom: 2%;
             border-bottom: 1px solid #D8DDE6;
             .left{
-                width: 90%;
+                width: 75%;
                 .txt{
                     font-weight: 500;
                 }
@@ -221,7 +226,6 @@ export default {
                 line-height: 30px;
                 cursor: pointer;
                 p{
-                    width: 90px;
                     text-align: center;
                     display: flex;
                     justify-content: center;
@@ -286,6 +290,7 @@ export default {
         .tit{
             width: 100%;
             background: #F3F6F9;
+            padding: 1.5% 0;
         }
     }
 }

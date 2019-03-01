@@ -207,7 +207,7 @@ export default {
             };
             allSchool(params).then((res) => {
                 if (res.statu == 1) {
-                    this.schoolNameOptions = res.data
+                    this.schoolNameOptions = res.data;
                 } else {
                     this.$message({
                         message: res.message,
@@ -216,11 +216,9 @@ export default {
                 }
             })
         },
-
         checkSchool (val) {
             this.ruleForm.schoolName = val;
         },
-    
         // 获取所有国家
         getCountry () {
             this.countryOptions = [];
@@ -352,7 +350,7 @@ export default {
             }
         }
         button{
-            width: 10%;
+            // width: 10%;
             display: flex;
             justify-content: center;
             align-items: center;

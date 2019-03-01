@@ -25,10 +25,9 @@
                     </el-option>
                 </el-select>
             </div>
-            <div class="ddpic">
+            <div class="ddpic" v-loading="loading">
                     <dl v-for="(item,index) in items" :key="index" >
-                        <!-- activedetail -->
-                        <router-link :to="{path:'/activedetail',query:{cid:item.id}}">
+                        <router-link :to="{path:'/activedetail', query:{cid:item.id}}">
                             <dt>
                                 <img src="@/assets/images/success.png" alt="">
                             </dt>
@@ -103,7 +102,8 @@ export default {
             // 所有地区
             allAreaOptions: [],
             allAreaValue: "",
-            items: []
+            items: [],
+            loading: false
         }
     },
     methods: {
@@ -176,11 +176,9 @@ export default {
 <style lang="scss" scoped>
 .minehd{
     width: 100%;
-    height: 1000px;
+    // height: 600px;
     list-style: none;
     padding: 2%;
-    overflow: hidden;
-    overflow-y: auto;
     .search{
         width: 33.3%;
         position: relative;

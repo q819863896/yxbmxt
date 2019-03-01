@@ -28,27 +28,28 @@
                     :placeholder="lang=='zh' ? '选择日期' : 'Date'">
                 </el-date-picker>
             </div>
-            <div class="ddpic">
-                <dl>
-                    <dt>
-                        <img src="@/assets/images/success.png" alt="">
-                    </dt>
-                    <dd>
-                        <p class="fontBlue">新湖三亚活动</p>
-                        <p>
-                            <i class="iconfont icon-dizhi"></i>
-                            <span>北京市朝阳区</span>
-                        </p>
-                        <p>
-                            <i class="iconfont icon-shijian"></i>
-                            <span>北京市朝阳区</span>
-                        </p>
-                        <p>
-                            <i class="iconfont icon-dizhi1"></i>
-                            <span>北京市朝阳区</span>
-                        </p>
-                        <p @click="toactive">跳转</p>
-                    </dd>
+            <div class="ddpic" v-loading="loading">
+                <dl v-for="(item, index) in items" :key="index">
+                    <router-link :to="{path:'/activedetail', query:{cid:item.id}}">
+                        <dt>
+                            <img src="@/assets/images/success.png" alt="">
+                        </dt>
+                        <dd>
+                            <p class="fontBlue">{{item.name}}</p>
+                            <p>
+                                <i class="iconfont icon-dizhi"></i>
+                                <span>{{item.area}}</span>
+                            </p>
+                            <p>
+                                <i class="iconfont icon-shijian"></i>
+                                <span>{{item.startDate}}</span>-<span>{{item.endDate}}</span>
+                            </p>
+                            <p>
+                                <i class="iconfont icon-dizhi1"></i>
+                                <span>{{item.building}}</span>
+                            </p>
+                        </dd>
+                    </router-link>
                 </dl>
             </div>
         </div>
@@ -56,6 +57,7 @@
 </template>
 
 <script>
+import { campAll } from "../../../api/api.js";
 export default {
     name: "major",
     data() {
@@ -81,16 +83,33 @@ export default {
                 }
             ],
             value: "",
-            value4: ""
+            value4: "",
+            items: [],
+            loading: false
         }
     },
     methods: {
         toactive() {
             this.$router.push("/activedetail");
+        },
+        getDate () {
+            let params = {
+                type: "专项"
+            };
+            campAll(params).then((res) => {
+                this.loading = true;
+                if (res.statu == 1) {
+                    this.loading = false;
+                    this.items = res.data;
+                }
+            })
         }
     },
     created () {
         this.lang = sessionStorage.getItem("lange");
+    },
+    mounted () {
+        this.getDate();
     }
 }
 </script>
@@ -124,26 +143,30 @@ export default {
         dl{
             display: flex;
             padding: 2% 0;
-            dt{
-                width: 128px;
-                height: 128px;
-                img{
-                    width: 100%;
-                    height: 100%;
+            a{
+                display: inline-block;
+                width: 100%;
+                display: flex;
+                dt{
+                    width: 128px;
+                    height: 128px;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
-            }
-            dd{
-                margin-left: 8px;
-                p{
-                    line-height: 30px;
-                }
-                .fontBlue{
-                    color: #0070D2;
-                    font-size: 14px;
+                dd{
+                    margin-left: 8px;
+                    p{
+                        line-height: 30px;
+                    }
+                    .fontBlue{
+                        color: #0070D2;
+                        font-size: 14px;
+                    }
                 }
             }
         }
-        
     }
 }
 </style>

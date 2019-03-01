@@ -109,6 +109,8 @@ export default {
         width: 100%;
         flex: 1;
         margin-top: 50px;
+        overflow: hidden;
+        overflow-y: auto;
     }
 }
 </style>

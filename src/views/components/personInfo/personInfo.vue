@@ -10,31 +10,31 @@
                     <div class="item">
                         <div class="itemDiv">
                             <i class="iconfont icon-zhongdian fontR"></i><span>{{lang == 'zh' ? '姓名' : 'Username'}}</span>
-                            <p class="itemClass">Juna</p>
+                            <p class="itemClass">{{this.perInf.user.name}}</p>
                         </div>
                         <div class="itemDiv">
                             <i class="iconfont icon-zhongdian fontR"></i><span>{{lang == 'zh' ? '电子邮箱' : 'Email'}}</span>
-                            <p class="itemClass">lynag@cloudcc.com</p>
+                            <p class="itemClass">{{this.perInf.user.email}}</p>
                         </div>
                         <div class="itemDiv">
                             <!-- 电话 -->
                             <i class="iconfont icon-zhongdian fontR"></i><span>{{lang == 'zh' ? '电话' : 'Contact Number'}}</span>
-                            <p class="itemClass">15910001000</p>
+                            <p class="itemClass">{{this.perInf.user.phone}}</p>
                         </div>
                         <div class="itemDiv">
                             <!-- 国别 -->
                             <i class="iconfont icon-zhongdian fontR"></i><span>{{lang == 'zh' ? '国别' : 'Country'}}</span>
-                            <p class="itemClass">澳大利亚</p>
+                            <p class="itemClass">{{this.perInf.country.name}}</p>
                         </div>
                         <div class="itemDiv">
                             <!-- 院校名称 -->
                             <i class="iconfont icon-zhongdian fontR"></i><span>{{lang == 'zh' ? '院校名称' : 'Institution Name'}}</span>
-                            <p class="itemClass">Yong lyv</p>
+                            <p class="itemClass">{{this.perInf.school.name}}</p>
                         </div>
                         <div class="itemDiv">
                             <!-- 职位 -->
                             <i class="iconfont icon-zhongdian fontR"></i><span>{{lang == 'zh' ? '职位' : 'Job Title'}}</span>
-                            <p class="itemClass">老师</p>
+                            <p class="itemClass">{{this.perInf.user.post}}</p>
                         </div>
                         <!-- 更新资料 -->
                         <div class="chageInfoBtn" @click="chageInfoBtn">{{lang == 'zh' ? '更新资料' : 'Information Updates'}}</div>
@@ -42,28 +42,48 @@
                 </div>
                 <el-form :model="detailedInfo" :rules="detailedInfoRules" ref="detailedInfo" class="demo-ruleForm login-container" v-else>
                     <el-form-item :label="lang == 'zh' ? '姓名' : 'Username'" prop="userName" style="position: relative">
-                        <el-input type="text" name="userName" v-model.trim="detailedInfo.userName" :placeholder="lang == 'zh' ? '姓名' : 'Username'">
+                        <el-input type="text" v-model.trim="detailedInfo.userName" :placeholder="lang == 'zh' ? '姓名' : 'Username'">
                         </el-input>
                     </el-form-item>
                     <!-- 电子邮箱 -->
                     <el-form-item :label="lang == 'zh' ? '电子邮箱' : 'Email'" prop="email">
-                        <el-input type="email" name="email" v-model.trim="detailedInfo.email" auto-complete="off" :placeholder="lang == 'zh' ? '电子邮箱' : 'Email'"></el-input>
+                        <el-input type="email" v-model.trim="detailedInfo.email" auto-complete="off" :placeholder="lang == 'zh' ? '电子邮箱' : 'Email'" :disabled="true"></el-input>
                     </el-form-item>
                     <!-- 电话 -->
                     <el-form-item :label="lang == 'zh' ? '电话' : 'Contact Number'" prop="tel">
-                        <el-input type="text" name="tel" v-model.trim="detailedInfo.tel" auto-complete="off" :placeholder="lang == 'zh' ? '电话' : 'Contact Number'"></el-input>
+                        <el-input type="text" v-model.trim="detailedInfo.tel" auto-complete="off" :placeholder="lang == 'zh' ? '电话' : 'Contact Number'"></el-input>
                     </el-form-item>
                     <!-- 国别 -->
-                    <el-form-item :label="lang == 'zh' ? '国别' : 'Country'" prop="country">
+                    <!-- <el-form-item :label="lang == 'zh' ? '国别' : 'Country'" prop="country">
                         <el-input type="text" name="country" v-model.trim="detailedInfo.country" auto-complete="off" :placeholder="lang == 'zh' ? '国别' : 'Country'"></el-input>
+                    </el-form-item> -->
+                    <el-form-item :label="lang === 'zh' ? '国别' : 'Country'" prop="country">
+                        <el-select v-model="detailedInfo.country" placeholder="" @change="checkCountry">
+                            <el-option
+                                v-for="item in countryOptions"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                            </el-option>
+                        </el-select>
                     </el-form-item>
                     <!-- 院校名称 -->
-                    <el-form-item :label="lang == 'zh' ? '院校名称' : 'Institution Name'" prop="schoolName">
+                    <!-- <el-form-item :label="lang == 'zh' ? '院校名称' : 'Institution Name'" prop="schoolName">
                         <el-input type="text" name="schoolName" v-model.trim="detailedInfo.schoolName" auto-complete="off" :placeholder="lang == 'zh' ? '院校名称' : 'Institution Name'"></el-input>
+                    </el-form-item> -->
+                        <el-form-item :label="lang === 'zh' ? '院校名称' : 'Institution Name'" prop="schoolName" class="schoolName">
+                        <el-select v-model="detailedInfo.schoolName" placeholder="" @change="checkSchool">
+                            <el-option
+                                v-for="item in schoolNameOptions"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                            </el-option>
+                        </el-select>
                     </el-form-item>
                     <!-- 职位 -->
                     <el-form-item :label="lang == 'zh' ? '职位' : 'Job Title'" prop="position">
-                        <el-input type="text" name="position" v-model.trim="detailedInfo.position" auto-complete="off" :placeholder="lang == 'zh' ? '职位' : 'Job Title'"></el-input>
+                        <el-input type="text" v-model.trim="detailedInfo.position" auto-complete="off" :placeholder="lang == 'zh' ? '职位' : 'Job Title'"></el-input>
                     </el-form-item>
                     <div class="btnGroup">
                         <!-- 取消 -->
@@ -75,27 +95,22 @@
             </div>
             <!--  -->
             <div class="right">
-                <!-- <h4>修改密码</h4> -->
                 <h4>{{lang == 'zh' ? '修改密码' : 'Change Password'}}</h4>
                 <el-form :model="changePass" :rules="lang == 'zh' ? zhchangePassRules : enchangePassRules" ref="changePass" class="demo-ruleForm login-container">
-                    <!-- 初始密码 -->
                     <el-form-item :label="lang == 'zh' ? '初始密码' : 'Original Password'" prop="csPass" style="position: relative">
-                        <el-input type="password" name="csPass" v-model.trim="changePass.csPass" :placeholder="lang == 'zh' ? '初始密码' : 'Original Password'" @blur="checkPass">
+                        <el-input type="password" v-model.trim="changePass.csPass" :placeholder="lang == 'zh' ? '初始密码' : 'Original Password'" @blur="checkPass">
                         </el-input>
                         <p v-if="notPass" class="notPass">{{lang == 'zh' ? '与原密码不一致' : 'Inconsistent with the original password'}}</p>
                     </el-form-item>
-                    <!-- 新密码 -->
                     <el-form-item :label="lang == 'zh' ? '新密码' : 'New Password'" prop="newPass">
-                        <el-input type="password" name="newPass" v-model.trim="changePass.newPass" auto-complete="off" :placeholder="lang == 'zh' ? '新密码' : 'New Password'" @blur="checkNewPass"></el-input>
+                        <el-input type="password" v-model.trim="changePass.newPass" auto-complete="off" :placeholder="lang == 'zh' ? '新密码' : 'New Password'" @blur="checkNewPass"></el-input>
                         <p v-if="newcs" class="notPass">{{lang == 'zh' ? '新密码与初始密码一致' : 'The new password is identical to the original password'}}</p>
                         <p v-if="sixss" class="notPass">{{lang == 'zh' ? '只能输入6-20个字母、数字、下划线' : 'Only 6-20 letters, numbers, underscores can be entered'}}</p>
                     </el-form-item>
-                    <!-- 再次输入密码 -->
                     <el-form-item :label="lang == 'zh' ? '再次输入密码' : 'Enter Password Again'" prop="aginPass">
-                        <el-input type="password" name="aginPass" v-model.trim="changePass.aginPass" auto-complete="off" :placeholder="lang == 'zh' ? '再次输入密码' : 'Enter Password Again'" @blur="checkAgin"></el-input>
+                        <el-input type="password" v-model.trim="changePass.aginPass" auto-complete="off" :placeholder="lang == 'zh' ? '再次输入密码' : 'Enter Password Again'" @blur="checkAgin"></el-input>
                         <p v-if="againTit" class="notPass">{{lang == 'zh' ? '修改密码两次不一致' : 'Two inconsistencies in password modification'}}</p>
                     </el-form-item>
-                    <!-- 更改密码 -->
                     <el-button class="changePassBtn" @click.native.prevent="changePassBtn" :disabled="disFlag">{{lang == 'zh' ? '更改密码' : 'Change Password'}}</el-button>
                 </el-form>
             </div>
@@ -104,12 +119,13 @@
 </template>
 
 <script>
-import { updatepwd, succeedpwd } from "../../../api/api.js";
+import { updatepwd, succeedpwd, selectUser, allCountry, allSchool, updateUser } from "../../../api/api.js";
 export default {
     name: "personInfo",
     data() {
         return {
             lang: "",
+            perInf: {},
             pickPeo: {
                 userName: "",
                 email: "",
@@ -121,9 +137,6 @@ export default {
             pickPeoRules: {
                 userName: [
                     { required: true, message: '请输入姓名', trigger: 'blur' },
-                ],
-                email: [
-                    { required: true, message: '请输入电子邮箱', trigger: 'blur' },
                 ],
                 tel: [
                     { required: true, message: '请输入电话', trigger: 'blur' },
@@ -141,44 +154,8 @@ export default {
                     { required: true, message: '请输入选择', trigger: 'blur' },
                 ]
             },
-            options: [
-                {
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                },
-            ],
-            value: "",
-            zloptions: [
-                {
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                },
-            ],
-            zlvalue: "",
+            countryOptions: [],     // 国别
+            schoolNameOptions: [],  // 院校名称
             checked: false,
             zsflag: true,
             detailedInfo: {
@@ -187,14 +164,14 @@ export default {
                 tel: "",
                 country: "",
                 schoolName: "",
-                position: ""
+                position: "",
+                schoolId: "",
+                id: "",
+                countryId: ""
             },
             detailedInfoRules: {
                 userName: [
                     { required: true, message: '请输入姓名', trigger: 'blur' }
-                ],
-                email: [
-                    { required: true, message: '请输入电子邮箱', trigger: 'blur' }
                 ],
                 tel: [
                     { required: true, message: '请输入电话', trigger: 'blur' }
@@ -244,11 +221,86 @@ export default {
         }
     },
     methods: {
+        // 获取个人信息
+        getPerInfo () {
+            selectUser().then((res) => {
+                this.perInf = res.data;
+                this.detailedInfo.userName = res.data.user.name;
+                this.detailedInfo.email = res.data.user.email;
+                this.detailedInfo.tel = res.data.user.phone;
+                this.detailedInfo.country = res.data.country.name;
+                this.detailedInfo.schoolName = res.data.school.name;
+                this.detailedInfo.position = res.data.user.post;
+                this.detailedInfo.schoolId = res.data.school.id;
+                this.detailedInfo.id = res.data.user.id;
+                this.detailedInfo.countryId = res.data.country.id;
+            })
+        },
         chageInfoBtn () {
             this.zsflag = false;
+            allCountry().then((res) => {
+                this.countryOptions = res.data;
+            })
+            let params = {
+                countryid: this.detailedInfo.countryId
+            };
+            allSchool(params).then((res) => {
+                if (res.statu == 1) {
+                    this.schoolNameOptions = res.data;
+                } else {
+                    this.$message({
+                        message: res.message,
+                        type: 'warning'
+                    });
+                }
+            })
+        },
+        // 选择国别
+        checkCountry (val) {
+            let params = {
+                countryid: val
+            };
+            allSchool(params).then((res) => {
+                if (res.statu == 1) {
+                    this.schoolNameOptions = res.data;
+                } else {
+                    this.$message({
+                        message: res.message,
+                        type: 'warning'
+                    });
+                }
+            })
+        },
+        checkSchool (val) {
+            console.log(val);
+            this.detailedInfo.schoolId = val;
         },
         cancelBtn () {
             this.zsflag = true;
+        },
+        continueBtn () {
+            let params = {
+                name: this.detailedInfo.userName,
+                phone: this.detailedInfo.tel,
+                schoolId: this.detailedInfo.schoolId,
+                post: this.detailedInfo.position,
+                id: this.detailedInfo.id
+            };
+            updateUser(params).then((res) => {
+                if (res.statu == 1) {
+                    if (this.lang == "zh") {
+                        this.$message({
+                            message: res.message,
+                            type: 'success'
+                        });
+                    } else {
+                        this.$message({
+                            message: 'Successful revision!',
+                            type: 'success'
+                        });
+                    }
+                }
+            })
         },
         checkPass (e) {
             let params = {
@@ -270,12 +322,13 @@ export default {
         },
         // 验证新老密码
         checkNewPass (e) {
-            let patrn = /^(\w){6,20}$/;
-            if (!patrn.exec(e.target.value)) {
-                // return false;
-                this.sixss = true;
-            } else {
-                this.sixss = false;
+            // let patrn = /^(\w){6,20}$/;
+            // if (!patrn.exec(e.target.value)) {
+            //     // return false;
+            //     this.sixss = true;
+            //     this.newcs = true;
+            // } else {
+            //     this.sixss = false;
                 if (e.target.value == this.changePass.csPass) {
                     this.newcs = true;
                     this.disFlag = true;
@@ -283,17 +336,18 @@ export default {
                     this.newcs = false;
                     this.disFlag = false;
                 }
-            }
+            // }
             
         },
         // 验证第二次
         checkAgin (e) {
+            console.log(e.target.value);
             if (e.target.value !== this.changePass.newPass) {
                 this.againTit = true;
-                this.disFlag = false;
+                this.disFlag = true;
             } else {
                 this.againTit = false;
-                this.disFlag = true;
+                this.disFlag = false;
             }
         },
         // 验证再次输入的密码
@@ -301,28 +355,68 @@ export default {
             let params = {
                 password: this.changePass.newPass
             };
-            if (this.changePass.aginPass == "") {
-
-            }
-            if (this.changePass.newPass != this.changePass.aginPass) {
-                this.$message.error('修改密码两次不一致');
+            if (this.lang == "zh") {
+                if (this.changePass.csPass == "" && this.changePass.newPass == "" && this.changePass.aginPass == "") {
+                    this.$message.error('请输入修改密码');
+                } else if (this.changePass.aginPass == "") {
+                    this.$message.error('请输入修改密码');
+                } else {
+                    let patrn = /^(\w){6,20}$/;
+                    if (!patrn.exec(this.changePass.aginPass)) {
+                        this.sixss = true;
+                    } else {
+                        this.sixss = false;
+                        succeedpwd(params).then((res) => {
+                            this.$message({
+                                message: '密码修改成功',
+                                type: 'success'
+                            });
+                        })
+                    }
+                }
             } else {
-                succeedpwd(params).then((res) => {
-                    this.$message({
-                        message: '密码修改成功',
-                        type: 'success'
-                    });
-                })
+                if (this.changePass.csPass == "" && this.changePass.newPass == "" && this.changePass.aginPass == "") {
+                    this.$message.error('Please enter a modified password');
+                } else if (this.changePass.aginPass == "") {
+                    this.$message.error('Please enter a modified password');
+                } else {
+                    let patrn = /^(\w){6,20}$/;
+                    if (!patrn.exec(this.changePass.aginPass)) {
+                        this.sixss = true;
+                    } else {
+                        this.sixss = false;
+                        succeedpwd(params).then((res) => {
+                            this.$message({
+                                message: 'Successful password modification',
+                                type: 'success'
+                            });
+                        })
+                    }
+                }
             }
-        },
-        cancelBtn() {},
-        
-        continueBtn () {
+            // if (this.changePass.aginPass == "") {
 
-        }
+            // }
+            // if (this.changePass.newPass != this.changePass.aginPass && this.changePass.newPass == "") {
+            //     // this.$message.error('修改密码两次不一致');
+            //     this.disFlag = false;
+            //     return false;
+            // } else {
+                
+            // }
+            // succeedpwd(params).then((res) => {
+            //         this.$message({
+            //             message: '密码修改成功',
+            //             type: 'success'
+            //         });
+            //     })
+        },
     },
     created () {
         this.lang = sessionStorage.getItem("lange");
+    },
+    mounted () {
+        this.getPerInfo();
     }
 }
 </script>
@@ -374,7 +468,13 @@ export default {
                     }
                     
                 }
-                
+            }
+            .el-form{
+                .el-form-item{
+                    .el-select{
+                        width: 100%;
+                    }
+                }
             }
             .demo-ruleForm{
                 .btnGroup{
