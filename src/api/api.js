@@ -6,10 +6,45 @@ axios.defaults.validateStatus = status => {
 }
 
 // 接口错误拦截
+// axios.interceptors.response.use(res => {
+//     console.log(res.statu)
+//     if (res.status === 401) {
+//        sessionStorage.removeItem('changeUser');
+//     //    sessionStorage.removeItem('token');
+//         router.push({path: '/login'});
+//        return res;
+//     } else {
+//        return res;
+//     }
+//  }, err => {
+//     return Promise.reject(err)
+//  })
+// axios.interceptors.response.use(
+//     response => {
+//       if(response.data.code === 500) {
+//         if (response.data.msg === '请先登录') {
+//           router.push({
+//             path: '/login',
+//             query: {redirect: router.history.current.fullPath}
+//           })
+//           //如果需要可以在这里将 vuex 里的 user 改为空对象
+//         }
+//       //显示错误信息
+//       return Promise.reject(response.data)
+//     }
+//     if(response.data.code === 0){
+//       return response;
+//     }
+// }, error => {
+//     //显示错误信息
+//     return Promise.reject(error.response.data)
+// });
+
+
 axios.interceptors.response.use(res => {
     console.log(res);
-    if (res.status === 401) {
-        sessionStorage.removeItem('user');
+    if (res.statu === 401) {
+        sessionStorage.removeItem('changeUser');
         router.push({ path: '/login' });
         return res;
     } else {
@@ -19,7 +54,9 @@ axios.interceptors.response.use(res => {
     return Promise.reject(err);
 });
 
-axios.defaults.baseURL = "http://10.150.117.151:8080";
+axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
+// axios.defaults.baseURL = "http://10.150.116.209:8080";     // 李元吉
+// axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-portal-2.1.1.RELEASE";  // 测试
 
 axios.defaults.timeout = 1000 * 50;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -31,11 +68,11 @@ var _axios = axios.create({
     baseURL: axios.defaults.baseURL,
     timeout: '50000',
     headers: {
-      "Content-Type": "application/json",
-      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
     },
     withCredentials:true
-  })
+})
 
 // 登录
 export const Login = params => {
@@ -129,5 +166,25 @@ export const updateUser = params => {
 // 消息通知--获取所有信息
 export const selectAll = params => {
     return _axios.post('/notification/selectAll.do', stringify(params)).then(res => res.data);
+}
+
+// 消息通知--未读状态
+export const updateCount = params => {
+    return _axios.post('/notification/updateCount.do', stringify(params)).then(res => res.data);
+}
+
+// 消息通知--已读状态
+export const updateStatu = params => {
+    return _axios.post('/notification/updateStatu.do', stringify(params)).then(res => res.data);
+}
+
+// 消息通知--教育/专项---地区
+export const bydateandaddressCamp = params => {
+    return _axios.post('/campaign/bydateandaddressCamp.do', stringify(params)).then(res => res.data);
+}
+
+// 消息通知--教育/专项---月份
+export const bydate = params => {
+    return _axios.post('/campaign/bydate.do', stringify(params)).then(res => res.data);
 }
 

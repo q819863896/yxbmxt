@@ -5,6 +5,7 @@ import App from './App';
 import router from './router/index.js';
 import "./assets/style/style.css";
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+// import VueHighcharts from "highcharts";
 // import i18n from './lang'
 // import VueI18n from "vue-i18n";
 
@@ -21,18 +22,20 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(ElementUI, { locale });
 Vue.use(router);
-
-// Vue.use(ElementUI, {
-//     size: 'medium', // set element-ui default size
-//     i18n: (key, value) => i18n.t(key, value)
-// })
+// Vue.use(VueHighcharts);
 
 router.beforeEach((to, from, next) => {
-    if (to.path == "/login") {
-        sessionStorage.removeItem("lange");
+    const nextRoute = ['/login']
+ 
+    let user = sessionStorage.getItem('changeUser')
+    if (nextRoute.indexOf(to.path) !== -1) {
+       next()
+    } else if (!user && to.path !== '/login') {
+       next({path: '/login'})
+    } else {
+       next()
     }
-    next();
-});
+ })
 
 /* eslint-disable no-new */
 new Vue({

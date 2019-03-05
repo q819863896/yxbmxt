@@ -26,42 +26,66 @@ export default new Router({
         {
             path: '/',
             name: 'Login',
-            component: Login
+            component: Login,
+            meta:{
+                requireLogin:true,
+            },
         },
         {
             path: '/login',
             name: 'Login',
-            component: Login
+            component: Login,
+            meta:{
+                requireLogin:true,
+            },
         },
         {
             path: '/register',
             name: 'Register',
-            component: Register
+            component: Register,
+            meta:{
+                requireLogin:true,
+            },
         },
         {
             path: '/retrievepass',
             name: 'Retrievepass',
-            component: Retrievepass
+            component: Retrievepass,
+            meta:{
+                requireLogin:true,
+            },
         },
         {
             path: '/mine',
             name: 'Mine',
             component: Mine,
+            meta:{
+                requireLogin:true,
+            },
         },
         {
             path: '/signup',
             name: 'Signup',
-            component: Signup
+            component: Signup,
+            meta:{
+                requireLogin:true,
+            },
         },
         {
             path: '/signsuccess',
             name: 'Signsuccess',
-            component: Signsuccess
+            component: Signsuccess,
+            meta:{
+                requireLogin:true,
+            },
         },
         {
             path: '/messagedetail',
             name: 'Messagedetail',
-            component: Messagedetail
+            component: Messagedetail,
+            meta:{
+                requireLogin:true,
+            },
         },
         {
             path: '/reactivities',
@@ -89,11 +113,17 @@ export default new Router({
             path: '/activedetail',
             name: 'Activedetail',
             component: Activedetail,
+            meta:{
+                requireLogin:true,
+            },
         },
         {
             path: '/404',
             name: '404',
             component: NotFound,
+            meta:{
+                requireLogin:true,
+            },
         },
         {
            path: '*',

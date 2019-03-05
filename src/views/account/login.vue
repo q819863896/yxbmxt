@@ -69,25 +69,25 @@ export default {
 
         },
         handleSubmit2() {
-            this.$refs.loginInfo.validate((valid) => {
-                if (valid) {
-                    let params = {
-                        name: this.loginInfo.account,
-                        password: this.loginInfo.password
-                    };
-                    Login(params).then((res) => {
-                        if (res.message == "密码正确") {
-                            localStorage.setItem("userName", this.loginInfo.account);
+            // this.$refs.loginInfo.validate((valid) => {
+            //     if (valid) {
+            //         let params = {
+            //             name: this.loginInfo.account,
+            //             password: this.loginInfo.password
+            //         };
+            //         Login(params).then((res) => {
+            //             if (res.message == "密码正确") {
+            //                 sessionStorage.setItem("changeUser", this.loginInfo.account);
                             this.$router.push("/mine");
-                        } else {
-                            this.$message({
-                                message: res.message,
-                                type: 'warning'
-                            });
-                        }
-                    })
-                }
-            })
+            //             } else {
+            //                 this.$message({
+            //                     message: res.message,
+            //                     type: 'warning'
+            //                 });
+            //             }
+            //         })
+            //     }
+            // })
         },
         forget() {
             console.log("asd");

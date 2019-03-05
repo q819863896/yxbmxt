@@ -3,13 +3,13 @@
         <!-- <topheader /> -->
         <div class="topHeader">
             <div class="logoBox" ref="logoBox">
-                <img class="logo" src="@/assets/images/logo.png" alt="">
+                <img class="logo" src="@/assets/images/logo.png" alt="" @click="toMine">
                 <p>{{lang === 'zh' ? '展会院校报名系统' : 'Fair & Event Registration System'}}</p>
             </div>
             <div class="right">
                 <router-link to="/message" class="message" ref="message">
                     <img src="@/assets/images/message.png" alt="">
-                    <p></p>
+                    <p v-if="this.count != 0"></p>
                 </router-link>
                 <router-link to="/personInfo" class="personInfo" ref="personInfo">
                     <img class="personPic" src="@/assets/images/personInfo.png" alt="">
@@ -100,7 +100,7 @@
 
 <script>
 import topheader from "../reactivities/reactivities.vue";
-import { bmxxjl } from "../../../api/api.js";
+import { bmxxjl, updateCount } from "../../../api/api.js";
 export default {
     name: "activedetail",
     components: { topheader },
@@ -108,21 +108,40 @@ export default {
         return {
             lang: "",
             statu: "",
-            items: []
+            items: [],
+            count: ""
         }
     },
     methods: {
+        toMine() {
+            this.$router.push("/mine");
+        },
         // 退出
         logoout () {
-            this.$confirm('确认退出吗?', '提示', {
-               confirmButtonText: '退出',
-               cancelButtonText: '取消',
-            }).then(() => {
-               sessionStorage.removeItem('user');
-               this.$router.push('/login');
-            }).catch((err) => {
-               console.error('loginErr', err);
-            });
+            if (this.lang == 'zh') {
+                this.$confirm('确认退出吗?', '提示', {
+                    confirmButtonText: '退出',
+                    cancelButtonText: '取消',
+                }).then(() => {
+                    sessionStorage.removeItem('changeUser');
+                    sessionStorage.removeItem("lange");
+                    this.$router.push('/login');
+                }).catch((err) => {
+                    console.error('loginErr', err);
+                });
+            } else {
+                this.$confirm('Confirmation of withdrawal?', 'Tips', {
+                    confirmButtonText: 'Sign out',
+                    cancelButtonText: 'Cancel',
+                }).then(() => {
+                    sessionStorage.removeItem('changeUser');
+                    sessionStorage.removeItem("lange");
+                    this.$router.push('/login');
+                }).catch((err) => {
+                    console.error('loginErr', err);
+                });
+            }
+            
         },
         qxbmBtn () {
             this.$router.go(-1);
@@ -144,6 +163,11 @@ export default {
                 this.items = res.data.campaign;
             }
         })
+    },
+    mounted () {
+        updateCount().then((res) => {
+            this.count = res.data;
+        })
     }
 }
 </script>
@@ -162,6 +186,12 @@ export default {
             width: 85%;
             height: 100%;
             display: flex;
+            .logo{
+                cursor: pointer;
+            }
+            p{
+                margin-top: 3px;
+            }
         }
         .right{
             flex: 1;

@@ -2,39 +2,39 @@
     <div class="message">
         <div class="title">
             <p>{{lang == 'zh' ? '消息通知' : 'Notification Message'}}</p>
-            <span class="fontR" ref="numtit">(<span>{{num}}</span>{{lang == 'zh' ? '条新信息' : 'new messages'}})</span>
+            <span v-if="this.count != 0" class="fontR" ref="numtit">(<span>{{num}}</span>{{lang == 'zh' ? '条新信息' : 'new messages'}})</span>
         </div>
         <div class="wrap" v-if="showFlag">
-            <div class="item" v-for="(item, index) in items" :key="index">
+            <router-link class="item" v-for="(item, index) in items" :key="index" :to="{path:'/messagedetail', query:{nid:item.Campaign.id}}">
                 <div class="top">
                     <p>{{item.title}}</p><p class="newaa" v-if="item.isRead==0">new</p>
                 </div>
                 <div class="center">
                     <p>
                         <em>{{lang == 'zh' ? '活动名称' : 'Activity Name'}}</em>
-                        <span>{{新湖三亚活动}}</span>
+                        <span>{{item.Campaign.name}}</span>
                     </p>
                     <p class="mr">
                         <em>{{lang == 'zh' ? '所在地区' : 'Location'}}</em>
-                        <span>新湖三亚活动</span>
+                        <span>{{item.Campaign.city}}</span>
                     </p>
                     <p class="mr">
                         <em>{{lang == 'zh' ? '活动地点' : 'Place of activity'}}</em>
-                        <span>新湖三亚活动</span>
+                        <span>{{item.Campaign.address}}</span>
                     </p>
                     <p class="mr">
                         <em>{{lang == 'zh' ? '参会时间' : 'Attendance time'}}</em>
-                        <span>2019/09/20 10：00</span>
+                        <span>{{item.Campaign.startDate}}</span>
                     </p>
                 </div>
                 <!-- <p class="toDetail" @click="onetodetail">{{lang == 'zh' ? '详情' : 'details'}}></p> -->
                 <router-link :to="{path:'/messagedetail', query:{cid:item.id}}"></router-link>
-            </div>
+            </router-link>
 
             
         </div>
 
-        <div class="detail" v-else>
+        <!-- <div class="detail" v-else>
             <p>
                 您报名参加的活动审核已通过
             </p>
@@ -59,16 +59,17 @@
             <p class="mt">
                 <span>审核备注：</span> <span></span>
             </p>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
-import { selectAll } from "../../../api/api.js";
+import { selectAll, updateStatu, updateCount } from "../../../api/api.js";
 export default {
     name: "message",
     data() {
         return {
+            count: "",
             num: "",
             showFlag: true,
             lang: "",
@@ -83,9 +84,14 @@ export default {
         getAllDate () {
             selectAll().then((res) => {
                 if (res.statu == 1) {
-                    this.num = res.data.length;
                     this.items = res.data;
                 }
+            })
+        },
+        getstatu () {
+            updateCount().then((res) => {
+                this.count = res.data;
+                this.num = res.data;
             })
         }
     },
@@ -94,6 +100,7 @@ export default {
     },
     mounted () {
         this.getAllDate();
+        this.getstatu();
     }
 }
 </script>
@@ -124,6 +131,9 @@ export default {
         border-radius: 4px;
         padding: 3% 2%;
         .item{
+            display: inline-block;
+            width: 100%;
+            height: 100%;
             padding: 2% 0 3% 0;
             border-bottom: 1px dashed #D8DDE6;
             .top{
@@ -145,6 +155,9 @@ export default {
             .center{
                 display: flex;
                 padding: 1% 0;
+                p{
+                    flex: 1;
+                }
                 .mr{
                     margin-left: 12px;
                 }

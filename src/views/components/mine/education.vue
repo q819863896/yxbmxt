@@ -6,22 +6,23 @@
         </div>
         <div class="mid">
             <div class="sstj">
-                <el-select v-model="value" :placeholder="lang=='zh' ? '按创建时间排序' : 'Sort by Creation Time'">
+                <!-- <el-select v-model="createvalue" :placeholder="lang=='zh' ? '按创建时间排序' : 'Sort by Creation Time'" @change="timeType">
                     <el-option
-                        v-for="item in options"
+                        v-for="item in createTimeOptions"
                         :key="item.value"
                         :label="item.label"
                         :value="item.value">
                     </el-option>
                 </el-select>
-                <el-select v-model="value" :placeholder="lang=='zh' ? '所有地区' : 'Location'">
+                <el-select v-model="allAreaValue" :placeholder="lang=='zh' ? '所有地区' : 'Location'" @change="areaType">
+                    <el-option value="allDq" :label="lang=='zh' ? '全部' : 'All Areas'">全部</el-option>
                     <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
+                        v-for="item in allAreaOptions"
+                        :key="item.id"
+                        :label="item.city"
+                        :value="item.city">
                     </el-option>
-                </el-select>
+                </el-select> -->
                 <el-date-picker
                     v-model="birthdayName"
                     format="yyyy-MM" 
@@ -61,32 +62,26 @@
 </template>
 
 <script>
-import { campAll, bynameandtypeCamp } from "../../../api/api.js";
+import { campAll, bynameandtypeCamp, cityData, filterss, bydateandaddressCamp, bydate } from "../../../api/api.js";
 export default {
     name: "major",
     data() {
         return {
             lang: "",
             name: "",
-            options: [
+            createTimeOptions: [
                 {
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
+                    value: '2',
+                    label: '按开始时间排序-Sort by start time'
+                },
+                {
+                    value: '3',
+                    label: '按结束时间排序-Sort by end time'
                 }
             ],
-            value: "",
+            allAreaOptions: [],
+            createvalue: "",
+            allAreaValue: "",
             birthdayName: "",
             items: [],
             loading: false
@@ -109,6 +104,13 @@ export default {
         },
         changeMonth (val) {
             console.log(val);
+            let params = {
+                type: "教育",
+                date: val
+            };
+            bydate(params).then((res) => {
+                console.log(res);
+            })
         },
         getDate () {
             let params = {
@@ -120,8 +122,43 @@ export default {
                     this.loading = false;
                     this.items = res.data;
                 }
-                
             })
+        },
+        getCity () {
+            cityData().then((res) => {
+                this.allAreaOptions = res.data;
+            })
+        },
+        // 按时间
+        timeType(val) {
+            this.items = [];
+            console.log(this.allAreaValue);
+            this.createvalue = val;
+            let params = {
+                date: this.createvalue,
+                address: this.allAreaValue,
+                type: "教育"
+            };
+            bydateandaddressCamp(params).then((res) => {
+                this.items = res.data;
+            })
+        },
+        // 按地区筛选
+        areaType(val) {
+            if (val == "allDq") {
+                this.getDate();
+            } else {
+                this.allAreaValue = val;
+                this.items = [];
+                let params = {
+                    date: this.createvalue,
+                    address: this.allAreaValue,
+                    type: "教育"
+                };
+                bydateandaddressCamp(params).then((res) => {
+                    this.items = res.data
+                })
+            }
         }
     },
     created () {
@@ -129,6 +166,7 @@ export default {
     },
     mounted () {
         this.getDate();
+        this.getCity();
     }
 }
 </script>

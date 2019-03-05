@@ -2,12 +2,12 @@
     <div class="singsuccess">
         <div class="topHeader" ref="tophead">
             <div class="logoBox" ref="logoBox">
-                <img class="logo" src="@/assets/images/logo.png" alt="">
+                <img class="logo" src="@/assets/images/logo.png" alt="" @click="toMine">
             </div>
             <div class="right">
                 <router-link to="/message" class="message" ref="message">
                     <img src="@/assets/images/message.png" alt="">
-                    <p></p>
+                    <p v-if="this.count != 0"></p>
                 </router-link>
                 <router-link to="/personInfo" class="personInfo" ref="personInfo">
                     <img class="personPic" src="@/assets/images/personInfo.png" alt="">
@@ -20,23 +20,67 @@
         <div class="wrap">
             <p class="back" @click="back">
                 <i class="iconfont icon-fanhui"></i>
-                返回我的活动
+                {{lang === 'zh' ? '返回我的活动' : 'Return to my activities'}}
             </p>
             <p class="pic">
                 <img src="@/assets/images/success.png" alt="">
             </p>
-            <p class="txt">您已成功提交此次的报名信息，我们将在7个工作日内完成处理，请耐心等待。</p>
+            <!-- 您已成功提交此次的报名信息，我们将在7个工作日内完成处理，请耐心等待。 -->
+            <p class="txt">{{lang === 'zh' ? '您已成功提交此次的报名信息，我们将在7个工作日内完成处理，请耐心等待。' : 'You have successfully submitted the registration information. We will complete the processing within 7 working days. Please wait patiently.'}}</p>
         </div>
     </div>
 </template>
 
 <script>
+import { updateCount } from "../../../api/api.js";
 export default {
     name: "singsuccess",
-    methods: {
-        back() {
-            this.$router.push("/mine")
+    data() {
+        return {
+            lang: "",
+            count: ""
         }
+    },
+    methods: {
+        toMine () {
+            this.$router.push("/mine");
+        },
+        back() {
+            this.$router.push("/mine");
+        },
+        logoout () {
+            if (this.lang == 'zh') {
+                this.$confirm('确认退出吗?', '提示', {
+                    confirmButtonText: '退出',
+                    cancelButtonText: '取消',
+                }).then(() => {
+                    sessionStorage.removeItem('changeUser');
+                    sessionStorage.removeItem("lange");
+                    this.$router.push('/login');
+                }).catch((err) => {
+                    console.error('loginErr', err);
+                });
+            } else {
+                this.$confirm('Confirmation of withdrawal?', 'Tips', {
+                    confirmButtonText: 'Sign out',
+                    cancelButtonText: 'Cancel',
+                }).then(() => {
+                    sessionStorage.removeItem('changeUser');
+                    sessionStorage.removeItem("lange");
+                    this.$router.push('/login');
+                }).catch((err) => {
+                    console.error('loginErr', err);
+                });
+            }
+        },
+    },
+    created() {
+        this.lang = sessionStorage.getItem("lange");
+    },
+    mounted () {
+        updateCount().then((res) => {
+            this.count = res.data;
+        })
     }
 }
 </script>
@@ -51,6 +95,12 @@ export default {
         display: flex;
         .logoBox{
             width: 85%;
+            .logo{
+                cursor: pointer;
+            }
+            p{
+                margin-top: 3px;
+            }
         }
         .right{
             flex: 1;

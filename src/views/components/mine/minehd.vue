@@ -17,6 +17,7 @@
                 </el-select>
                 <!-- 所有地区 -->
                 <el-select v-model="allAreaValue" :placeholder="lang=='zh' ? '所有地区' : 'Location'" @change="areaType">
+                    <el-option value="allDq" :label="lang=='zh' ? '全部' : 'All Areas'">全部</el-option>
                     <el-option
                         v-for="item in allAreaOptions"
                         :key="item.id"
@@ -86,16 +87,12 @@ export default {
             // 创建时间
             creatTimeOptions: [
                 {
-                    value: '1',
-                    label: '按创建时间排序'
-                },
-                {
                     value: '2',
-                    label: '按开始时间排序'
+                    label: '按开始时间排序-Sort by start time'
                 },
                 {
                     value: '3',
-                    label: '按结束时间排序'
+                    label: '按结束时间排序-Sort by end time'
                 }
             ],
             creatTimeValue: "",
@@ -130,25 +127,33 @@ export default {
         },
         // 按地区
         areaType(val) {
-            this.allAreaValue = val;
-            console.log(this.creatTimeValue);
-            this.items = [];
-            let params = {
-                date: this.creatTimeValue,
-                address: this.allAreaValue
-            };
-            filterss(params).then((res) => {
-                this.items = res.data
-            })
+            if (val == "allDq") {
+                this.getAllData();
+            } else {
+                this.allAreaValue = val;
+                this.items = [];
+                let params = {
+                    date: this.creatTimeValue,
+                    address: this.allAreaValue
+                };
+                filterss(params).then((res) => {
+                    this.items = res.data
+                })
+            }
         },
         getAllData() {
-            let params = {
-                lang: this.lang
-            };
-            showbmxx(params).then((res) => {
+            // let Socket = new WebSocket(baseURL+'/campaign/showbmxx.do', [protocol]);
+            // console.log(Socket.readyState());
+            // let params = {
+            //     lang: this.lang
+            // };
+            showbmxx().then((res) => {
+                this.loading = true;
                 if(res.statu == 1) {
                     this.items = res.data;
+                    this.loading = false;
                 } else {
+                    this.loading = false;
                     this.$message({
                         message: res.message,
                         type: 'warning'
@@ -159,7 +164,7 @@ export default {
         getCity() {
             cityData().then((res) => {
                 // console.log(res);
-                this.allAreaOptions = res.data
+                this.allAreaOptions = res.data;
             })
         }
     },
