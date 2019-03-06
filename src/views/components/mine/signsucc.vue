@@ -12,7 +12,7 @@
                 <router-link to="/personInfo" class="personInfo" ref="personInfo">
                     <img class="personPic" src="@/assets/images/personInfo.png" alt="">
                 </router-link>
-                <div to="/logoout" class="logoout" ref="logoout" @click.native.prevent="logoout">
+                <div to="/logoout" class="logoout" ref="logoout" @click="logoout">
                     <img src="@/assets/images/logoout.png" alt="">
                 </div>
             </div>
@@ -101,9 +101,13 @@ export default {
     .topHeader{
         width: 100%;
         height: 50px;
+        line-height: 50px;
         display: flex;
+        justify-content: space-between;
         .logoBox{
             width: 85%;
+            height: 100%;
+            display: flex;
             .logo{
                 cursor: pointer;
             }
@@ -115,13 +119,31 @@ export default {
             flex: 1;
             height: 100%;
             display: flex;
-            .personInfo{
+            .message, .personInfo, .logoout{
+                width: 3rem;
+                height: 3rem;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                cursor: pointer;
                 img{
-                    width: 80%;
-                    height: 70%;
+                    width: 2.8rem;
+                }
+                .personPic{
+                    width: 2rem;
+                }
+            }
+            .message{
+                position: relative;
+                border-bottom: none;
+                p{
+                    position: absolute;
+                    top: 16%;
+                    right: 16%;
+                    width: 6px;
+                    height: 6px;
+                    background: #CC0202;
+                    border-radius: 50%;
                 }
             }
         }

@@ -26,12 +26,16 @@
             </p>
             <div class="top">
                 <div class="left">
-                    <p class="txt" v-if="statu == 1">{{lang === 'zh' ? '您报名参加的活动审核已通过' : 'Your event registration is approved'}}</p>
-                    <p class="txt" v-else>{{lang === 'zh' ? '您报名参加的活动审核未通过' : 'The activity you signed up for failed to pass the examination'}}</p>
+                    <!-- 审批通过 -->
+                    <p class="txt" v-if="statu == '审批通过'">{{lang === 'zh' ? '您报名参加的活动审核已通过' : 'Your event registration is approved'}}</p>
+                    <!-- 审批拒绝 -->
+                    <p class="txt" v-if="statu == '审批拒绝'">{{lang === 'zh' ? '您报名参加的活动审批拒绝' : 'Rejection of Approval for the Activities You Enrolled in'}}</p>
+                    <!-- 审批中 -->
+                    <p class="txt" v-if="statu == '审批中'">{{lang === 'zh' ? '您报名参加的活动审批中' : 'During the examination and approval of the activities you signed up for'}}</p>
                     <p class="fontC">2018/08/01</p>
                 </div>
                 <div class="right" @click="qxbmBtn">
-                    <p>{{lang === 'zh' ? '取消报名' : 'Cancel Registration'}}</p>
+                    <p v-if="statu == '审批通过'">{{lang === 'zh' ? '取消报名' : 'Cancel Registration'}}</p>
                 </div>
             </div>
             <div class="details">
@@ -100,10 +104,15 @@
             :visible.sync="centerDialogVisible"
             width="30%"
             center>
-            <span>需要注意的是内容是默认不居中的</span>
+            <el-input
+                type="textarea"
+                :rows="4"
+                :placeholder="lang === 'zh' ? '请输入原因' : 'Please enter the reason'"
+                v-model="textarea">
+            </el-input>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="centerDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+                <el-button @click="centerDialogVisible = false">{{lang === 'zh' ? '取 消' : 'Cancel'}}</el-button>
+                <el-button type="primary" @click="cancenlBtn">{{lang === 'zh' ? '确 定' : 'Sure'}}</el-button>
             </span>
         </el-dialog>
     </div>
@@ -112,7 +121,7 @@
 
 <script>
 import topheader from "../reactivities/reactivities.vue";
-import { xxjl, bmxxjl, updateCount, loginOut } from "../../../api/api.js";
+import { xxjl, bmxxjl, updateCount, loginOut, cancelSign } from "../../../api/api.js";
 export default {
     name: "activedetail",
     components: { topheader },
@@ -122,7 +131,9 @@ export default {
             statu: "",
             items: {},
             count: "",
-            centerDialogVisible: false
+            reid: "",
+            centerDialogVisible: false,
+            textarea: ""
         }
     },
     methods: {
@@ -165,8 +176,36 @@ export default {
             }
         },
         qxbmBtn () {
-            // this.$router.go(-1);
             this.centerDialogVisible = true;
+            // let params = {
+            //     reasonwhy: this.textarea
+            // };
+            // cancenlBtn()
+        },
+        cancenlBtn () {
+            if (this.textarea != "") {
+                let params = {
+                    reasonwhy: this.textarea,
+                    eid: this.reid
+                };
+                cancelSign(params).then((res) => {
+                    if (res.statu == 1) {
+                        if (this.lang == "zh") {
+                            this.$message.success('取消成功！');
+                            this.centerDialogVisible = false;
+                        } else {
+                            this.$message.success('Cancel successfully!');
+                            this.centerDialogVisible = false;
+                        }
+                    }
+                })
+            } else {
+                if (this.lang == "zh") {
+                    this.$message.error('请输入原因');
+                } else {
+                    this.$message.error('Please enter the reason');
+                }
+            }
         },
         backBtn() {
             this.$router.go(-1);
@@ -187,9 +226,11 @@ export default {
         let params = this.$route.query;
         console.log(params);
         bmxxjl(params).then((res) => {
-            // if (res.)
-            this.statu = res.data.statu;
-            this.items = res.data.campaign;
+            if (res.statu == 1) {
+                this.statu = res.data.isApproval;
+                this.reid = res.data.eid;
+                this.items = res.data.campaign;
+            }
         })
     }
 }

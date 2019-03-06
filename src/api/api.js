@@ -148,6 +148,11 @@ export const bmxxjl = params => {
     return _axios.post('/campaign/bmxxjl.do', stringify(params)).then(res => res.data);
 }
 
+// 我的活动--活动详情---取消报名
+export const cancelSign = params => {
+    return _axios.post('/enrolment/cancel.do', stringify(params)).then(res => res.data);
+}
+
 // 个人中心--验证初始密码
 export const updatepwd = params => {
     return _axios.post('/login/updatepwd.do', stringify(params)).then(res => res.data);
