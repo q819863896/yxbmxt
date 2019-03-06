@@ -40,7 +40,8 @@
                         <div class="chageInfoBtn" @click="chageInfoBtn">{{lang == 'zh' ? '更新资料' : 'Information Updates'}}</div>
                     </div>
                 </div>
-                <el-form :model="detailedInfo" :rules="detailedInfoRules" ref="detailedInfo" class="demo-ruleForm login-container" v-else>
+                <!-- detailedInfoRules -->
+                <el-form :model="detailedInfo" :rules="lang == 'zh' ? detailedInfoRules : enchangePassRules" ref="detailedInfo" class="demo-ruleForm login-container" v-else>
                     <el-form-item :label="lang == 'zh' ? '姓名' : 'Username'" prop="userName" style="position: relative">
                         <el-input type="text" v-model.trim="detailedInfo.userName" :placeholder="lang == 'zh' ? '姓名' : 'Username'">
                         </el-input>
@@ -169,7 +170,7 @@ export default {
                 id: "",
                 countryId: ""
             },
-            detailedInfoRules: {
+            zhdetailedInfoRules: {
                 userName: [
                     { required: true, message: '请输入姓名', trigger: 'blur' }
                 ],
@@ -184,6 +185,23 @@ export default {
                 ],
                 position: [
                     { required: true, message: '请输入职位', trigger: 'blur' }
+                ]
+            },
+            endetailedInfoRules: {
+                userName: [
+                    { required: true, message: 'Please enter your name.', trigger: 'blur' }
+                ],
+                tel: [
+                    { required: true, message: 'Please enter the telephone number.', trigger: 'blur' }
+                ],
+                country: [
+                    { required: true, message: 'Please enter country', trigger: 'blur' }
+                ],
+                schoolName: [
+                    { required: true, message: 'Please enter the name of the institution.', trigger: 'blur' }
+                ],
+                position: [
+                    { required: true, message: 'Please enter the position', trigger: 'blur' }
                 ]
             },
             changePass: {
@@ -341,8 +359,8 @@ export default {
         },
         // 验证第二次
         checkAgin (e) {
-            console.log(e.target.value);
-            if (e.target.value !== this.changePass.newPass) {
+            console.log(this.changePass.csPass);
+            if (e.target.value !== this.changePass.newPass && e.target.value != this.changePass.csPass) {
                 this.againTit = true;
                 this.disFlag = true;
             } else {

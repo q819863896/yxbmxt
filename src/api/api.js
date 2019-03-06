@@ -79,6 +79,11 @@ export const Login = params => {
     return _axios.post('/login/log.do', stringify(params)).then(res => res.data);
 }
 
+// 登出
+export const loginOut = params => {
+    return _axios.post('/login/loginOut.do', stringify(params)).then(res => res.data);
+}
+
 export const showlogin = params => {
     return _axios.post('/login/show.do', stringify(params)).then(res => res.data);
 }
@@ -188,3 +193,7 @@ export const bydate = params => {
     return _axios.post('/campaign/bydate.do', stringify(params)).then(res => res.data);
 }
 
+// 消息通知--教育/专项---详情
+export const xxjl = params => {
+    return _axios.post('/campaign/xxjl.do', stringify(params)).then(res => res.data);
+}

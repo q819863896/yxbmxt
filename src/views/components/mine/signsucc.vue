@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { updateCount } from "../../../api/api.js";
+import { updateCount, loginOut } from "../../../api/api.js";
 export default {
     name: "singsuccess",
     data() {
@@ -54,9 +54,14 @@ export default {
                     confirmButtonText: '退出',
                     cancelButtonText: '取消',
                 }).then(() => {
-                    sessionStorage.removeItem('changeUser');
-                    sessionStorage.removeItem("lange");
-                    this.$router.push('/login');
+                    loginOut().then((res => {
+                        if (res.statu == 1) {
+                            sessionStorage.removeItem('changeUser');
+                            sessionStorage.removeItem("lange");
+                            this.$router.push('/login');
+                        }
+                    }))
+                    
                 }).catch((err) => {
                     console.error('loginErr', err);
                 });
@@ -65,9 +70,13 @@ export default {
                     confirmButtonText: 'Sign out',
                     cancelButtonText: 'Cancel',
                 }).then(() => {
-                    sessionStorage.removeItem('changeUser');
-                    sessionStorage.removeItem("lange");
-                    this.$router.push('/login');
+                    loginOut().then((res => {
+                        if (res.statu == 1) {
+                            sessionStorage.removeItem('changeUser');
+                            sessionStorage.removeItem("lange");
+                            this.$router.push('/login');
+                        }
+                    }))
                 }).catch((err) => {
                     console.error('loginErr', err);
                 });

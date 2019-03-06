@@ -14,7 +14,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 import "./assets/iconfont/iconfont.css";
 
-import store from "./store";
+// import store from "./store";
+import store from "./vuex/index.js";
 // import $ from "jquery";
 
 Vue.config.productionTip = false;
@@ -24,18 +25,18 @@ Vue.use(ElementUI, { locale });
 Vue.use(router);
 // Vue.use(VueHighcharts);
 
-router.beforeEach((to, from, next) => {
-    const nextRoute = ['/login']
+// router.beforeEach((to, from, next) => {
+//     const nextRoute = ['/login']
  
-    let user = sessionStorage.getItem('changeUser')
-    if (nextRoute.indexOf(to.path) !== -1) {
-       next()
-    } else if (!user && to.path !== '/login') {
-       next({path: '/login'})
-    } else {
-       next()
-    }
- })
+//     let user = sessionStorage.getItem('changeUser')
+//     if (nextRoute.indexOf(to.path) !== -1) {
+//        next()
+//     } else if (!user && to.path !== '/login') {
+//        next({path: '/login'})
+//     } else {
+//        next()
+//     }
+//  })
 
 /* eslint-disable no-new */
 new Vue({

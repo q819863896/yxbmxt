@@ -24,16 +24,16 @@
                 <i class="iconfont icon-fanhui"></i>
                 {{lang === 'zh' ? '返回活动列表' : 'Returns the list of activities'}}
             </p>
-            <!-- <div class="top">
+            <div class="top">
                 <div class="left">
                     <p class="txt" v-if="statu == 1">{{lang === 'zh' ? '您报名参加的活动审核已通过' : 'Your event registration is approved'}}</p>
                     <p class="txt" v-else>{{lang === 'zh' ? '您报名参加的活动审核未通过' : 'The activity you signed up for failed to pass the examination'}}</p>
                     <p class="fontC">2018/08/01</p>
                 </div>
-                <div class="right" @click="bmBtn">
-                    <p>{{lang === 'zh' ? '立即报名' : 'Cancel Registration'}}</p>
+                <div class="right" @click="qxbmBtn">
+                    <p>{{lang === 'zh' ? '取消报名' : 'Cancel Registration'}}</p>
                 </div>
-            </div> -->
+            </div>
             <div class="details">
                 <div class="itemDetail">
                     <p>
@@ -186,9 +186,10 @@ export default {
 
         let params = this.$route.query;
         console.log(params);
-        xxjl(params).then((res) => {
+        bmxxjl(params).then((res) => {
+            // if (res.)
             this.statu = res.data.statu;
-            this.items = res.data;
+            this.items = res.data.campaign;
         })
     }
 }

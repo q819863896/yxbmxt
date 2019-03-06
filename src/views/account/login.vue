@@ -17,6 +17,7 @@
             <el-form-item style="width:100%;">
                 <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">{{lang === "zh" ? "登录" : "Sign In"}}</el-button>
             </el-form-item>
+            <p @click="toDemo">vuex</p>
             <el-form-item class="forget" @click.native.prevent="forget">{{lang === "zh" ? "忘记密码" : "Forget Password"}}</el-form-item>
             <!-- <div class="ordiv">
                 <div class="left">- - - - - - - - - - </div>
@@ -69,25 +70,26 @@ export default {
 
         },
         handleSubmit2() {
-            // this.$refs.loginInfo.validate((valid) => {
-            //     if (valid) {
-            //         let params = {
-            //             name: this.loginInfo.account,
-            //             password: this.loginInfo.password
-            //         };
-            //         Login(params).then((res) => {
-            //             if (res.message == "密码正确") {
-            //                 sessionStorage.setItem("changeUser", this.loginInfo.account);
+            console.log("sad");
+            this.$refs.loginInfo.validate((valid) => {
+                if (valid) {
+                    let params = {
+                        name: this.loginInfo.account,
+                        password: this.loginInfo.password
+                    };
+                    Login(params).then((res) => {
+                        if (res.message == "密码正确") {
+                            sessionStorage.setItem("changeUser", this.loginInfo.account);
                             this.$router.push("/mine");
-            //             } else {
-            //                 this.$message({
-            //                     message: res.message,
-            //                     type: 'warning'
-            //                 });
-            //             }
-            //         })
-            //     }
-            // })
+                        } else {
+                            this.$message({
+                                message: res.message,
+                                type: 'warning'
+                            });
+                        }
+                    })
+                }
+            })
         },
         forget() {
             console.log("asd");
@@ -95,6 +97,9 @@ export default {
         },
         quick(){
             this.$router.push("/register")
+        },
+        toDemo () {
+            this.$router.push("/studys");
         }
     },
     created() {

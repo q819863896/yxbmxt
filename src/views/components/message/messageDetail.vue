@@ -48,7 +48,7 @@ export default {
     },
     mounted(){
         updateStatu(this.$route.query).then((res) => {
-
+            
         })
     }
 }

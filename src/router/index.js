@@ -16,8 +16,11 @@ const Logoout = () => import('../views/components/logoout/logoout.vue');
 const Signup = () => import('../views/components/mine/signUp.vue'); // 报名
 const Signsuccess = () => import('../views/components/mine/signsucc.vue');  // 报名成功
 const Activedetail = () => import('../views/components/message/activedetail.vue');  // 活动详情
+const Myactivedetail = () => import('../views/components/message/myactiveDetail.vue');  // 活动详情
 
 const NotFound = () => import('../views/exception/404.vue');
+
+const studys = () => import('../views/components/lx/demo.vue');
 
 Vue.use(Router);
 
@@ -118,6 +121,14 @@ export default new Router({
             },
         },
         {
+            path: '/myactivedetail',
+            name: 'Myactivedetail',
+            component: Myactivedetail,
+            meta:{
+                requireLogin:true,
+            },
+        },
+        {
             path: '/404',
             name: '404',
             component: NotFound,
@@ -129,6 +140,14 @@ export default new Router({
            path: '*',
            hidden: true,
            redirect: { path: '/404' },
+        },
+        {
+            path: '/studys',
+            name: 'studys',
+            component: studys,
+            meta:{
+                requireLogin:true,
+            },
         }
     ]
 })

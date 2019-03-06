@@ -27,8 +27,9 @@
                 </el-select>
             </div>
             <div class="ddpic" v-loading="loading">
-                    <dl v-for="(item,index) in items" :key="index" >
-                        <router-link :to="{path:'/activedetail', query:{cid:item.id}}">
+                <div class="toActive" v-for="(item, index) in items" :key="index">
+                    <router-link :to="{path:'/myactivedetail', query:{cid:item.id}}">
+                        <dl>
                             <dt>
                                 <img src="@/assets/images/success.png" alt="">
                             </dt>
@@ -47,8 +48,11 @@
                                     <span>{{item.building}}</span>
                                 </p>
                             </dd>
-                        </router-link>
-                    </dl>
+                        </dl>
+                        <!-- 查看报名 -->
+                        <p class="signUp">{{lang=='zh' ? '查看报名' : 'Check Registration'}}</p>
+                    </router-link>
+                </div>
                     <!-- <dl v-for="(item,index) in items" :key="index" v-else>
                         <router-link :to="{path:'/activedetail',query:{cid:item.id}}">
                             <dt>
@@ -206,38 +210,50 @@ export default {
         }
         .ddpic{
             width: 100%;
-            height: 100%;
-            
-            dl{
-                display: flex;
-                padding: 2% 0;
-                
+            .toActive{
+                width: 96%;
+                padding: 0 2%;
+                border-bottom: 1px dashed #cccccc;
+                margin: 0 2%;
                 a{
                     display: inline-block;
                     width: 100%;
                     display: flex;
-                    dt{
-                        width: 128px;
-                        height: 128px;
-                        img{
-                            width: 100%;
-                            height: 100%;
+                    justify-content: space-between;
+                    align-items: center;
+                    dl{
+                        display: flex;
+                        padding: 2% 0;
+                        dt{
+                            width: 128px;
+                            height: 128px;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                        dd{
+                            margin-left: 8px;
+                            p{
+                                line-height: 30px;
+                            }
+                            .fontBlue{
+                                color: #0070D2;
+                                font-size: 14px;
+                            }
                         }
                     }
-                    dd{
-                        margin-left: 8px;
-                        p{
-                            line-height: 30px;
-                        }
-                        .fontBlue{
-                            color: #0070D2;
-                            font-size: 14px;
-                        }
+                    .signUp{
+                        width: 100px;
+                        height: 30px;
+                        text-align: center;
+                        line-height: 30px;
+                        background: #006960;
+                        color: #ffffff;
+                        border-radius: 4px;
                     }
                 }
-                
             }
-            
         }
     }
     

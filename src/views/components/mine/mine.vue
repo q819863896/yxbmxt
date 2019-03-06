@@ -42,7 +42,7 @@ import Minehd from "./minehd.vue";
 import Major from "./major.vue";
 import Education from "./education.vue";
 // import ActivePre from "./activePre.vue";
-import { updateCount } from "../../../api/api.js";
+import { updateCount, loginOut } from "../../../api/api.js";
 export default {
     name: "mine",
     data() {
@@ -66,10 +66,14 @@ export default {
                     confirmButtonText: '退出',
                     cancelButtonText: '取消',
                 }).then(() => {
-                    sessionStorage.removeItem('changeUser');
-                    sessionStorage.removeItem("lange");
-                    this.$router.push('/login');
-
+                    loginOut().then((res => {
+                        if (res.statu == 1) {
+                            sessionStorage.removeItem('changeUser');
+                            sessionStorage.removeItem("lange");
+                            this.$router.push('/login');
+                        }
+                    }))
+                    
                 }).catch((err) => {
                     console.error('loginErr', err);
                 });
@@ -78,9 +82,13 @@ export default {
                     confirmButtonText: 'Sign out',
                     cancelButtonText: 'Cancel',
                 }).then(() => {
-                    sessionStorage.removeItem('changeUser');
-                    sessionStorage.removeItem("lange");
-                    this.$router.push('/login');
+                    loginOut().then((res => {
+                        if (res.statu == 1) {
+                            sessionStorage.removeItem('changeUser');
+                            sessionStorage.removeItem("lange");
+                            this.$router.push('/login');
+                        }
+                    }))
                 }).catch((err) => {
                     console.error('loginErr', err);
                 });
@@ -110,8 +118,6 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    overflow-y: scroll;
     .topHeader{
         width: 100%;
         height: 50px;
