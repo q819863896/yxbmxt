@@ -67,7 +67,7 @@ export default {
     name: "register",
     data() {
         var checkEmail = (rule, value, callback) => {
-            const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+            const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
             if (!value) {
                 return callback(new Error('邮箱不能为空'))
             }
@@ -143,31 +143,6 @@ export default {
             restaurants: [],
             countryOptions: [],
             schoolNameOptions: [],
-            selectid: "",
-            state2: "",
-            timeout:  null,
-            options4: "",
-            value9: "",
-            loading: false,
-            states: [
-                "Alabama", "Alaska", "Arizona",
-                "Arkansas", "California", "Colorado",
-                "Connecticut", "Delaware", "Florida",
-                "Georgia", "Hawaii", "Idaho", "Illinois",
-                "Indiana", "Iowa", "Kansas", "Kentucky",
-                "Louisiana", "Maine", "Maryland",
-                "Massachusetts", "Michigan", "Minnesota",
-                "Mississippi", "Missouri", "Montana",
-                "Nebraska", "Nevada", "New Hampshire",
-                "New Jersey", "New Mexico", "New York",
-                "North Carolina", "North Dakota", "Ohio",
-                "Oklahoma", "Oregon", "Pennsylvania",
-                "Rhode Island", "South Carolina",
-                "South Dakota", "Tennessee", "Texas",
-                "Utah", "Vermont", "Virginia",
-                "Washington", "West Virginia", "Wisconsin",
-                "Wyoming"
-            ],
             checked: true,
             disFlag: false
         }
@@ -182,24 +157,30 @@ export default {
                 this.titletrue = false;
                 this.titlefalse = false;
             } else {
-                checkemail(params).then((res) => {
-                    if (res.statu == 1) {
-                        // 此邮箱可以注册
-                        this.titletrue = true;
-                        this.titlefalse = false;
-                        this.titletruetxt = res.message;
-                        this.disFlag = false;
-                    } else {
-                        // 此邮箱已被注册
-                        this.titletrue = false;
-                        this.titlefalse = true;
-                        this.titlefalsetxt = res.message;
-                        this.disFlag = true;
-                    }
-                })
+                let mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                if (mailReg.test(txt)) {
+                    checkemail(params).then((res) => {
+                        if (res.statu == 1) {
+                            // 此邮箱可以注册
+                            this.titletrue = true;
+                            this.titlefalse = false;
+                            this.titletruetxt = res.message;
+                            this.disFlag = false;
+                        } else {
+                            // 此邮箱已被注册
+                            this.titletrue = false;
+                            this.titlefalse = true;
+                            this.titlefalsetxt = res.message;
+                            this.disFlag = true;
+                        }
+                    })
+                } else {
+                    this.titletrue = false;
+                    this.titlefalse = false;
+                }
             }
         },
-
+        // 切换国别
         checkCountry (val) {
             console.log(val);
             let params = {
@@ -276,7 +257,6 @@ export default {
         this.lang = sessionStorage.getItem("lange");
     },
     mounted() {
-        // this.restaurants = this.loadAll();
         this.flagSubmitBtn();
         this.getCountry();
     }

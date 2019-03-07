@@ -26,7 +26,7 @@
                     </el-option>
                 </el-select>
             </div>
-            <div class="ddpic" v-loading="loading">
+            <div class="ddpic" v-loading="loading" v-if="yesData">
                 <div class="toActive" v-for="(item, index) in items" :key="index">
                     <router-link :to="{path:'/myactivedetail', query:{cid:item.id}}">
                         <dl>
@@ -49,7 +49,6 @@
                                 </p>
                             </dd>
                         </dl>
-                        <!-- 查看报名 -->
                         <p class="signUp">{{lang=='zh' ? '查看报名' : 'Check Registration'}}</p>
                     </router-link>
                 </div>
@@ -76,6 +75,9 @@
                         </router-link>
                     </dl> -->
             </div>
+            <div class="noData" v-if="noData">
+                <p>{{lang=='zh' ? '您还有没报名活动！' : 'Have you signed up yet?'}}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -88,6 +90,8 @@ export default {
         return {
             lang: "",
             name: "",
+            yesData: true,
+            noData: false,
             // 创建时间
             creatTimeOptions: [
                 {
@@ -154,8 +158,18 @@ export default {
             showbmxx().then((res) => {
                 this.loading = true;
                 if(res.statu == 1) {
-                    this.items = res.data;
-                    this.loading = false;
+                    if (res.message == "您还没有已报名的活动") {
+                        this.yesData = false;
+                        this.noData = true;
+                        this.loading = false;
+                    } else {
+                        this.yesData = true;
+                        this.noData = false;
+                        this.loading = false;
+                        this.items = res.data;
+                    }
+                    // this.items = res.data;
+                    // this.loading = false;
                 } else {
                     this.loading = false;
                     this.$message({
@@ -185,13 +199,15 @@ export default {
 <style lang="scss" scoped>
 .minehd{
     width: 100%;
-    // height: 600px;
+    height: 100%;
     list-style: none;
     padding: 2%;
+    display: flex;
+    flex-direction: column;
     .search{
         width: 33.3%;
+        height: 50px;
         position: relative;
-        margin-bottom: 2%;
         img{
             position: absolute;
             right: 0;
@@ -255,7 +271,14 @@ export default {
                 }
             }
         }
+        .noData{
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            // height: 100%;
+        }
     }
-    
 }
 </style>

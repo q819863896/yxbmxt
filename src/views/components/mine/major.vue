@@ -2,7 +2,7 @@
     <div class="major">
         <div class="search">
             <el-input v-model="name" :placeholder="lang=='zh' ? '会议名称' : 'Event Name'"></el-input>
-            <img src="@/assets/images/find.png" alt="">
+            <img @click="searchBtn" src="@/assets/images/find.png" alt="">
         </div>
         <div class="mid">
             <div class="sstj">
@@ -33,7 +33,7 @@
                     <!-- 选择日期 -->
                 </el-date-picker>
             </div>
-            <div class="ddpic" v-loading="loading">
+            <div class="ddpic" v-loading="loading" v-if="yesData">
                 <div class="toActive" v-for="(item, index) in items" :key="index">
                     <router-link :to="{path:'/activedetail', query:{cid:item.id}}">
                         <dl>
@@ -60,18 +60,23 @@
                     </router-link>
                 </div>
             </div>
+            <div class="noData" v-if="noData">
+                <p>{{lang=='zh' ? '您还没有被邀约专项类型的活动！' : 'You have not been invited to a special type of event yet!'}}</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import { cityData, campAll, bydateandaddressCamp, bydate } from "../../../api/api.js";
+import { cityData, campAll, bydateandaddressCamp, bydate, bynameandtypeCamp } from "../../../api/api.js";
 export default {
     name: "major",
     data() {
         return {
             lang: "",
             name: "",
+            yesData: true,
+            noData: false,
             createTimeOptions: [
                 {
                     value: '2',
@@ -94,6 +99,20 @@ export default {
         toactive() {
             this.$router.push("/activedetail");
         },
+        searchBtn () {
+            this.items = [];
+            let params = {
+                type: "专项",
+                name: this.name
+            };
+            bynameandtypeCamp(params).then((res) => {
+                this.loading = true;
+                if (res.statu == 1) {
+                    this.loading = false;
+                    this.items = res.data;
+                }
+            })
+        },
         getDate () {
             let params = {
                 type: "专项"
@@ -101,8 +120,18 @@ export default {
             campAll(params).then((res) => {
                 this.loading = true;
                 if (res.statu == 1) {
-                    this.loading = false;
-                    this.items = res.data;
+                    if (res.message == "您还没有被邀约专项类型的活动！") {
+                        this.noData = true;
+                        this.yesData = false;
+                        this.loading = false;
+                    } else {
+                        this.noData = false;
+                        this.yesData = true;
+                        this.loading = false;
+                        this.items = res.data;
+                    }
+                    // this.loading = false;
+                    // this.items = res.data;
                 }
             })
         },
@@ -152,7 +181,10 @@ export default {
                     if (res.statu == "1") {
                         this.items = res.data;
                     } else {
-                        this.$message(res.message);
+                        this.$message({
+                            message: res.message,
+                            type: 'warning'
+                        });
                     }
                 })
             } else {
@@ -164,7 +196,10 @@ export default {
                     if (res.statu == "1") {
                         this.items = res.data;
                     } else {
-                        this.$message(res.message);
+                        this.$message({
+                            message: res.message,
+                            type: 'warning'
+                        });
                     }
                 })
             }
@@ -186,10 +221,12 @@ export default {
     height: 100%;
     list-style: none;
     padding: 2%;
+    display: flex;
+    flex-direction: column;
     .search{
         width: 33.3%;
+        height: 50px;
         position: relative;
-        margin-bottom: 2%;
         img{
             position: absolute;
             right: 0;
@@ -201,56 +238,67 @@ export default {
     }
     .mid{
         background: #F9F9FB;
+        width: 100%;
+        flex: 1;
         .sstj{
             margin-bottom: 2%;
         }
-    }
-    .ddpic{
-        width: 100%;
-        .toActive{
-            width: 96%;
-            padding: 0 2%;
-            border-bottom: 1px dashed #cccccc;
-            margin: 0 2%;
-            a{
-                display: inline-block;
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                dl{
+        .ddpic{
+            width: 100%;
+            .toActive{
+                width: 96%;
+                padding: 0 2%;
+                border-bottom: 1px dashed #cccccc;
+                margin: 0 2%;
+                a{
+                    display: inline-block;
+                    width: 100%;
                     display: flex;
-                    padding: 2% 0;
-                    dt{
-                        width: 128px;
-                        height: 128px;
-                        img{
-                            width: 100%;
-                            height: 100%;
+                    justify-content: space-between;
+                    align-items: center;
+                    dl{
+                        display: flex;
+                        padding: 2% 0;
+                        dt{
+                            width: 128px;
+                            height: 128px;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                        dd{
+                            margin-left: 8px;
+                            p{
+                                line-height: 30px;
+                            }
+                            .fontBlue{
+                                color: #0070D2;
+                                font-size: 14px;
+                            }
                         }
                     }
-                    dd{
-                        margin-left: 8px;
-                        p{
-                            line-height: 30px;
-                        }
-                        .fontBlue{
-                            color: #0070D2;
-                            font-size: 14px;
-                        }
+                    .signUp{
+                        width: 100px;
+                        height: 30px;
+                        text-align: center;
+                        line-height: 30px;
+                        background: #006960;
+                        color: #ffffff;
+                        border-radius: 4px;
                     }
-                }
-                .signUp{
-                    width: 100px;
-                    height: 30px;
-                    text-align: center;
-                    line-height: 30px;
-                    background: #006960;
-                    color: #ffffff;
-                    border-radius: 4px;
                 }
             }
         }
+        .noData{
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            // height: 100%;
+        }
     }
+    
 }
 </style>

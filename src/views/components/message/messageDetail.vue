@@ -4,28 +4,34 @@
         <h4>{{lang == "zh" ? "消息通知" : "Message Notification"}}</h4>
         <div class="detail">
             <p>
-                您报名参加的活动审核已通过
+                {{this.items.isApproval}}
             </p>
             <p class="time">
-                2018/09/20 14:00
+                {{this.items.campaign.startDate}}
             </p>
             <p class="mt">
-                <span>活动名称：</span> <span class="fontB">新湖三亚活动</span>
+                <!-- 活动名称 -->
+                <span>{{lang == "zh" ? "活动名称" : "Event Name"}}：</span> <span class="fontB">{{this.items.campaign.name}}</span>
             </p>
             <p class="mt">
-                <span>所在地区：</span> <span>新湖三亚活动</span>
+                <!-- 所在地区 -->
+                <span>{{lang == "zh" ? "所在地区" : "Location"}}：</span> <span>{{this.items.campaign.area}}</span>
             </p>
             <p class="mt">
-                <span>活动地点：</span> <span>新湖三亚活动</span>
+                <!-- 活动地点 -->
+                <span>{{lang == "zh" ? "活动地点" : "Venue Address"}}：</span> <span>{{this.items.campaign.building}}</span>
             </p>
             <p class="mt">
-                <span>参会时间：</span> <span>2018/09/24 10：00</span>
+                <!-- 参会时间 -->
+                <span>{{lang == "zh" ? "参会时间" : "Attendance Time"}}：</span> <span>{{this.items.campaign.startDate}}</span>
             </p>
             <p class="mt">
-                <span>审核状态：</span> <span>已批准</span>
+                <!-- 审核状态 -->
+                <span>{{lang == "zh" ? "审核状态" : "Review Status"}}：</span> <span>{{this.items.isApproval}}</span>
             </p>
             <p class="mt">
-                <span>审核备注：</span> <span></span>
+                <!-- 审核备注 -->
+                <span>{{lang == "zh" ? "审核备注" : "Review Notes"}}：</span> <span>{{this.items.approvalText}}</span>
             </p>
         </div>
     </div>
@@ -33,7 +39,7 @@
 
 <script>
 import Topheader from "../../components/reactivities/reactivities.vue";
-import { updateStatu } from "../../../api/api.js";
+import { updateStatu, bmxxjl } from "../../../api/api.js";
 export default {
     name: "meDe",
     components: {Topheader},
@@ -43,13 +49,37 @@ export default {
             items: []
         }
     },
+    methods: {
+        // 展示消息详细
+        showDetail () {
+            let params = {
+                cid: this.$route.query.cid
+            };
+            bmxxjl(params).then((res) => {
+                if (res.statu == 1) {
+                    this.items = res.data;
+                }
+            })
+        },
+        // 判断已读状态
+        flagRead () {
+            let params = {
+                nid: this.$route.query.cid
+            };
+            updateStatu(params).then((res) => {
+                
+            })
+        }
+    },
     created() {
         this.lang = sessionStorage.getItem("lange");
     },
     mounted(){
-        updateStatu(this.$route.query).then((res) => {
+        this.showDetail();
+        this.flagRead();
+        // updateStatu(this.$route.query).then((res) => {
             
-        })
+        // })
     }
 }
 </script>

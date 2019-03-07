@@ -189,6 +189,18 @@ export default {
             flex: 1;
             display: flex;
             flex-direction: column;
+            .el-tabs__header{
+                width: 100%;
+                height: 50px;
+            }
+            .el-tabs__content{
+                width: 100%;
+                flex: 1;
+                .el-tab-pane{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
         }
     }
     .content /deep/ .is-active{

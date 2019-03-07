@@ -75,7 +75,6 @@
             <div class="mid">
                 <h4>{{lang === 'zh' ? '其他信息' : 'Other Information'}}</h4>
                 <div class="listDiv">
-                    <!-- 参考资料 -->
                     <el-form-item :label="lang === 'zh' ? '参考资料' : 'Reference material'" prop="country">
                         <!-- <i class="iconfont icon-zhongdian"></i> -->
                         <el-select v-model="zlvalue" :placeholder="lang === 'zh' ? '请选择' : 'Please choose'">
@@ -87,7 +86,6 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <!-- 是否讲座 -->
                     <el-form-item :label="lang === 'zh' ? '是否讲座' : 'Presentation Required'" prop="lecture"><br>
                         <!-- <i class="iconfont icon-zhongdian"></i> -->
                         <el-checkbox v-model="checked"></el-checkbox>
@@ -96,8 +94,6 @@
             </div>
             <div class="under">
                 <div class="untop">
-                    <!-- 附件信息 -->
-                    <!-- 备注：LOGO、PPT、其他 -->
                     <h4>{{lang === 'zh' ? '附件信息' : 'Attachment'}}</h4><span class="fontR">({{lang === 'zh' ? '备注：LOGO、PPT、其他' : 'e.g. LOGO、PPT、Others'}})</span>
                 </div>
                 <div class="upLoad">
@@ -111,10 +107,8 @@
                         :limit="3"
                         :on-change="upChange"
                         :file-list="fileList">
-                        <!-- :on-exceed="handleExceed" -->
                         <el-button size="small" type="primary">{{lang === 'zh' ? '点击上传' : 'Upload Attachment'}}</el-button>
                     </el-upload>
-                    <!-- 上传附件 -->
                 </div>
             </div>
             <div class="pickbtnGroup">
@@ -326,6 +320,32 @@ export default {
         },
         upChange (file, fileList) {
             console.log(file, fileList);
+        },
+        getAccept(accept) {
+            switch (accept) {
+                case 'text':
+                    return {
+                        title: 'Texts',
+                        exteensions: 'doc,docx,xls,xlsx,ppt,pptx,pdf,txt',
+                        mimeTypes: '.doc,docx,.xls,.xlsx,.ppt,.pptx,.pdf,.txt'
+                    };
+                    break;
+                case 'video':
+                    return {
+                        title: 'Videos',
+                        exteensions: 'mp4',
+                        mimeTypes: '.mp4'
+                    };
+                    break;
+                case 'image':
+                    return {
+                        title: 'Images',
+                        exteensions: 'gif,jpg,jpeg,bmp,png',
+                        mimeTypes: '.gif,.jpg,.jpeg,.bmp,.png'
+                    };
+                    break;
+                default: return accept
+            }
         },
         pickContueBtn() {
             this.$router.push("/signsuccess");

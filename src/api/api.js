@@ -54,9 +54,9 @@ axios.interceptors.response.use(res => {
     return Promise.reject(err);
 });
 
-// axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
+axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
 // axios.defaults.baseURL = "http://10.150.116.209:8080";     // 李元吉
-axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-0.0.1-SNAPSHOT";  // 测试
+// axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-0.0.1-SNAPSHOT";  // 测试
 
 axios.defaults.timeout = 1000 * 50;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -82,6 +82,11 @@ export const Login = params => {
 // 登出
 export const loginOut = params => {
     return _axios.post('/login/loginOut.do', stringify(params)).then(res => res.data);
+}
+
+// 登出
+export const showName = params => {
+    return _axios.post('/login/name.do', stringify(params)).then(res => res.data);
 }
 
 export const showlogin = params => {
@@ -202,3 +207,17 @@ export const bydate = params => {
 export const xxjl = params => {
     return _axios.post('/campaign/xxjl.do', stringify(params)).then(res => res.data);
 }
+
+// 立即报名的接口
+// export const upload2 = params => {
+//     return _axios.post('/enrolment/upload2.do', stringify(params)).then(res => res.data);
+// }
+export const upload2 = (params) => {
+   return axios.post('/enrolment/upload2.do', stringify(params)).then(res => res.data);
+};
+
+// 立即报名的接口
+export const update = params => {
+    return _axios.post('/enrolment/update.do', stringify(params)).then(res => res.data);
+}
+

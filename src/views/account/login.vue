@@ -93,10 +93,10 @@ export default {
         },
         forget() {
             console.log("asd");
-            this.$router.push("/retrievepass")
+            this.$router.push("/retrievepass");
         },
         quick(){
-            this.$router.push("/register")
+            this.$router.push("/register");
         },
         toDemo () {
             this.$router.push("/studys");
@@ -125,7 +125,7 @@ export default {
     width: 100%;
     height: 100%;
     .el-form{
-        padding: 9% 15% 0;
+        padding: 5% 15% 0;
         .forget{
             color: #006960;
             cursor: pointer;
