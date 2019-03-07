@@ -32,7 +32,7 @@ export default {
         // this.showLang();
     },
     mounted() {
-        this.showLang();
+        // this.showLang();
         // window.addEventListener('hashchange',()=>{
         //     var currentPath = window.location.hash.slice(1); // 获取输入的路由
         //     console.log(currentPath);

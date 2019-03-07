@@ -17,7 +17,7 @@
             <el-form-item style="width:100%;">
                 <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">{{lang === "zh" ? "登录" : "Sign In"}}</el-button>
             </el-form-item>
-            <p @click="toDemo">vuex</p>
+            <!-- <p @click="toDemo">vuex</p> -->
             <el-form-item class="forget" @click.native.prevent="forget">{{lang === "zh" ? "忘记密码" : "Forget Password"}}</el-form-item>
             <!-- <div class="ordiv">
                 <div class="left">- - - - - - - - - - </div>

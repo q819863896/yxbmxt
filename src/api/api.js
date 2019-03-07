@@ -54,9 +54,9 @@ axios.interceptors.response.use(res => {
     return Promise.reject(err);
 });
 
-axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
+// axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
 // axios.defaults.baseURL = "http://10.150.116.209:8080";     // 李元吉
-// axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-portal-2.1.1.RELEASE";  // 测试
+axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-0.0.1-SNAPSHOT";  // 测试
 
 axios.defaults.timeout = 1000 * 50;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
