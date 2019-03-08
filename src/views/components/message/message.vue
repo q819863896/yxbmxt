@@ -49,7 +49,9 @@ export default {
         // 获取消息通知的
         getAllDate () {
             selectAll().then((res) => {
-                console.log(res);
+                // if (res.indexOf("<") != -1) {
+                //     this.$router.push("/login")
+                // }
                 if (res.statu == 1) {
                     this.items = res.data;
                 }

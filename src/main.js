@@ -27,7 +27,7 @@ Vue.use(router);
 
 router.beforeEach((to, from, next) => {
     const nextRoute = ['/login'];
- 
+
     let user = sessionStorage.getItem('changeUser');
     if (nextRoute.indexOf(to.path) !== -1) {
        next();

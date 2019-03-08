@@ -48,7 +48,7 @@
                                 </p>
                                 <p>
                                     <i class="iconfont icon-shijian"></i>
-                                    <span>{{item.startDate}}</span>-<span>{{item.endDate}}</span>
+                                    <span v-for="(itemDate, index) in item.startDate" :key="index">{{itemDate}}</span>-<span>{{item.endDate}}</span>
                                 </p>
                                 <p>
                                     <i class="iconfont icon-dizhi1"></i>
@@ -93,7 +93,9 @@ export default {
             allAreaValue: "",
             birthdayName: "",
             items: [],
-            loading: false
+            loading: false,
+            startD: [],
+            endD: []
         }
     },
     methods: {
@@ -147,6 +149,9 @@ export default {
             campAll(params).then((res) => {
                 this.loading = true;
                 if (res.statu == 1) {
+                    for (let i = 0; i < res.data.length; i++) {
+                        this.startD = res.data[i].startDate.split("T")[0];
+                    }
                     if (res.message == "您还没有被邀约教育类型的活动！") {
                         this.loading = false;
                         this.yesData = false;
@@ -161,6 +166,9 @@ export default {
                     // this.items = res.data;
                 }
             })
+        },
+        gernerate () {
+            
         },
         getCity () {
             cityData().then((res) => {
