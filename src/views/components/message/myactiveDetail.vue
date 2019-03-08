@@ -94,15 +94,14 @@
                     </div>
                 </div>
             </div>
-            
             <div class="bmBtn right">
-                <p @click="bmBtn">{{lang === 'zh' ? '立即报名' : 'Sign Up Now'}}</p>
+                <p @click="bmBtn" v-if="flagSign == '审批通过'">{{lang === 'zh' ? '立即报名' : 'Sign Up Now'}}</p>
             </div>
         </div>
         <el-dialog
             :title="lang === 'zh' ? '提示' : 'Tips'"
             :visible.sync="centerDialogVisible"
-            width="30%"
+            width="50%"
             center>
             <el-input
                 type="textarea"
@@ -116,7 +115,6 @@
             </span>
         </el-dialog>
     </div>
-    
 </template>
 
 <script>
@@ -133,7 +131,8 @@ export default {
             count: "",
             reid: "",
             centerDialogVisible: false,
-            textarea: ""
+            textarea: "",
+            flagSign: ""
         }
     },
     methods: {
