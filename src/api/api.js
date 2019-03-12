@@ -216,8 +216,15 @@ export const xxjl = params => {
 // export const upload2 = params => {
 //     return axios.post('/enrolment/upload2.do', stringify(params)).then(res => res.data);
 // }
-export const upload2 = (params) => {
-   return axios.post('/enrolment/upload2.do', stringify(params)).then(res => res.data);
+
+// 报名-回显
+export const setadddata = params => {
+    return axios.post('/enrolment/setadddata.do', stringify(params)).then(res => res.data);
+}
+
+// 立即报名-上传
+export const upload = (params) => {
+   return axios.post('/enrolment/upload.do', stringify(params)).then(res => res.data);
 };
 
 // 立即报名的接口

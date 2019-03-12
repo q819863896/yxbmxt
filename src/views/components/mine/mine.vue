@@ -181,6 +181,7 @@ export default {
         padding: 0 2%;
         display: flex;
         flex-direction: column;
+        margin-top: 50px;
         .person{
             padding:  4% 0;
         }

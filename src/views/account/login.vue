@@ -6,26 +6,26 @@
             <el-radio label="en" border>English</el-radio>
         </el-radio-group> -->
         <el-form :model="loginInfo" :rules="lang === 'zh' ? zhloginRules : enloginRules" ref="loginInfo" class="demo-ruleForm login-container">
-            <el-form-item :label="lang === 'zh' ? '用户名' : 'userName'" prop="account" style="position: relative">
-                <el-input type="text" name="account" v-model.trim="loginInfo.account" :placeholder="lang === 'zh' ? '用户名' : 'userName'">
+            <el-form-item :label="lang === 'zh' ? '用户名' : 'Username'" prop="account" style="position: relative">
+                <el-input type="text" name="account" v-model.trim="loginInfo.account" :placeholder="lang === 'zh' ? '用户名' : 'Username'">
                 </el-input>
             </el-form-item>
-            <el-form-item :label="lang === 'zh' ? '密码' : 'password'" prop="password">
-                <el-input type="password" name="password" v-model.trim="loginInfo.password" auto-complete="off" :placeholder="lang === 'zh' ? '密码' : 'password'"></el-input>
+            <el-form-item :label="lang === 'zh' ? '密码' : 'Password'" prop="password">
+                <el-input type="password" name="password" v-model.trim="loginInfo.password" auto-complete="off" :placeholder="lang === 'zh' ? '密码' : 'Password'"></el-input>
             </el-form-item>
             <!-- <el-checkbox v-model="isRememberPsw" class="remember">记住密码</el-checkbox> -->
             <el-form-item style="width:100%;">
-                <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">{{lang === "zh" ? "登录" : "Sign In"}}</el-button>
+                <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">{{lang === "zh" ? "登录" : "Login"}}</el-button>
             </el-form-item>
             <!-- <p @click="toDemo">vuex</p> -->
-            <el-form-item class="forget" @click.native.prevent="forget">{{lang === "zh" ? "忘记密码" : "Forget Password"}}</el-form-item>
+            <el-form-item class="forget" @click="forgetBtn">{{lang === "zh" ? "忘记密码" : "Forget Password"}}</el-form-item>
             <!-- <div class="ordiv">
                 <div class="left">- - - - - - - - - - </div>
                 <div class="center">或</div>
                 <div class="right"> - - - - - - - - - -</div>
             </div> -->
         </el-form>
-        <div class="quick" @click="quick">{{lang === "zh" ? "快速注册" : "Rapid Registration"}}</div>
+        <div class="quick" @click="quick">{{lang === "zh" ? "快速注册" : "Quick Registration"}}</div>
     </div>
 </template>
 
@@ -70,7 +70,7 @@ export default {
 
         },
         handleSubmit2() {
-            console.log("sad");
+            console.log("asd");
             this.$refs.loginInfo.validate((valid) => {
                 if (valid) {
                     let params = {
@@ -91,7 +91,7 @@ export default {
                 }
             })
         },
-        forget() {
+        forgetBtn() {
             console.log("asd");
             this.$router.push("/retrievepass");
         },
@@ -105,17 +105,6 @@ export default {
     created() {
         this.lang = sessionStorage.getItem("lange");
     },
-    // computed: {
-    //     lang: {
-    //         get() {
-    //             return this.$store.state.app.language
-    //         },
-    //         set(lang) {
-    //             this.$i18n.locale = lang
-    //             this.$store.dispatch('setLanguage', lang)
-    //         }
-    //     }
-    // }
 }
 </script>
 

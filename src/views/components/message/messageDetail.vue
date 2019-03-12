@@ -22,8 +22,8 @@
                 <span>{{lang == "zh" ? "活动地点" : "Venue Address"}}：</span> <span>{{this.items.campaign.building}}</span>
             </p>
             <p class="mt">
-                <!-- 参会时间 -->
-                <span>{{lang == "zh" ? "参会时间" : "Attendance Time"}}：</span> <span>{{this.items.campaign.startDate}}</span>
+                <!-- 更改信息 -->
+                <span>{{lang == "zh" ? "更改信息" : "Change Information"}}：</span> <span>{{this.items.campaign.startDate}}</span>
             </p>
             <p class="mt">
                 <!-- 审核状态 -->
@@ -53,7 +53,7 @@ export default {
         // 展示消息详细
         showDetail () {
             let params = {
-                cid: this.$route.query.cid
+                nid: this.$route.query.nid
             };
             bmxxjl(params).then((res) => {
                 if (res.statu == 1) {

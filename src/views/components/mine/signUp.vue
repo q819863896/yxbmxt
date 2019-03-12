@@ -27,7 +27,7 @@
                 <!-- 对接人基本信息 -->
                 <h4>{{lang === "zh" ? "对接人基本信息" : "Contact Person Information"}}</h4>
                 <div class="listDiv">
-                    <el-form-item :label="lang === 'zh' ? '对接人基本信息' : 'Contact Person Information'" prop="userName" style="position: relative">
+                    <el-form-item :label="lang === 'zh' ? '姓名' : 'Name'" prop="userName" style="position: relative">
                         <!-- <i class="iconfont icon-zhongdian"></i> -->
                         <el-input type="text" v-model.trim="pickPeo.userName" :placeholder="lang === 'zh' ? '姓名' : 'Name'">
                         </el-input>
@@ -76,19 +76,18 @@
             <div class="mid">
                 <h4>{{lang === 'zh' ? '其他信息' : 'Other Information'}}</h4>
                 <div class="listDiv">
-                    <el-form-item :label="lang === 'zh' ? '参考资料' : 'Reference material'" prop="country">
-                        <!-- <i class="iconfont icon-zhongdian"></i> -->
-                        <el-select v-model="zlvalue" :placeholder="lang === 'zh' ? '请选择' : 'Please choose'">
+                    <el-form-item :label="lang === 'zh' ? '参展资料' : 'Exhibition Materials'" prop="materials">
+                        <!-- <el-select v-model="zlvalue" :placeholder="lang === 'zh' ? '请选择' : 'Please choose'">
                             <el-option
                                 v-for="item in zloptions"
                                 :key="item.value"
                                 :label="item.label"
                                 :value="item.value">
                             </el-option>
-                        </el-select>
+                        </el-select> -->
+                        <el-input v-model="materialsInp" placeholder="请输入内容"></el-input>
                     </el-form-item>
                     <el-form-item :label="lang === 'zh' ? '是否讲座' : 'Presentation Required'" prop="lecture"><br>
-                        <!-- <i class="iconfont icon-zhongdian"></i> -->
                         <el-checkbox v-model="checked"></el-checkbox>
                     </el-form-item>
                 </div>
@@ -100,12 +99,12 @@
                 <div class="upLoad">
                     <el-upload
                         class="upload-demo"
-                        action="https://jsonplaceholder.typicode.com/posts/"
+                        :action="uploadfun"
                         :on-preview="handlePreview"
                         :on-remove="handleRemove"
                         :before-remove="beforeRemove"
                         multiple
-                        :limit="3"
+                        accept=".jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF,.docx,.pptx,.xlsx,.txt"
                         :on-change="upChange"
                         :file-list="fileList">
                         <el-button size="small" type="primary">{{lang === 'zh' ? '点击上传' : 'Upload Attachment'}}</el-button>
@@ -121,7 +120,8 @@
 </template>
 
 <script>
-import { updateCount, loginOut } from "../../../api/api.js";
+import { updateCount, loginOut, setadddata, upload, update } from "../../../api/api.js";
+import axios from "axios";
 export default {
     name: "signUp",
     data() {
@@ -155,6 +155,9 @@ export default {
                 schoolName: [
                     { required: true, message: '请输入院校名称', trigger: 'blur' },
                 ],
+                materials: [
+                    { required: true, message: '请输入参展资料', trigger: 'blur' },
+                ],
                 lecture: [
                     { required: true, message: '请选择', trigger: 'blur' },
                 ]
@@ -178,10 +181,14 @@ export default {
                 schoolName: [
                     { required: true, message: 'Please enter the name of the institution.', trigger: 'blur' },
                 ],
+                materials: [
+                    { required: true, message: 'Please enter the exhibition information.', trigger: 'blur' },
+                ],
                 lecture: [
                     { required: true, message: 'Please choose', trigger: 'blur' },
                 ]
             },
+            materialsInp: "",
             options: [
                 {
                     value: '选项1',
@@ -204,7 +211,7 @@ export default {
                     label: '北京烤鸭'
                 }
             ],
-            value: '',
+            value: "",
             zloptions: [
                 {
                     value: '选项1',
@@ -227,20 +234,25 @@ export default {
                     label: '北京烤鸭'
                 }
             ],
-            zlvalue: '',
+            zlvalue: "",
             checked: false,
             state4: "",
-            fileList: []
+            fileList: [],
+            uploadfun: ""
         }
     },
-    created () {
+    created() {
         this.lang = sessionStorage.getItem("lange");
+
+        this.uploadfun = axios.defaults.baseURL + '/enrolment/upload.do';
     },
     mounted() {
         this.restaurants = this.loadAll();
         updateCount().then((res) => {
             this.count = res.data;
         })
+
+        this.setData();
     },
     methods: {
         toMine () {
@@ -298,12 +310,23 @@ export default {
             { "value": "南拳妈妈龙虾盖浇饭", "address": "普陀区金沙江路1699号鑫乐惠美食广场A13" }
             ];
         },
+        setData () {
+            setadddata().then((res) => {
+                if (res.statu == 1){
+                    this.pickPeo.userName = res.data[0].name;
+                    this.pickPeo.position = res.data[0].post;
+                    this.pickPeo.email = res.data[0].email;
+                    this.pickPeo.tel = res.data[0].phone;
+                }
+            })
+        },
+
         querySearchAsync(queryString, cb) {
             var restaurants = this.restaurants;
             var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
-            cb(results);
+                cb(results);
             }, 3000 * Math.random());
         },
         createStateFilter(queryString) {
@@ -357,7 +380,10 @@ export default {
             }
         },
         pickContueBtn() {
-            this.$router.push("/signsuccess");
+            // this.$router.push("/signsuccess");
+            let params = {
+
+            };
         },
         pickCancelBtn() {
             this.$router.go(-1);

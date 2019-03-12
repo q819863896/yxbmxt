@@ -95,6 +95,7 @@ export default {
     .topHeader{
         width: 100%;
         height: 50px;
+        background: #ffffff;
         line-height: 50px;
         display: flex;
         justify-content: space-between;

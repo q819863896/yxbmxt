@@ -5,7 +5,7 @@
             <span v-if="this.count != 0" class="fontR" ref="numtit">(<span>{{num}}</span>{{lang == 'zh' ? '条新信息' : 'new messages'}})</span>
         </div>
         <div class="wrap">
-            <router-link class="item" v-for="(item, index) in items" :key="index" :to="{path:'/messagedetail', query:{cid:item.notification.campaignId}}">
+            <router-link class="item" v-for="(item, index) in items" :key="index" :to="{path:'/messagedetail', query:{nid:item.notification.id}}">
                 <div class="top">
                     <p>{{item.isApproval}}</p><p class="newaa" v-if="item.notification.isRead==0">new</p>
                 </div>
