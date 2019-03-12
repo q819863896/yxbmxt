@@ -40,6 +40,17 @@ export default {
         //         this.$router.push("/login"); // 动态跳转
         //     }
         // },false);
+        function checkIE(){
+            return '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style
+        }
+        if (checkIE()) {
+            window.addEventListener('hashchange', () => {
+                var currentPath = window.location.hash.slice(1);
+                if (this.$route.path !== currentPath) {
+                    this.$router.push(currentPath)
+                }
+            }, false)
+        }
     }
 }
 </script>

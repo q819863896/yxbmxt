@@ -13,19 +13,20 @@
             <el-form-item :label="lang === 'zh' ? '密码' : 'Password'" prop="password">
                 <el-input type="password" name="password" v-model.trim="loginInfo.password" auto-complete="off" :placeholder="lang === 'zh' ? '密码' : 'Password'"></el-input>
             </el-form-item>
-            <!-- <el-checkbox v-model="isRememberPsw" class="remember">记住密码</el-checkbox> -->
             <el-form-item style="width:100%;">
-                <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">{{lang === "zh" ? "登录" : "Login"}}</el-button>
+                <el-button type="primary" style="width:100%;" @click.native.prevent="loginBtn" :loading="logining">{{lang === "zh" ? "登录" : "Login"}}</el-button>
             </el-form-item>
-            <!-- <p @click="toDemo">vuex</p> -->
-            <el-form-item class="forget" @click="forgetBtn">{{lang === "zh" ? "忘记密码" : "Forget Password"}}</el-form-item>
+            <!-- <p @click.native.prevent="toDemo">vuex</p> -->
+            <el-form-item class="forget" @click.native.prevent="forgetBtn">{{lang === "zh" ? "忘记密码" : "Forget Password"}}</el-form-item>
+            <!-- <router-link :to="{name: '/retrievepass'}">{{lang === "zh" ? "忘记密码" : "Forget Password"}}</router-link> -->
+            <router-view></router-view>
             <!-- <div class="ordiv">
                 <div class="left">- - - - - - - - - - </div>
                 <div class="center">或</div>
                 <div class="right"> - - - - - - - - - -</div>
             </div> -->
         </el-form>
-        <div class="quick" @click="quick">{{lang === "zh" ? "快速注册" : "Quick Registration"}}</div>
+        <div class="quick" @click="quickBtn">{{lang === "zh" ? "快速注册" : "Quick Registration"}}</div>
     </div>
 </template>
 
@@ -69,7 +70,8 @@ export default {
         checkLang () {
 
         },
-        handleSubmit2() {
+        // 登录
+        loginBtn() {
             console.log("asd");
             this.$refs.loginInfo.validate((valid) => {
                 if (valid) {
@@ -78,9 +80,12 @@ export default {
                         password: this.loginInfo.password
                     };
                     Login(params).then((res) => {
+                        this.logining = true;
                         if (res.message == "密码正确") {
                             sessionStorage.setItem("changeUser", this.loginInfo.account);
+                            console.log(this.$router);
                             this.$router.push("/mine");
+                            this.logining = false;
                         } else {
                             this.$message({
                                 message: res.message,
@@ -91,11 +96,18 @@ export default {
                 }
             })
         },
+        // 忘记密码
         forgetBtn() {
-            console.log("asd");
-            this.$router.push("/retrievepass");
+            // const self = this;
+            console.log("忘记密码");
+            console.log(this.$router);
+            // this.$router.push("/retrievepass");
+            // self.$router.push({path: "/retrievepass"});
+            this.$router.push({name:'Retrievepass' , path: '/retrievepass' });
         },
-        quick(){
+        // 快速注册
+        quickBtn(){
+            console.log("快速注册");
             this.$router.push("/register");
         },
         toDemo () {
@@ -104,6 +116,11 @@ export default {
     },
     created() {
         this.lang = sessionStorage.getItem("lange");
+    },
+    watch: {
+        '$route' (to, from) {
+            this.$router.go(0);
+        }
     },
 }
 </script>

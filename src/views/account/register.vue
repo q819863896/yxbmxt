@@ -26,7 +26,7 @@
                             v-for="item in countryOptions"
                             :key="item.id"
                             :label="item.name"
-                            :value="item.id">
+                            :value="item.id+','+item.code">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -37,7 +37,7 @@
                             v-for="item in schoolNameOptions"
                             :key="item.id"
                             :label="item.name"
-                            :value="item.id">
+                            :value="item.id+','+item.code">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -57,7 +57,6 @@
             </el-form>
             <el-button @click="submitForm('ruleForm')" :disabled="disFlag">{{lang == "zh" ? "快速注册" : "Rapid registration"}}</el-button>
         <!-- </div> -->
-        
     </div>
 </template>
 
@@ -142,6 +141,9 @@ export default {
             titlefalse: false,
             restaurants: [],
             countryOptions: [],
+            counCode: "",
+            schCode: "",
+            schId: "",
             schoolNameOptions: [],
             checked: true,
             disFlag: false
@@ -182,9 +184,11 @@ export default {
         },
         // 切换国别
         checkCountry (val) {
-            console.log(val);
+            console.log(val.split(",")[1]);
+            this.counCode = val.split(",")[0];
+            this.schoolNameOptions = [];
             let params = {
-                countryid: val
+                countryid: val.split(",")[0]
             };
             allSchool(params).then((res) => {
                 if (res.statu == 1) {
@@ -198,7 +202,9 @@ export default {
             })
         },
         checkSchool (val) {
-            this.ruleForm.schoolName = val;
+            this.schId = val.split(",")[0];
+            this.schCode = val.split(",")[1];
+            console.log(this.schCode);
         },
         // 获取所有国家
         getCountry () {
@@ -225,7 +231,10 @@ export default {
                         email: this.ruleForm.email,
                         phone: this.ruleForm.tel,
                         // country: this.ruleForm.country,
-                        schoolId: this.ruleForm.schoolName,
+                        countryCode: this.counCode,
+
+                        schoolId: this.schId,
+                        schoolCode: this.schCode,
                         post: this.ruleForm.position,
                         password: this.ruleForm.password
                     };

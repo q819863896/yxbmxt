@@ -1,8 +1,8 @@
 import { stringify } from "qs";
 import axios from "axios";
 
-axios.defaults.validateStatus = status => {
-    return status < 500;
+axios.defaults.validateStatus = statu => {
+    return statu < 500;
 }
 
 // 接口错误拦截

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+        <!-- <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/> -->
         <title>院校报名系统</title>
     </head>
     <body>
@@ -16,5 +16,16 @@
         // }
         // window.addEventListener('resize', change, false);
         // change();
+        function checkIE(){
+            return '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style
+        }
+        if (checkIE()) {
+            window.addEventListener('hashchange', () => {
+                var currentPath = window.location.hash.slice(1);
+                if (this.$route.path !== currentPath) {
+                    this.$router.push(currentPath)
+                }
+            }, false)
+        }
     </script>
 </html>

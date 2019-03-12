@@ -44,12 +44,12 @@
                     <!--  国别-->
                     <el-form-item :label="lang === 'zh' ? '国别' : 'Country'" prop="country">
                         <!-- <i class="iconfont icon-zhongdian"></i> -->
-                        <el-select v-model="value" :placeholder="lang === 'zh' ? '国别' : 'Country'">
+                        <el-select v-model="countryValue" :placeholder="lang === 'zh' ? '国别' : 'Country'" @change="ckeckCount">
                             <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                                v-for="item in countryOptions"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.code">
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -64,12 +64,20 @@
                     <!-- 院校名称 -->
                     <el-form-item :label="lang === 'zh' ? '院校名称' : 'Institution Name'" prop="schoolName">
                         <!-- <i class="iconfont icon-zhongdian"></i> -->
-                        <el-autocomplete
+                        <!-- <el-autocomplete
                             v-model="state4"
                             :fetch-suggestions="querySearchAsync"
                             :placeholder="lang === 'zh' ? '院校名称' : 'Institution Name'"
                             @select="handleSelect"
-                        ></el-autocomplete>
+                        ></el-autocomplete> -->
+                        <el-select v-model="schoolValue" :placeholder="lang === 'zh' ? '院校名称' : 'Institution Name'" @change="ckeckSchool">
+                            <el-option
+                                v-for="item in schoolOptions"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.code">
+                            </el-option>
+                        </el-select>
                     </el-form-item>
                 </div>
             </div>
@@ -120,7 +128,7 @@
 </template>
 
 <script>
-import { updateCount, loginOut, setadddata, upload, update } from "../../../api/api.js";
+import { updateCount, loginOut, setadddata, upload, update, allCountry, allSchool, selectUser } from "../../../api/api.js";
 import axios from "axios";
 export default {
     name: "signUp",
@@ -189,56 +197,18 @@ export default {
                 ]
             },
             materialsInp: "",
-            options: [
-                {
-                    value: '选项1',
-                    label: '黄金糕'
-                },
-                {
-                    value: '选项2',
-                    label: '双皮奶'
-                },
-                {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                },
-                {
-                    value: '选项4',
-                    label: '龙须面'
-                },
-                {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }
-            ],
+            countryOptions: [],
+            countCode: "",
+            countryValue: "",
+            schoolOptions: [],
+            schoolValue: "",
+            schoolCode: "",
             value: "",
-            zloptions: [
-                {
-                    value: '选项1',
-                    label: '黄金糕'
-                },
-                {
-                    value: '选项2',
-                    label: '双皮奶'
-                },
-                {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                },
-                {
-                    value: '选项4',
-                    label: '龙须面'
-                },
-                {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }
-            ],
-            zlvalue: "",
             checked: false,
             state4: "",
             fileList: [],
-            uploadfun: ""
+            uploadfun: "",
+
         }
     },
     created() {
@@ -253,6 +223,10 @@ export default {
         })
 
         this.setData();
+        // 获取国家
+        this.getCountry();
+
+        this.getCounAndSch();
     },
     methods: {
         toMine () {
@@ -320,7 +294,13 @@ export default {
                 }
             })
         },
-
+        // 获取国家信息
+        getCounAndSch () {
+            selectUser().then((res) => {
+                this.countryValue = res.data.country.name;
+                this.schoolValue = res.data.school.name;
+            })
+        },
         querySearchAsync(queryString, cb) {
             var restaurants = this.restaurants;
             var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
@@ -384,6 +364,39 @@ export default {
             let params = {
 
             };
+        },
+        // 获取国家
+        getCountry () {
+            this.countryOptions = [];
+            allCountry().then((res) => {
+                if (res.statu == 1) {
+                    this.countryOptions = res.data;
+                }
+            })
+        },
+        // 改变国家
+        ckeckCount (val) {
+            this.schoolOptions = [];
+            console.log(val);
+
+            let params = {
+                countryid: val
+            };
+            allSchool(params).then((res) => {
+                if (res.statu == 1) {
+                    this.schoolOptions = res.data;
+                } else {
+                    this.$message({
+                        message: res.message,
+                        type: 'warning'
+                    });
+                }
+            })
+        },
+        // 选择院校
+        ckeckSchool (val) {
+            console.log(val);
+            this.schoolCode = val;
         },
         pickCancelBtn() {
             this.$router.go(-1);
@@ -545,10 +558,10 @@ export default {
                 width: 50%;
                 display: flex;
                 margin-left: 22%;
-                height: 30px;
-                line-height: 30px;
+                height: 45px;
+                line-height: 41px;
                 div{
-                    padding: 0.5% 1% 5% 1%;
+                    padding: 0.5% 4% 5% 4%;
                     text-align: center;
                     margin-left: 30%;
                     border: 1px solid #006960;

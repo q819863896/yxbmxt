@@ -22,6 +22,25 @@ const NotFound = () => import('../views/exception/404.vue');
 
 const studys = () => import('../views/components/lx/demo.vue');
 
+// import Login from "../views/account/login.vue";
+// import Logoout from "../views/components/logoout/logoout.vue";
+// import Register from "../views/account/register.vue";
+// import Retrievepass from "../views/account/retrievepass.vue";
+
+// import Reactivities from "../views/components/reactivities/reactivities.vue";
+
+// import Mine from "../views/components/mine/mine.vue";
+// import Message from "../views/components/message/message.vue";
+// import Messagedetail from "../views/components/message/messageDetail.vue";
+// import PersonInfo from "../views/components/personInfo/personInfo.vue";
+// import Signup from "../views/components/mine/signUp.vue";
+// import Signsuccess from "../views/components/mine/signsucc.vue";
+
+// import Activedetail from "../views/components/message/activedetail.vue";
+// import Myactivedetail from "../views/components/message/myactiveDetail.vue";
+// import NotFound from "../views/exception/404.vue";
+// import studys from "../views/components/lx/demo.vue";
+
 Vue.use(Router);
 
 export default new Router({
@@ -30,65 +49,41 @@ export default new Router({
             path: '/',
             name: 'Login',
             component: Login,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
             path: '/login',
             name: 'Login',
             component: Login,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
             path: '/register',
             name: 'Register',
             component: Register,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
             path: '/retrievepass',
             name: 'Retrievepass',
             component: Retrievepass,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
             path: '/mine',
             name: 'Mine',
             component: Mine,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
             path: '/signup',
             name: 'Signup',
             component: Signup,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
             path: '/signsuccess',
             name: 'Signsuccess',
             component: Signsuccess,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
             path: '/messagedetail',
             name: 'Messagedetail',
             component: Messagedetail,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
             path: '/reactivities',
@@ -116,25 +111,16 @@ export default new Router({
             path: '/activedetail',
             name: 'Activedetail',
             component: Activedetail,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
             path: '/myactivedetail',
             name: 'Myactivedetail',
             component: Myactivedetail,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
             path: '/404',
             name: '404',
             component: NotFound,
-            meta:{
-                requireLogin:true,
-            },
         },
         {
            path: '*',
@@ -145,9 +131,6 @@ export default new Router({
             path: '/studys',
             name: 'studys',
             component: studys,
-            meta:{
-                requireLogin:true,
-            },
         }
     ]
 })
