@@ -35,24 +35,25 @@
             </div>
             <div class="ddpic" v-loading="loading" v-if="yesData">
                 <div class="toActive" v-for="(item, index) in items" :key="index">
-                    <router-link :to="{path:'/activedetail', query:{cid:item.id}}">
+                    <router-link :to="{path:'/activedetail', query:{cid:item.campaign.id}}">
                         <dl>
-                            <dt>
-                                <img src="@/assets/images/success.png" alt="">
+                            <dt class="dt-img">
+                                <img :src="item.EnrolmentAttachment.attachmenttype" alt="">
                             </dt>
                             <dd>
-                                <p class="fontBlue">{{item.name}}</p>
+                                <p class="fontBlue">{{item.campaign.building}}</p>
                                 <p>
                                     <i class="iconfont icon-dizhi"></i>
-                                    <span>{{item.area}}</span>
+                                    <span>{{item.campaign.area}}</span>
                                 </p>
                                 <p>
                                     <i class="iconfont icon-shijian"></i>
-                                    <span v-for="(itemDate, index) in item.startDate" :key="index">{{itemDate}}</span>-<span>{{item.endDate}}</span>
+                                    <!-- <span v-for="(itemDate, index) in item.startDate" :key="index">{{itemDate}}</span>-<span>{{item.endDate}}</span> -->
+                                    <span>{{item.campaign.campTime}}</span>
                                 </p>
                                 <p>
                                     <i class="iconfont icon-dizhi1"></i>
-                                    <span>{{item.building}}</span>
+                                    <span>{{item.campaign.building}}</span>
                                 </p>
                             </dd>
                         </dl>
@@ -147,23 +148,21 @@ export default {
                 type: "教育"
             };
             campAll(params).then((res) => {
-                this.loading = true;
+                // this.loading = true;
                 if (res.statu == 1) {
-                    for (let i = 0; i < res.data.length; i++) {
-                        this.startD = res.data[i].startDate.split("T")[0];
-                    }
+                    // for (let i = 0; i < res.data.length; i++) {
+                    //     this.startD = res.data[i].startDate.split("T")[0];
+                    // }
                     if (res.message == "您还没有被邀约教育类型的活动！") {
-                        this.loading = false;
+                        // this.loading = false;
                         this.yesData = false;
                         this.noData = true;
                     } else {
-                        this.loading = false;
+                        // this.loading = false;
                         this.yesData = true;
                         this.noData = false;
                         this.items = res.data;
                     }
-                    // this.loading = false;
-                    // this.items = res.data;
                 }
             })
         },
@@ -267,6 +266,7 @@ export default {
                             img{
                                 width: 100%;
                                 height: 100%;
+                                min-width: 128px;
                             }
                         }
                         dd{

@@ -1,24 +1,27 @@
 import { stringify } from "qs";
 import axios from "axios";
+import router from "../router/index.js";
 
 axios.defaults.validateStatus = statu => {
     return statu < 500;
 }
 
 // 接口错误拦截
-// axios.interceptors.response.use(res => {
-//     console.log(res.statu)
-//     if (res.status === 401) {
-//        sessionStorage.removeItem('changeUser');
-//     //    sessionStorage.removeItem('token');
-//         router.push({path: '/login'});
-//        return res;
-//     } else {
-//        return res;
-//     }
-//  }, err => {
-//     return Promise.reject(err)
-//  })
+    axios.interceptors.response.use(res => {
+        console.log(res.data);
+        if (res.status === 401) {
+           sessionStorage.removeItem('changeUser');
+        //    sessionStorage.removeItem('token');
+            router.push({path: '/login'});
+           return res;
+        } else {
+           return res;
+           next();
+        }
+    }, err => {
+        return Promise.reject(err)
+    })
+
 // axios.interceptors.response.use(
 //     response => {
 //       if(response.data.code === 500) {
@@ -42,9 +45,9 @@ axios.defaults.validateStatus = statu => {
 
 
 
-axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
+// axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
 // axios.defaults.baseURL = "http://10.150.116.209:8080";     // 李元吉
-// axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-0.0.1-SNAPSHOT";  // 测试
+axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-0.0.1-SNAPSHOT";  // 测试
 
 axios.defaults.timeout = 1000 * 50;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -212,6 +215,11 @@ export const xxjl = params => {
     return axios.post('/campaign/xxjl.do', stringify(params)).then(res => res.data);
 }
 
+// datalist---我的活动
+export const wdbmxxjl = params => {
+    return axios.post('/campaign/wdbmxxjl.do', stringify(params)).then(res => res.data);
+}
+
 // 立即报名的接口
 // export const upload2 = params => {
 //     return axios.post('/enrolment/upload2.do', stringify(params)).then(res => res.data);
@@ -226,6 +234,10 @@ export const setadddata = params => {
 export const upload = (params) => {
    return axios.post('/enrolment/upload.do', stringify(params)).then(res => res.data);
 };
+
+export const upload1 = (params) => {
+    return axios.post('/enrolment/upload1.do', stringify(params)).then(res => res.data);
+ };
 
 // 立即报名的接口
 export const update = params => {

@@ -77,7 +77,7 @@ export default {
                 if (valid) {
                     let params = {
                         name: this.loginInfo.account,
-                        password: this.loginInfo.password
+                        password: this.$md5(this.loginInfo.password)
                     };
                     Login(params).then((res) => {
                         this.logining = true;
@@ -91,6 +91,7 @@ export default {
                                 message: res.message,
                                 type: 'warning'
                             });
+                            this.logining = false;
                         }
                     })
                 }

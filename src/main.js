@@ -9,6 +9,7 @@ import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 // import VueHighcharts from "highcharts";
 // import i18n from './lang'
 // import VueI18n from "vue-i18n";
+import md5 from 'js-md5';
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -20,6 +21,7 @@ import store from "./vuex/index.js";
 // import $ from "jquery";
 
 Vue.config.productionTip = false;
+Vue.prototype.$md5 = md5;
 
 Vue.use(ElementUI);
 Vue.use(ElementUI, { locale });

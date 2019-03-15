@@ -47,7 +47,7 @@
                 </el-form-item>
                 <!-- 密码 -->
                 <el-form-item :label="lang === 'zh' ? '密码' : 'password'" prop="password">
-                    <el-input v-model="ruleForm.password"></el-input>
+                    <el-input type="password" v-model="ruleForm.password"></el-input>
                 </el-form-item>
                 <div class="agreeClick">
                     <el-checkbox v-model="checked" @change="flagSubmitBtn">{{lang == "zh" ? "点击快速注册则表示您同意本网站" : "By clicking quick registration, you agree with the website "}}</el-checkbox>
@@ -185,7 +185,7 @@ export default {
         // 切换国别
         checkCountry (val) {
             console.log(val.split(",")[1]);
-            this.counCode = val.split(",")[0];
+            this.counCode = val.split(",")[1];
             this.schoolNameOptions = [];
             let params = {
                 countryid: val.split(",")[0]
@@ -236,7 +236,7 @@ export default {
                         schoolId: this.schId,
                         schoolCode: this.schCode,
                         post: this.ruleForm.position,
-                        password: this.ruleForm.password
+                        password: this.$md5(this.ruleForm.password)
                     };
 
                     regiset(params).then((res) => {
@@ -278,6 +278,11 @@ export default {
     // height: 100%;
     display: flex;
     flex-direction: column;
+    .pic{
+        img{
+            width: 150px;
+        }
+    }
     // .main{
         h3{
             width: 100%;

@@ -28,24 +28,24 @@
             </div>
             <div class="ddpic" v-loading="loading" v-if="yesData">
                 <div class="toActive" v-for="(item, index) in items" :key="index">
-                    <router-link :to="{path:'/myactivedetail', query:{cid:item.id}}">
+                    <router-link :to="{path:'/myactivedetail', query:{cid:item.campaign.id}}">
                         <dl>
                             <dt>
-                                <img src="@/assets/images/success.png" alt="">
+                                <img :src="item.enrolmentAttachment[0].attachmentUrl" alt="">
                             </dt>
                             <dd>
-                                <p class="fontBlue">{{item.name}}</p>
+                                <p class="fontBlue">{{item.campaign.name}}</p>
                                 <p>
                                     <i class="iconfont icon-dizhi"></i>
-                                    <span>{{item.area}}</span>
+                                    <span>{{item.campaign.area}}</span>
                                 </p>
                                 <p>
                                     <i class="iconfont icon-shijian"></i>
-                                    <span>{{item.startDate}}</span>-<span>{{item.endDate}}</span>
+                                    <span>{{item.campaign.campTime}}</span>
                                 </p>
                                 <p>
                                     <i class="iconfont icon-dizhi1"></i>
-                                    <span>{{item.building}}</span>
+                                    <span>{{item.campaign.building}}</span>
                                 </p>
                             </dd>
                         </dl>
@@ -246,6 +246,7 @@ export default {
                             img{
                                 width: 100%;
                                 height: 100%;
+                                min-width: 128px;
                             }
                         }
                         dd{

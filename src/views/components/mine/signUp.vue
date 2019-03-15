@@ -22,62 +22,32 @@
             <!-- <h4>账户信息</h4> -->
             <h4>{{lang === "zh" ? "账户信息" : "Account Information"}}</h4>
         </div>
-        <el-form :model="pickPeo" ref="pickPeo" :rules="lang === 'zh' ? zhpickPeoRules : enpickPeoRules" class="demo-ruleForm login-container">
+        <el-form :model="pickPeo" ref="pickPeo" class="demo-ruleForm login-container">
             <div class="top">
                 <!-- 对接人基本信息 -->
                 <h4>{{lang === "zh" ? "对接人基本信息" : "Contact Person Information"}}</h4>
                 <div class="listDiv">
                     <el-form-item :label="lang === 'zh' ? '姓名' : 'Name'" prop="userName" style="position: relative">
-                        <!-- <i class="iconfont icon-zhongdian"></i> -->
-                        <el-input type="text" v-model.trim="pickPeo.userName" :placeholder="lang === 'zh' ? '姓名' : 'Name'">
+                        <el-input type="text" v-model.trim="pickPeo.contact" :placeholder="lang === 'zh' ? '姓名' : 'Name'" :disabled="true">
                         </el-input>
                     </el-form-item>
                     <el-form-item :label="lang === 'zh' ? '职位' : 'Job Title'" prop="position">
-                        <!-- <i class="iconfont icon-zhongdian"></i> -->
-                        <el-input type="text" v-model.trim="pickPeo.position" auto-complete="off" :placeholder="lang === 'zh' ? '职位' : 'Job Title'"></el-input>
+                        <el-input type="text" v-model.trim="pickPeo.contactPost" auto-complete="off" :placeholder="lang === 'zh' ? '职位' : 'Job Title'" :disabled="true"></el-input>
                     </el-form-item>
                     <!-- 电子邮箱 -->
                     <el-form-item :label="lang === 'zh' ? '电子邮箱' : 'Email'" prop="email">
-                        <!-- <i class="iconfont icon-zhongdian"></i> -->
-                        <el-input type="text" v-model.trim="pickPeo.email" auto-complete="off" :placeholder="lang === 'zh' ? '电子邮箱' : 'Email'"></el-input>
+                        <el-input type="text" v-model.trim="pickPeo.email" auto-complete="off" :placeholder="lang === 'zh' ? '电子邮箱' : 'Email'" :disabled="true"></el-input>
                     </el-form-item>
                     <!--  国别-->
                     <el-form-item :label="lang === 'zh' ? '国别' : 'Country'" prop="country">
-                        <!-- <i class="iconfont icon-zhongdian"></i> -->
-                        <el-select v-model="countryValue" :placeholder="lang === 'zh' ? '国别' : 'Country'" @change="ckeckCount">
-                            <el-option
-                                v-for="item in countryOptions"
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.code">
-                            </el-option>
-                        </el-select>
+                        <el-input type="text" v-model="countryValue" auto-complete="off" :placeholder="lang === 'zh' ? '国别' : 'Country'" :disabled="true"></el-input>
                     </el-form-item>
                     <!-- 电话 -->
                     <el-form-item :label="lang === 'zh' ? '电话' : 'Contact Number'" prop="tel">
-                        <!-- <i class="iconfont icon-zhongdian"></i> -->
-                        <el-input type="text" v-model.trim="pickPeo.tel" auto-complete="off" :placeholder="lang === 'zh' ? '电话' : 'Contact Number'"></el-input>
+                        <el-input type="text" v-model.trim="pickPeo.contactNumber" auto-complete="off" :placeholder="lang === 'zh' ? '电话' : 'Contact Number'" :disabled="true"></el-input>
                     </el-form-item>
-                    <!-- <el-form-item label="院校名称" prop="schoolName">
-                        <el-input type="text" name="schoolName" v-model.trim="pickPeo.schoolName" auto-complete="off" placeholder="院校名称"></el-input>
-                    </el-form-item> -->
-                    <!-- 院校名称 -->
                     <el-form-item :label="lang === 'zh' ? '院校名称' : 'Institution Name'" prop="schoolName">
-                        <!-- <i class="iconfont icon-zhongdian"></i> -->
-                        <!-- <el-autocomplete
-                            v-model="state4"
-                            :fetch-suggestions="querySearchAsync"
-                            :placeholder="lang === 'zh' ? '院校名称' : 'Institution Name'"
-                            @select="handleSelect"
-                        ></el-autocomplete> -->
-                        <el-select v-model="schoolValue" :placeholder="lang === 'zh' ? '院校名称' : 'Institution Name'" @change="ckeckSchool">
-                            <el-option
-                                v-for="item in schoolOptions"
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.code">
-                            </el-option>
-                        </el-select>
+                        <el-input type="text" v-model.trim="pickPeo.name" auto-complete="off" :placeholder="lang === 'zh' ? '院校名称' : 'Institution Name'" :disabled="true"></el-input>
                     </el-form-item>
                 </div>
             </div>
@@ -85,18 +55,10 @@
                 <h4>{{lang === 'zh' ? '其他信息' : 'Other Information'}}</h4>
                 <div class="listDiv">
                     <el-form-item :label="lang === 'zh' ? '参展资料' : 'Exhibition Materials'" prop="materials">
-                        <!-- <el-select v-model="zlvalue" :placeholder="lang === 'zh' ? '请选择' : 'Please choose'">
-                            <el-option
-                                v-for="item in zloptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                            </el-option>
-                        </el-select> -->
                         <el-input v-model="materialsInp" placeholder="请输入内容"></el-input>
                     </el-form-item>
                     <el-form-item :label="lang === 'zh' ? '是否讲座' : 'Presentation Required'" prop="lecture"><br>
-                        <el-checkbox v-model="checked"></el-checkbox>
+                        <el-checkbox v-model="asd"></el-checkbox>
                     </el-form-item>
                 </div>
             </div>
@@ -105,30 +67,32 @@
                     <h4>{{lang === 'zh' ? '附件信息' : 'Attachment'}}</h4><span class="fontR">({{lang === 'zh' ? '备注：LOGO、PPT、其他' : 'e.g. LOGO、PPT、Others'}})</span>
                 </div>
                 <div class="upLoad">
-                    <el-upload
-                        class="upload-demo"
-                        :action="uploadfun"
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :before-remove="beforeRemove"
-                        multiple
+                    <el-upload class="upload-demo"
+                        ref="editTeaPic"
+                        :action="portraitUrl"
                         accept=".jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF,.docx,.pptx,.xlsx,.txt"
-                        :on-change="upChange"
-                        :file-list="fileList">
+                        :file-list="fileList"
+                        with-credentials
+                        :before-upload="beforeUpload"
+                        :on-remove="afterRemove"
+                        >
+                        <!-- :before-upload="beforeUpload" -->
                         <el-button size="small" type="primary">{{lang === 'zh' ? '点击上传' : 'Upload Attachment'}}</el-button>
                     </el-upload>
                 </div>
             </div>
             <div class="pickbtnGroup">
-                <div class="contue" @click="pickContueBtn">{{lang === 'zh' ? '报名' : 'Registration'}}</div>
-                <div class="cancel" @click="pickCancelBtn">{{lang === 'zh' ? '取消' : 'Cancel'}}</div>
+                <div>
+                    <el-button class="contue" @click="pickContueBtn" >{{lang === 'zh' ? '报名' : 'Registration'}}</el-button>
+                    <el-button class="cancel" @click="pickCancelBtn">{{lang === 'zh' ? '取消' : 'Cancel'}}</el-button>
+                </div>
             </div>
         </el-form>
     </div>
 </template>
 
 <script>
-import { updateCount, loginOut, setadddata, upload, update, allCountry, allSchool, selectUser } from "../../../api/api.js";
+import { updateCount, loginOut, setadddata, upload, update, allCountry, allSchool, selectUser, upload1 } from "../../../api/api.js";
 import axios from "axios";
 export default {
     name: "signUp",
@@ -137,64 +101,11 @@ export default {
             lang: "",
             count: "",
             pickPeo: {
-                userName: "",
-                position: "",
+                contact: "",
+                contactPost: "",
                 email: "",
-                country: "",
-                tel: "",
-                schoolName: "",
-            },
-            zhpickPeoRules: {
-                userName: [
-                    { required: true, message: '请输入姓名', trigger: 'blur' },
-                ],
-                position: [
-                    { required: true, message: '请输入职位', trigger: 'blur' },
-                ],
-                email: [
-                    { required: true, message: '请输入电子邮箱', trigger: 'blur' },
-                ],
-                country: [
-                    { required: true, message: '请选择国别', trigger: 'blur' },
-                ],
-                tel: [
-                    { required: true, message: '请输入电话', trigger: 'blur' },
-                ],
-                schoolName: [
-                    { required: true, message: '请输入院校名称', trigger: 'blur' },
-                ],
-                materials: [
-                    { required: true, message: '请输入参展资料', trigger: 'blur' },
-                ],
-                lecture: [
-                    { required: true, message: '请选择', trigger: 'blur' },
-                ]
-            },
-            enpickPeoRules: {
-                userName: [
-                    { required: true, message: 'Please enter your name', trigger: 'blur' },
-                ],
-                position: [
-                    { required: true, message: 'Please enter the position', trigger: 'blur' },
-                ],
-                email: [
-                    { required: true, message: 'Please enter your e-mail', trigger: 'blur' },
-                ],
-                country: [
-                    { required: true, message: 'Please choose your country.', trigger: 'blur' },
-                ],
-                tel: [
-                    { required: true, message: 'Please enter the telephone number.', trigger: 'blur' },
-                ],
-                schoolName: [
-                    { required: true, message: 'Please enter the name of the institution.', trigger: 'blur' },
-                ],
-                materials: [
-                    { required: true, message: 'Please enter the exhibition information.', trigger: 'blur' },
-                ],
-                lecture: [
-                    { required: true, message: 'Please choose', trigger: 'blur' },
-                ]
+                contactNumber: "",
+                name: "",       // 学校名
             },
             materialsInp: "",
             countryOptions: [],
@@ -202,31 +113,35 @@ export default {
             countryValue: "",
             schoolOptions: [],
             schoolValue: "",
-            schoolCode: "",
             value: "",
-            checked: false,
+            asd: "",
             state4: "",
             fileList: [],
-            uploadfun: "",
-
+            activeId: "",
+            upFile: "",
+            files: [],
+            portraitUrl: "",
+            bmDis: true,
+            counCode: "",
+            schoolCode: "",
+            fileSrc: "",
+            fileName: "",
+            fileType: ""
         }
     },
     created() {
         this.lang = sessionStorage.getItem("lange");
 
-        this.uploadfun = axios.defaults.baseURL + '/enrolment/upload.do';
+        this.portraitUrl = axios.defaults.baseURL + '/enrolment/upload1.do';
+        this.activeId = sessionStorage.getItem("activeDeId");
     },
     mounted() {
         this.restaurants = this.loadAll();
         updateCount().then((res) => {
             this.count = res.data;
         })
-
+        
         this.setData();
-        // 获取国家
-        this.getCountry();
-
-        this.getCounAndSch();
     },
     methods: {
         toMine () {
@@ -285,35 +200,17 @@ export default {
             ];
         },
         setData () {
-            setadddata().then((res) => {
-                if (res.statu == 1){
-                    this.pickPeo.userName = res.data[0].name;
-                    this.pickPeo.position = res.data[0].post;
-                    this.pickPeo.email = res.data[0].email;
-                    this.pickPeo.tel = res.data[0].phone;
-                }
-            })
-        },
-        // 获取国家信息
-        getCounAndSch () {
-            selectUser().then((res) => {
-                this.countryValue = res.data.country.name;
-                this.schoolValue = res.data.school.name;
-            })
-        },
-        querySearchAsync(queryString, cb) {
-            var restaurants = this.restaurants;
-            var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-                cb(results);
-            }, 3000 * Math.random());
-        },
-        createStateFilter(queryString) {
-            return (state) => {
-            return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+            let params = {
+                id: this.activeId
             };
+            setadddata(params).then((res) => {
+                this.pickPeo = res.data.neppm[0];
+                this.countryValue = res.data.countryName;
+                this.counCode = res.data.countryCode;
+                this.schoolCode = res.data.neppm[0].code;
+            })
         },
+
         handleSelect(item) {
             if (item) {
                 this.pickPeoRules.schoolName[0].message = ""
@@ -327,77 +224,54 @@ export default {
             console.log(file, fileList);
             console.log("handleRemove");
         },
+        beforeUpload (file) {
+            console.log(file);
+            // if (window.createObjectURL != undefined) {
+            //     this.fileSrc = window.createObjectURL(file);
+            // } else if (window.URL != undefined) {
+            //     this.fileSrc = Window.URL.createObjectURL(file);
+            // } else if (window.webkitURL != undefined) {
+            //     this.fileSrc = window.webkitURL.createObjectURL(file);
+            // }
+            // console.log(this.fileSrc);
+        },
+        afterRemove () {},
         beforeRemove(file, fileList) {
             return this.$confirm(`确定移除 ${ file.name }？`);
         },
+        handleExceed(files, fileList) {
+            this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+        },
+        upFail(response, file, fileList) {
+            console.log(response, file, fileList);
+            // if ()
+            this.$message.error('上传失败!');
+        },
         upChange (file, fileList) {
-            console.log(file, fileList);
+            // this.files.push(file.raw);
+            this.files = file.name;
+            console.log(file);
+            // let blob = new Blob();
+            console.log(window.URL.createObjectURL(file));
         },
-        getAccept(accept) {
-            switch (accept) {
-                case 'text':
-                    return {
-                        title: 'Texts',
-                        exteensions: 'doc,docx,xls,xlsx,ppt,pptx,pdf,txt',
-                        mimeTypes: '.doc,docx,.xls,.xlsx,.ppt,.pptx,.pdf,.txt'
-                    };
-                    break;
-                case 'video':
-                    return {
-                        title: 'Videos',
-                        exteensions: 'mp4',
-                        mimeTypes: '.mp4'
-                    };
-                    break;
-                case 'image':
-                    return {
-                        title: 'Images',
-                        exteensions: 'gif,jpg,jpeg,bmp,png',
-                        mimeTypes: '.gif,.jpg,.jpeg,.bmp,.png'
-                    };
-                    break;
-                default: return accept
-            }
-        },
+        upSuccess () {},
+        // 报名按钮
         pickContueBtn() {
             // this.$router.push("/signsuccess");
             let params = {
-
+                materials: this.materialsInp,
+                isLecture: this.asd == true ? '1' : '0',
+                campaignId: this.activeId,
+                schoolCode: this.schoolCode,
+                countryCode: this.counCode
             };
-        },
-        // 获取国家
-        getCountry () {
-            this.countryOptions = [];
-            allCountry().then((res) => {
+            update(params).then((res) => {
                 if (res.statu == 1) {
-                    this.countryOptions = res.data;
+                    this.$router.push("/signsuccess");
                 }
             })
         },
-        // 改变国家
-        ckeckCount (val) {
-            this.schoolOptions = [];
-            console.log(val);
-
-            let params = {
-                countryid: val
-            };
-            allSchool(params).then((res) => {
-                if (res.statu == 1) {
-                    this.schoolOptions = res.data;
-                } else {
-                    this.$message({
-                        message: res.message,
-                        type: 'warning'
-                    });
-                }
-            })
-        },
-        // 选择院校
-        ckeckSchool (val) {
-            console.log(val);
-            this.schoolCode = val;
-        },
+        // 取消报名
         pickCancelBtn() {
             this.$router.go(-1);
         },
@@ -414,7 +288,6 @@ export default {
                             this.$router.push('/login');
                         }
                     }))
-                    
                 }).catch((err) => {
                     console.error('loginErr', err);
                 });
@@ -435,7 +308,7 @@ export default {
                 });
             }
         },
-    }
+    },
 }
 </script>
 
@@ -502,8 +375,8 @@ export default {
         }
         .el-form{
             width: 88%;
-            padding: 2% 6%;
-            margin: 0 6%;
+            padding: 2% 6% 10% 6%;
+            margin: 0 6% 3% 6%;
             box-shadow: 0px 0px 10px #cccccc;
             .iconfont{
                 color: #CC0202;
@@ -555,22 +428,27 @@ export default {
                 }
             }
             .pickbtnGroup{
-                width: 50%;
+                width: 100%;
                 display: flex;
-                margin-left: 22%;
+                // margin-left: 22%;
+                justify-content: center;
+                align-items: center;
                 height: 45px;
                 line-height: 41px;
                 div{
                     padding: 0.5% 4% 5% 4%;
+                    min-width: 300px;
                     text-align: center;
-                    margin-left: 30%;
-                    border: 1px solid #006960;
                     border-radius: 4px;
                     cursor: pointer;
-                }
-                .contue{
-                    background: #006960;
-                    color: #ffffff;
+                    text-align: center;
+                    .contue{
+                        background: #006960;
+                        color: #ffffff;
+                    }
+                    .cancel{
+                        margin-left: 20%;
+                    }
                 }
             }
             .el-form-item{
@@ -583,9 +461,6 @@ export default {
         }
         .el-form /deep/ .el-form-item{
             position: relative;
-        }
-        .el-form /deep/ .el-form-item__label{
-            // margin-left: 4%;
         }
         .el-form-item i{
             position: absolute;

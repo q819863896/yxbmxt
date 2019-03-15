@@ -322,7 +322,7 @@ export default {
         },
         checkPass (e) {
             let params = {
-                password: e.target.value
+                password: this.$md5(e.target.value)
             };
             if (e.target.value !== "") {
                 updatepwd(params).then((res) => {
@@ -371,7 +371,7 @@ export default {
         // 验证再次输入的密码
         changePassBtn () {
             let params = {
-                password: this.changePass.newPass
+                password: this.$md5(this.changePass.newPass)
             };
             if (this.lang == "zh") {
                 if (this.changePass.csPass == "" && this.changePass.newPass == "" && this.changePass.aginPass == "") {

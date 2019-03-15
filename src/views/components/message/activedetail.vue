@@ -37,25 +37,25 @@
             <div class="details">
                 <div class="itemDetail">
                     <p>
-                        <span>{{lang === 'zh' ? '活动名称' : 'Event Name'}}</span>：<span>{{this.items.name}}</span>
+                        <span>{{lang === 'zh' ? '活动名称' : 'Event Name'}}</span>：<span>{{this.items.campaign.name}}</span>
                     </p>
                     <p>
-                        <span>{{lang === 'zh' ? '所在地点' : 'Location'}}</span>：<span>{{this.items.city}}</span>
+                        <span>{{lang === 'zh' ? '所在地点' : 'Location'}}</span>：<span>{{this.items.campaign.city}}</span>
                     </p>
                     <p>
-                        <span>{{lang === 'zh' ? '活动地点' : 'Venue Address'}}</span>：<span>{{this.items.area}}</span>
+                        <span>{{lang === 'zh' ? '活动地点' : 'Venue Address'}}</span>：<span>{{this.items.campaign.area}}</span>
                     </p>
                     <p>
-                        <span>{{lang === 'zh' ? '详细地址' : 'Address Details'}}</span>：<span>{{this.items.building}}</span>
+                        <span>{{lang === 'zh' ? '详细地址' : 'Address Details'}}</span>：<span>{{this.items.campaign.building}}</span>
                     </p>
                     <p>
-                        <span>{{lang === 'zh' ? '活动时间' : 'Event Time'}}</span>：<span>{{this.items.startDate}}-{{this.items.endDate}}</span>
+                        <span>{{lang === 'zh' ? '活动时间' : 'Event Time'}}</span>：<span>{{this.items.campaign.startDate}}-{{this.items.campaign.endDate}}</span>
                     </p>
                 </div>
                 <!-- 活动介绍 -->
                 <div class="activejs">
                     <div class="tit">{{lang === 'zh' ? '活动介绍' : 'Activity introduction'}}</div>
-                    <p>{{this.items.remark}}</p>
+                    <p>{{this.items.campaign.remark}}</p>
                 </div>
                 <!-- 活动对接人 -->
                 <div class="activedjr">
@@ -63,14 +63,14 @@
                     <div class="djrDiv">
                         <p>
                             <!-- 姓名 -->
-                            <span>{{lang === 'zh' ? '姓名' : 'Full name'}}</span><em>不是</em>：<span>{{this.items.activityLeader}}</span>
+                            <span>{{lang === 'zh' ? '姓名' : 'Full name'}}</span><em>不是</em>：<span>{{this.items.campaign.activityLeader}}</span>
                         </p>
                         <p>
                             <!-- 联系电话 -->
-                            <span>{{lang === 'zh' ? '联系电话' : 'Contact number'}}</span>：<span>{{this.items.activityLeaderPhone}}</span>
+                            <span>{{lang === 'zh' ? '联系电话' : 'Contact number'}}</span>：<span>{{this.items.campaign.activityLeaderPhone}}</span>
                         </p>
-                        <div class="pic">
-                            <img src="@/assets/images/success.png" alt="">
+                        <div class="pic" v-if="this.items.enrolmentAttachment[0].attachmentUrl != ''">
+                            <img :src="this.items.enrolmentAttachment[0].attachmentUrl" alt="">
                         </div>
                     </div>
                 </div>
@@ -78,14 +78,14 @@
                 <div class="picwrap">
                     <div class="tit">{{lang === 'zh' ? '会场图片' : 'Venue photos'}}</div>
                     <div class="picDiv">
-                        <div class="picT">
-                            <img src="@/assets/images/success.png" alt="">
+                        <div class="picT" v-if="this.items.enrolmentAttachment[1].attachmentUrl != ''">
+                            <img :src="this.items.enrolmentAttachment[1].attachmentUrl" alt="">
                         </div>
-                        <div class="picT">
-                            <img src="@/assets/images/success.png" alt="">
+                        <div class="picT" v-if="this.items.enrolmentAttachment[2].attachmentUrl != ''">
+                            <img :src="this.items.enrolmentAttachment[2].attachmentUrl" alt="">
                         </div>
-                        <div class="picT">
-                            <img src="@/assets/images/success.png" alt="">
+                        <div class="picT" v-if="this.items.enrolmentAttachment[3].attachmentUrl != ''">
+                            <img :src="this.items.enrolmentAttachment[3].attachmentUrl" alt="">
                         </div>
                     </div>
                 </div>
@@ -122,6 +122,7 @@ export default {
             statu: "",
             items: {},
             count: "",
+            queryId: "",
             centerDialogVisible: false
         }
     },
@@ -183,6 +184,10 @@ export default {
         updateCount().then((res) => {
             this.count = res.data;
         })
+
+        this.queryId = window.location.href.split("=")[1];
+        console.log(this.queryId);
+        sessionStorage.setItem("activeDeId", this.queryId);
 
         let params = this.$route.query;
         console.log(params);
@@ -306,6 +311,14 @@ export default {
                 em{
                     visibility: hidden;
                 }
+                .pic{
+                    width: 128px;
+                    height: 128px;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
             }
         }
         .picwrap{
@@ -314,10 +327,14 @@ export default {
                 display: flex;
                 .picT{
                     flex: 1;
-                    height: 100%;
+                    height: 128px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    img{
+                        width: 128px;
+                        height: 100%;
+                    }
                 }
             }
         }
