@@ -5,9 +5,9 @@ import Vue from 'vue';
 import App from './App';
 import router from './router/index.js';
 import "./assets/style/style.css";
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+// import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 // import VueHighcharts from "highcharts";
-// import i18n from './lang'
+import i18n from './lang/index.js';
 // import VueI18n from "vue-i18n";
 import md5 from 'js-md5';
 
@@ -24,7 +24,11 @@ Vue.config.productionTip = false;
 Vue.prototype.$md5 = md5;
 
 Vue.use(ElementUI);
-Vue.use(ElementUI, { locale });
+// Vue.use(ElementUI, {
+//     size: 'medium',
+//     i18n: (key, value) => i18n.t(key, value)
+// });
+
 Vue.use(router);
 // Vue.use(VueHighcharts);
 
@@ -46,7 +50,7 @@ new Vue({
     el: '#app',
     router,
     store,
-    // i18n,
+    i18n,
     components: { App },
     template: '<App/>'
 })

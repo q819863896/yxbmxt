@@ -2,28 +2,28 @@
     <div class="login_box" >
         <headers></headers>
         <el-form :model="loginInfo" :rules="lang === 'zh' ? zhloginRules : enloginRules" ref="loginInfo" class="demo-ruleForm login-container">
-            <!-- <el-form-item :label="$t('loginPage.username')" prop="account" style="position: relative">
+            <el-form-item :label="$t('loginPage.username')" prop="account" style="position: relative">
                 <el-input type="text" name="account" v-model.trim="loginInfo.account" :placeholder="$t('loginPage.username')">
                 </el-input>
-            </el-form-item> -->
-            <el-form-item :label="lang === 'zh' ? '用户名' : 'Username'" prop="account" style="position: relative">
+            </el-form-item>
+            <!-- <el-form-item :label="lang === 'zh' ? '用户名' : 'Username'" prop="account" style="position: relative">
                 <el-input type="text" name="account" v-model.trim="loginInfo.account" :placeholder="lang === 'zh' ? '用户名' : 'Username'">
                 </el-input>
-            </el-form-item>
-            <!-- <el-form-item :label="$t('loginPage.password')" prop="password">
-                <el-input type="password" name="password" v-model.trim="loginInfo.password" auto-complete="off" :placeholder="$t('loginPage.password')"></el-input>
             </el-form-item> -->
-            <el-form-item :label="lang === 'zh' ? '密码' : 'Password'" prop="account" style="position: relative">
+            <el-form-item :label="$t('loginPage.password')" prop="password">
+                <el-input type="password" name="password" v-model.trim="loginInfo.password" auto-complete="off" :placeholder="$t('loginPage.password')"></el-input>
+            </el-form-item>
+            <!-- <el-form-item :label="lang === 'zh' ? '密码' : 'Password'" prop="account" style="position: relative">
                 <el-input type="text" name="account" v-model.trim="loginInfo.password" :placeholder="lang === 'zh' ? '用户名' : 'Username'">
                 </el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item style="width:100%;">
-                <el-button type="primary" style="width:100%;" @click.native.prevent="loginBtn" :loading="logining">{{lang === "zh" ? "登录" : "Login"}}</el-button>
+                <el-button type="primary" style="width:100%;" @click.native.prevent="loginBtn" :loading="logining">{{$t('loginPage.Login')}}</el-button>
             </el-form-item>
-            <el-form-item class="forget" @click.native.prevent="forgetBtn">{{lang === "zh" ? "忘记密码" : "Forget Password"}}</el-form-item>
+            <el-form-item class="forget" @click.native.prevent="forgetBtn">{{$t('loginPage.forgetPass')}}</el-form-item>
             <router-view></router-view>
         </el-form>
-        <div class="quick" @click="quickBtn">{{lang === "zh" ? "快速注册" : "Quick Registration"}}</div>
+        <div class="quick" @click="quickBtn">{{$t('loginPage.quickRegistr')}}</div>
     </div>
 </template>
 

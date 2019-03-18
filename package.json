@@ -53,7 +53,7 @@
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "vue-highcharts": "^0.1.0",
-    "vue-i18n": "^8.8.2",
+    "vue-i18n": "^8.9.0",
     "vue-loader": "^13.7.3",
     "vue-style-loader": "^3.1.2",
     "vue-template-compiler": "^2.5.2",

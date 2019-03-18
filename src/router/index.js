@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 const Login = () => import('../views/account/login.vue');   // // 登录\
+const Testlogin = () => import('../views/account/testLogin.vue');   // // 登录\
 const Register = () => import('../views/account/register.vue');   // 注册
 const Retrievepass = () => import('../views/account/retrievepass.vue'); // 忘记密码
 
@@ -49,6 +50,11 @@ export default new Router({
             path: '/',
             name: 'Login',
             component: Login,
+        },
+        {
+            path: '/testlogin',
+            name: 'Testlogin',
+            component: Testlogin,
         },
         {
             path: '/login',

@@ -8,7 +8,6 @@ axios.defaults.validateStatus = statu => {
 
 // 接口错误拦截
     axios.interceptors.response.use(res => {
-        console.log(res.data);
         if (res.status === 401) {
            sessionStorage.removeItem('changeUser');
         //    sessionStorage.removeItem('token');
@@ -22,48 +21,15 @@ axios.defaults.validateStatus = statu => {
         return Promise.reject(err)
     })
 
-// axios.interceptors.response.use(
-//     response => {
-//       if(response.data.code === 500) {
-//         if (response.data.msg === '请先登录') {
-//           router.push({
-//             path: '/login',
-//             query: {redirect: router.history.current.fullPath}
-//           })
-//           //如果需要可以在这里将 vuex 里的 user 改为空对象
-//         }
-//       //显示错误信息
-//       return Promise.reject(response.data)
-//     }
-//     if(response.data.code === 0){
-//       return response;
-//     }
-// }, error => {
-//     //显示错误信息
-//     return Promise.reject(error.response.data)
-// });
-
-
-
-// axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
+axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
 // axios.defaults.baseURL = "http://10.150.116.209:8080";     // 李元吉
-axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-0.0.1-SNAPSHOT";  // 测试
+// axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-0.0.1-SNAPSHOT";  // 测试
 
 axios.defaults.timeout = 1000 * 50;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 axios.defaults.headers.get['Content-Type'] = 'application/json';
-
-// var _axios = axios.create({
-//     baseURL: axios.defaults.baseURL,
-//     timeout: '50000',
-//     headers: {
-//         "Content-Type": "application/json",
-//         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-//     },
-//     withCredentials:true
-// })
 
 axios.interceptors.response.use(res => {
 
@@ -220,11 +186,6 @@ export const wdbmxxjl = params => {
     return axios.post('/campaign/wdbmxxjl.do', stringify(params)).then(res => res.data);
 }
 
-// 立即报名的接口
-// export const upload2 = params => {
-//     return axios.post('/enrolment/upload2.do', stringify(params)).then(res => res.data);
-// }
-
 // 报名-回显
 export const setadddata = params => {
     return axios.post('/enrolment/setadddata.do', stringify(params)).then(res => res.data);
@@ -235,6 +196,10 @@ export const upload = (params) => {
    return axios.post('/enrolment/upload.do', stringify(params)).then(res => res.data);
 };
 
+export const singlefile = (params) => {
+    return axios.post('/enrolment/singlefile.do', stringify(params)).then(res => res.data);
+ };
+
 export const upload1 = (params) => {
     return axios.post('/enrolment/upload1.do', stringify(params)).then(res => res.data);
  };
@@ -243,4 +208,3 @@ export const upload1 = (params) => {
 export const update = params => {
     return axios.post('/enrolment/update.do', stringify(params)).then(res => res.data);
 }
-

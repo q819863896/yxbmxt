@@ -41,7 +41,7 @@
                                 <img :src="item.EnrolmentAttachment.attachmenttype" alt="">
                             </dt>
                             <dd>
-                                <p class="fontBlue">{{item.campaign.building}}</p>
+                                <p class="fontBlue">{{item.campaign.name}}</p>
                                 <p>
                                     <i class="iconfont icon-dizhi"></i>
                                     <span>{{item.campaign.area}}</span>
@@ -207,7 +207,8 @@ export default {
         }
     },
     created () {
-        this.lang = sessionStorage.getItem("lange");
+        // this.lang = sessionStorage.getItem("lange");
+        this.lang = localStorage.getItem("lange");
     },
     mounted () {
         this.getDate();

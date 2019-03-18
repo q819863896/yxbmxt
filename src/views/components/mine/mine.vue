@@ -102,7 +102,8 @@ export default {
         }
     },
     created () {
-        this.lang = sessionStorage.getItem("lange");
+        // this.lang = sessionStorage.getItem("lange");
+        this.lang = localStorage.getItem("lange");
     },
     mounted () {
         updateCount().then((res) => {
