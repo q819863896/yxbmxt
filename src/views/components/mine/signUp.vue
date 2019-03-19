@@ -69,14 +69,13 @@
                 <div class="upLoad">
                     <el-upload class="upload-demo"
                         ref="editTeaPic"
-                        :action="portraitUrl"
+                        action=""
                         accept=".jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF,.docx,.pptx,.xlsx,.txt"
                         :file-list="fileList"
                         with-credentials
                         :before-upload="beforeUpload"
                         :on-remove="afterRemove"
                         >
-                        <!-- :before-upload="beforeUpload" -->
                         <el-button size="small" type="primary">{{lang === 'zh' ? '点击上传' : 'Upload Attachment'}}</el-button>
                     </el-upload>
                 </div>
@@ -133,7 +132,7 @@ export default {
         // this.lang = sessionStorage.getItem("lange");
         this.lang = localStorage.getItem("lange");
 
-        this.portraitUrl = axios.defaults.baseURL + '/enrolment/upload1.do';
+        // this.portraitUrl = axios.defaults.baseURL + '/enrolment/upload1.do';
         this.activeId = sessionStorage.getItem("activeDeId");
     },
     mounted() {
@@ -142,6 +141,7 @@ export default {
         })
         
         this.setData();
+        console.log(sessionStorage.getItem("ccid"));
     },
     methods: {
         toMine () {
@@ -172,15 +172,50 @@ export default {
             console.log("handleRemove");
         },
         beforeUpload (file) {
-            console.log(file);
-            // if (window.createObjectURL != undefined) {
-            //     this.fileSrc = window.createObjectURL(file);
-            // } else if (window.URL != undefined) {
-            //     this.fileSrc = Window.URL.createObjectURL(file);
-            // } else if (window.webkitURL != undefined) {
-            //     this.fileSrc = window.webkitURL.createObjectURL(file);
-            // }
-            // console.log(this.fileSrc);
+            // console.log(file);
+            var formData = new FormData();
+            formData.append("file", file);
+            formData.append("campaignId", sessionStorage.getItem("activeDeId"));
+            console.log(formData.get("file"));
+            // axios.post("/");
+
+            // let params = {
+            //     file: file,
+            //     campaignId: sessionStorage.getItem("activeDeId")
+            // };
+            // let params = [];
+            // params.push(file);
+            // params.push(sessionStorage.getItem("activeDeId"));
+            // console.log(params);
+            upload1(formData).then((res) => {
+
+            })
+        },
+        uploadBtn () {
+            // let formData = new FormData();
+            // formData.append("fileJson", this.$refs.f1.files[0]);
+            // formData.append("campaignId", sessionStorage.getItem("activeDeId"));
+            // console.log(formData.get("fileJson"));
+            // console.log(formData.get("campaignId"));
+            let params = {
+                file: this.$refs.f1.files[0],
+                campaignId: sessionStorage.getItem("activeDeId")
+            };
+            console.log(params);
+            // upload1(formData).then((res) => {
+
+            // })
+            upload1(params, {
+                headers: {'Content-Type': 'multipart/form-data'}
+            }).then((res) => {
+
+            })
+            // const instance = axios.create({
+            //     withCredentials: true
+            // })
+            // instance.post(upload1, params).then((res) => {
+            //     console.log(res);
+            // })
         },
         afterRemove () {},
         beforeRemove(file, fileList) {
@@ -212,8 +247,31 @@ export default {
                 schoolCode: this.schoolCode,
                 countryCode: this.counCode
             };
+            if (this.lang == "zh") {
+                this.$message({
+                    message: '正在报名',
+                    type: 'success'
+                });
+            } else {
+                this.$message({
+                    message: 'Sign up',
+                    type: 'success'
+                });
+            }
             update(params).then((res) => {
                 if (res.statu == 1) {
+                    if (this.lang == "zh") {
+                        this.$message({
+                            message: '报名成功',
+                            type: 'success'
+                        });
+                    } else {
+                        this.$message({
+                            message: 'Successful Registration',
+                            type: 'success'
+                        });
+                    }
+                    
                     this.$router.push("/signsuccess");
                 }
             })
@@ -232,7 +290,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/login');
+                            this.$router.push('/testlogin');
                         }
                     }))
                 }).catch((err) => {
@@ -247,7 +305,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/login');
+                            this.$router.push('/testlogin');
                         }
                     }))
                 }).catch((err) => {
@@ -367,6 +425,16 @@ export default {
                     border-radius: 4px;
                     cursor: pointer;
                     margin: 2% 0;
+                    .ja-btn{
+                        margin-left: 3px;
+                        width: 80px;
+                        height: 35px;
+                        border: 1px solid #006960;
+                        color: #006960;
+                        border-radius: 5px;
+                        font-size: 12px;
+                        display: none;
+                    }
                     button{
                         border: 1px solid #006960;
                         color: #006960;

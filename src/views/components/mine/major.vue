@@ -6,23 +6,7 @@
         </div>
         <div class="mid">
             <div class="sstj">
-                <!-- <el-select v-model="createvalue" :placeholder="lang=='zh' ? '按创建时间排序' : 'Sort by Creation Time'" @change="timeType">
-                    <el-option
-                        v-for="item in createTimeOptions"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                    </el-option>
-                </el-select>
-                <el-select v-model="allAreaValue" :placeholder="lang=='zh' ? '所有地区' : 'Location'" @change="areaType">
-                    <el-option value="allDq" :label="lang=='zh' ? '全部' : 'All Areas'">全部</el-option>
-                    <el-option
-                        v-for="item in allAreaOptions"
-                        :key="item.id"
-                        :label="item.city"
-                        :value="item.city">
-                    </el-option>
-                </el-select> -->
+                <!-- 选择日期 -->
                 <el-date-picker
                     v-model="birthdayName"
                     format="yyyy-MM" 
@@ -30,15 +14,17 @@
                     @change="changeMonth"
                     type="month"
                     :placeholder="lang=='zh' ? '选择日期' : 'Date'">
-                    <!-- 选择日期 -->
                 </el-date-picker>
             </div>
             <div class="ddpic" v-loading="loading" v-if="yesData">
                 <div class="toActive" v-for="(item, index) in items" :key="index">
                     <router-link :to="{path:'/activedetail', query:{cid:item.campaign.id}}">
                         <dl>
-                            <dt>
-                                <img :src="item.EnrolmentAttachment.attachmenttype" alt="">
+                            <dt v-if="item.EnrolmentAttachment[0].attachmentUrl != ''">
+                                <img :src="item.EnrolmentAttachment[0].attachmentUrl" alt="">
+                            </dt>
+                            <dt v-else>
+                                <img src="@/assets/images/item.jpg" alt="">
                             </dt>
                             <dd>
                                 <p class="fontBlue">{{item.campaign.name}}</p>
@@ -280,8 +266,9 @@ export default {
                         }
                     }
                     .signUp{
-                        width: 100px;
+                        min-width: 100px;
                         height: 30px;
+                        padding: 0 1%;
                         text-align: center;
                         line-height: 30px;
                         background: #006960;

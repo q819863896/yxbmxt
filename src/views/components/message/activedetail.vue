@@ -69,45 +69,32 @@
                             <!-- 联系电话 -->
                             <span>{{lang === 'zh' ? '联系电话' : 'Contact number'}}</span>：<span>{{this.items.campaign.activityLeaderPhone}}</span>
                         </p>
-                        <div class="pic" v-if="this.items.enrolmentAttachment[0].attachmentUrl != ''">
+                        <!-- <div class="pic" v-if="this.items.enrolmentAttachment[0].attachmentUrl != ''">
                             <img :src="this.items.enrolmentAttachment[0].attachmentUrl" alt="">
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <!-- 会场图片 -->
                 <div class="picwrap">
                     <div class="tit">{{lang === 'zh' ? '会场图片' : 'Venue photos'}}</div>
                     <div class="picDiv">
+                        <div class="picT" v-if="this.items.enrolmentAttachment[0].attachmentUrl != ''">
+                            <img :src="this.items.enrolmentAttachment[0].attachmentUrl" alt="">
+                        </div>
                         <div class="picT" v-if="this.items.enrolmentAttachment[1].attachmentUrl != ''">
                             <img :src="this.items.enrolmentAttachment[1].attachmentUrl" alt="">
                         </div>
                         <div class="picT" v-if="this.items.enrolmentAttachment[2].attachmentUrl != ''">
                             <img :src="this.items.enrolmentAttachment[2].attachmentUrl" alt="">
                         </div>
-                        <div class="picT" v-if="this.items.enrolmentAttachment[3].attachmentUrl != ''">
-                            <img :src="this.items.enrolmentAttachment[3].attachmentUrl" alt="">
-                        </div>
                     </div>
                 </div>
             </div>
-            
             <div class="bmBtn right">
                 <p @click="bmBtn">{{lang === 'zh' ? '立即报名' : 'Sign Up Now'}}</p>
             </div>
         </div>
-        <el-dialog
-            :title="lang === 'zh' ? '提示' : 'Tips'"
-            :visible.sync="centerDialogVisible"
-            width="30%"
-            center>
-            <span>需要注意的是内容是默认不居中的</span>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="centerDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-            </span>
-        </el-dialog>
     </div>
-    
 </template>
 
 <script>
@@ -122,8 +109,7 @@ export default {
             statu: "",
             items: {},
             count: "",
-            queryId: "",
-            centerDialogVisible: false
+            queryId: ""
         }
     },
     methods: {
@@ -141,7 +127,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/login');
+                            this.$router.push('/testlogin');
                         }
                     }))
                     
@@ -157,17 +143,13 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/login');
+                            this.$router.push('/testlogin');
                         }
                     }))
                 }).catch((err) => {
                     console.error('loginErr', err);
                 });
             }
-        },
-        qxbmBtn () {
-            // this.$router.go(-1);
-            this.centerDialogVisible = true;
         },
         backBtn() {
             this.$router.go(-1);
@@ -191,6 +173,7 @@ export default {
         sessionStorage.setItem("activeDeId", this.queryId);
 
         let params = this.$route.query;
+        sessionStorage.setItem("ccid", this.$route.query.cid);
         console.log(params);
         xxjl(params).then((res) => {
             this.statu = res.data.statu;

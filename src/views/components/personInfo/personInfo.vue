@@ -42,7 +42,7 @@
                 </div>
                 <!-- detailedInfoRules -->
                 <el-form :model="detailedInfo" :rules="lang == 'zh' ? detailedInfoRules : enchangePassRules" ref="detailedInfo" class="demo-ruleForm login-container" v-else>
-                    <el-form-item :label="lang == 'zh' ? '姓名' : 'Username'" prop="userName" style="position: relative">
+                    <el-form-item :label="lang == 'zh' ? '姓名' : 'Username'" prop="userName" >
                         <el-input type="text" v-model.trim="detailedInfo.userName" :placeholder="lang == 'zh' ? '姓名' : 'Username'">
                         </el-input>
                     </el-form-item>
@@ -98,7 +98,7 @@
             <div class="right">
                 <h4>{{lang == 'zh' ? '修改密码' : 'Change Password'}}</h4>
                 <el-form :model="changePass" :rules="lang == 'zh' ? zhchangePassRules : enchangePassRules" ref="changePass" class="demo-ruleForm login-container">
-                    <el-form-item :label="lang == 'zh' ? '初始密码' : 'Original Password'" prop="csPass" style="position: relative">
+                    <el-form-item :label="lang == 'zh' ? '初始密码' : 'Original Password'" prop="csPass" >
                         <el-input type="password" v-model.trim="changePass.csPass" :placeholder="lang == 'zh' ? '初始密码' : 'Original Password'" @blur="checkPass">
                         </el-input>
                         <p v-if="notPass" class="notPass">{{lang == 'zh' ? '与原密码不一致' : 'Inconsistent with the original password'}}</p>
@@ -110,7 +110,7 @@
                     </el-form-item>
                     <el-form-item :label="lang == 'zh' ? '再次输入密码' : 'Enter Password Again'" prop="aginPass">
                         <el-input type="password" v-model.trim="changePass.aginPass" auto-complete="off" :placeholder="lang == 'zh' ? '再次输入密码' : 'Enter Password Again'" @blur="checkAgin"></el-input>
-                        <p v-if="againTit" class="notPass">{{lang == 'zh' ? '修改密码两次不一致' : 'Two inconsistencies in password modification'}}</p>
+                        <!-- <p v-if="againTit" class="notPass">{{lang == 'zh' ? '修改密码两次不一致' : 'Two inconsistencies in password modification'}}</p> -->
                     </el-form-item>
                     <el-button class="changePassBtn" @click.native.prevent="changePassBtn" :disabled="disFlag">{{lang == 'zh' ? '更改密码' : 'Change Password'}}</el-button>
                 </el-form>
@@ -311,11 +311,13 @@ export default {
                             message: res.message,
                             type: 'success'
                         });
+                        location.reload();
                     } else {
                         this.$message({
                             message: 'Successful revision!',
                             type: 'success'
                         });
+                        location.reload();
                     }
                 }
             })
@@ -390,6 +392,7 @@ export default {
                                 type: 'success'
                             });
                         })
+                        this.$router.push("/testlogin");
                     }
                 }
             } else {
@@ -408,26 +411,11 @@ export default {
                                 message: 'Successful password modification',
                                 type: 'success'
                             });
-                        })
+                        });
+                        this.$router.push("/testlogin");
                     }
                 }
             }
-            // if (this.changePass.aginPass == "") {
-
-            // }
-            // if (this.changePass.newPass != this.changePass.aginPass && this.changePass.newPass == "") {
-            //     // this.$message.error('修改密码两次不一致');
-            //     this.disFlag = false;
-            //     return false;
-            // } else {
-                
-            // }
-            // succeedpwd(params).then((res) => {
-            //         this.$message({
-            //             message: '密码修改成功',
-            //             type: 'success'
-            //         });
-            //     })
         },
     },
     created () {
@@ -450,7 +438,6 @@ export default {
         font-size: 18px;
         padding: 3% 0 2% 5%;
     }
-
     .content{
         margin-top: 50px;
     }
@@ -493,6 +480,15 @@ export default {
                     .el-select{
                         width: 100%;
                     }
+                    .el-form-item__error{
+                        color: #f56c6c;
+                        font-size: 12px;
+                        line-height: 1;
+                        padding-top: 4px;
+                        position: absolute;
+                        top: 136%;
+                        left: 0;
+                    }
                 }
             }
             .demo-ruleForm{
@@ -500,6 +496,7 @@ export default {
                     width: 100%;
                     display: flex;
                     .cancelBtn, .continueBtn{
+                        min-width: 50px;
                         padding: 0 2%;
                         height: 30px;
                         text-align: center;
@@ -525,9 +522,13 @@ export default {
         .right{
             width: 50%;
             padding: 0 5%;
+            .el-form{
+                .el-form-item{
+                    line-height: 80px;
+                }
+            }
             .notPass{
                 color: #F56C6C;
-                margin-bottom: -15%;
                 font-size: 12px;
             }
         }

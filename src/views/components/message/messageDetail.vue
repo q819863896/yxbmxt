@@ -61,15 +61,6 @@ export default {
                 }
             })
         },
-        // 判断已读状态
-        flagRead () {
-            let params = {
-                nid: this.$route.query.cid
-            };
-            updateStatu(params).then((res) => {
-                
-            })
-        }
     },
     created() {
         // this.lang = sessionStorage.getItem("lange");
@@ -77,10 +68,10 @@ export default {
     },
     mounted(){
         this.showDetail();
-        this.flagRead();
-        // updateStatu(this.$route.query).then((res) => {
+        // 判断已读状态
+        updateStatu(this.$route.query).then((res) => {
             
-        // })
+        })
     }
 }
 </script>

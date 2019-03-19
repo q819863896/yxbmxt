@@ -23,33 +23,14 @@ const NotFound = () => import('../views/exception/404.vue');
 
 const studys = () => import('../views/components/lx/demo.vue');
 
-// import Login from "../views/account/login.vue";
-// import Logoout from "../views/components/logoout/logoout.vue";
-// import Register from "../views/account/register.vue";
-// import Retrievepass from "../views/account/retrievepass.vue";
-
-// import Reactivities from "../views/components/reactivities/reactivities.vue";
-
-// import Mine from "../views/components/mine/mine.vue";
-// import Message from "../views/components/message/message.vue";
-// import Messagedetail from "../views/components/message/messageDetail.vue";
-// import PersonInfo from "../views/components/personInfo/personInfo.vue";
-// import Signup from "../views/components/mine/signUp.vue";
-// import Signsuccess from "../views/components/mine/signsucc.vue";
-
-// import Activedetail from "../views/components/message/activedetail.vue";
-// import Myactivedetail from "../views/components/message/myactiveDetail.vue";
-// import NotFound from "../views/exception/404.vue";
-// import studys from "../views/components/lx/demo.vue";
-
 Vue.use(Router);
 
 export default new Router({
     routes: [
         {
             path: '/',
-            name: 'Login',
-            component: Login,
+            name: 'Testlogin',
+            component: Testlogin,
         },
         {
             path: '/testlogin',

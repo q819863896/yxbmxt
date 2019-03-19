@@ -11,7 +11,7 @@ axios.defaults.validateStatus = statu => {
         if (res.status === 401) {
            sessionStorage.removeItem('changeUser');
         //    sessionStorage.removeItem('token');
-            router.push({path: '/login'});
+            router.push({path: '/testlogin'});
            return res;
         } else {
            return res;
@@ -21,31 +21,15 @@ axios.defaults.validateStatus = statu => {
         return Promise.reject(err)
     })
 
-axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
+// axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
 // axios.defaults.baseURL = "http://10.150.116.209:8080";     // 李元吉
-// axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-0.0.1-SNAPSHOT";  // 测试
+axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-0.0.1-SNAPSHOT";  // 测试
 
 axios.defaults.timeout = 1000 * 50;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 axios.defaults.headers.get['Content-Type'] = 'application/json';
-
-axios.interceptors.response.use(res => {
-
-    // if (res.request.responseURL.indexOf("show") != -1) {
-    //     this.router.push({ path: '/login' });
-    // }
-    if (res.statu === 401) {
-        sessionStorage.removeItem('changeUser');
-        router.push({ path: '/login' });
-        return res;
-    } else {
-        return res;
-    }
-}, err => {
-    return Promise.reject(err);
-});
 
 // 登录
 export const Login = params => {
@@ -198,11 +182,12 @@ export const upload = (params) => {
 
 export const singlefile = (params) => {
     return axios.post('/enrolment/singlefile.do', stringify(params)).then(res => res.data);
- };
+};
 
+// 立即报名-上传
 export const upload1 = (params) => {
-    return axios.post('/enrolment/upload1.do', stringify(params)).then(res => res.data);
- };
+    return axios.post('/enrolment/upload1.do', params).then(res => res.data);
+};
 
 // 立即报名的接口
 export const update = params => {

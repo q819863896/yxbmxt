@@ -32,18 +32,21 @@ Vue.use(ElementUI);
 Vue.use(router);
 // Vue.use(VueHighcharts);
 
-// router.beforeEach((to, from, next) => {
-//     const nextRoute = ['/login' , "/retrievepass", "/register"];
+router.beforeEach((to, from, next) => {
+    const nextRoute = ['/testlogin', "/retrievepass", "/register"];
+    if (to.path === '/testlogin') {
+        sessionStorage.removeItem('changeUser');
+    }
 
-//     let user = sessionStorage.getItem('changeUser');
-//     if (nextRoute.indexOf(to.path) !== -1) {
-//        next();
-//     } else if (!user && to.path !== '/login') {
-//        next({path: '/login'});
-//     } else {
-//        next();
-//     }
-//  })
+    let user = sessionStorage.getItem('changeUser');
+    if (nextRoute.indexOf(to.path) !== -1) {
+        next();
+    } else if (!user && to.path !== '/testlogin') {
+        next({ path: '/testlogin' });
+    } else {
+        next();
+    }
+})
 
 /* eslint-disable no-new */
 new Vue({

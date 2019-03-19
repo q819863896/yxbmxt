@@ -46,18 +46,18 @@ export default {
             },
             zhloginRules: {
                 account: [
-                    { required: true, message: '请输入用户名', trigger: 'blur' },
+                    { required: true, message: ' ', trigger: 'blur' },
                 ],
                 password: [
-                    { required: true, message: '请输入密码', trigger: 'blur' },
+                    { required: true, message: ' ', trigger: 'blur' },
                 ]
             },
             enloginRules: {
                 account: [
-                    { required: true, message: "Please enter the username", trigger: 'blur' },
+                    { required: true, message: ' ', trigger: 'blur' },
                 ],
                 password: [
-                    { required: true, message: 'Please input a password', trigger: 'blur' },
+                    { required: true, message: ' ', trigger: 'blur' },
                 ]
             },
         }

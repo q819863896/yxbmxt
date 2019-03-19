@@ -28,10 +28,13 @@
             </div>
             <div class="ddpic" v-loading="loading" v-if="yesData">
                 <div class="toActive" v-for="(item, index) in items" :key="index">
-                    <router-link :to="{path:'/myactivedetail', query:{cid:item.campaign.id}}">
+                    <router-link :to="{path:'/myactivedetail', query:{cid:item.campaign.id, enroId: item.emrolmentId}}">
                         <dl>
-                            <dt>
+                            <dt v-if="item.enrolmentAttachment[0].attachmentUrl != ''">
                                 <img :src="item.enrolmentAttachment[0].attachmentUrl" alt="">
+                            </dt>
+                            <dt v-else>
+                                <img src="@/assets/images/item.jpg" alt="">
                             </dt>
                             <dd>
                                 <p class="fontBlue">{{item.campaign.name}}</p>
@@ -262,8 +265,9 @@ export default {
                         }
                     }
                     .signUp{
-                        width: 100px;
+                        min-width: 100px;
                         height: 30px;
+                        padding: 0 1%;
                         text-align: center;
                         line-height: 30px;
                         background: #006960;

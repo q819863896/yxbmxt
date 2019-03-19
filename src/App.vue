@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" @mouseover="OperatingWebsite()">
         <router-view/>
     </div>
 </template>
@@ -8,6 +8,11 @@
 import { showlogin } from "./api/api.js";
 export default {
     name: 'App',
+    data() {
+        return {
+            currentTime: new Date().getTime()
+        }
+    },
     methods: {
         showLang() {
             let language = (navigator.browserLanguage || navigator.language).toLowerCase();
@@ -20,10 +25,32 @@ export default {
             }else{
                 console.log('其他语言');
             }
+        },
+        OperatingWebsite() {
+            let currentTime = this.currentTime;
+            let lastTime = new Date().getTime();
+            let timeOut = 10 * 60 * 1000; //设置时间 10分钟
+            if (lastTime - currentTime > timeOut) {
+                // 未操作页面，跳转登录页面
+                this.currentTime = new Date().getTime(); 
+                const fullPath = this.$route.fullPath;
+                // const query = this.$Base64.encode(fullPath);
+                this.$router.push({
+                    path: "/testlogin",
+                    // query: {
+                    //     type: query
+                    // }
+                });
+            } else {
+                this.currentTime = new Date().getTime(); 
+            }
+        
+            // const truthPathQuery = this.$route.query.type;
+            // const truthPath = this.$Base64.decode(truthPathQuery); //点击登录的时候跳转这个地址
         }
     },
     created() {
-        this.showLang();
+        // this.showLang();
     },
     mounted() {
         // this.showLang();

@@ -37,8 +37,11 @@
                 <div class="toActive" v-for="(item, index) in items" :key="index">
                     <router-link :to="{path:'/activedetail', query:{cid:item.campaign.id}}">
                         <dl>
-                            <dt class="dt-img">
-                                <img :src="item.EnrolmentAttachment.attachmenttype" alt="">
+                            <dt class="dt-img" v-if="item.EnrolmentAttachment[0].attachmentUrl != ''">
+                                <img :src="item.EnrolmentAttachment[0].attachmentUrl" alt="">
+                            </dt>
+                            <dt class="dt-img" v-else>
+                                <img src="@/assets/images/item.jpg" alt="">
                             </dt>
                             <dd>
                                 <p class="fontBlue">{{item.campaign.name}}</p>
@@ -48,7 +51,6 @@
                                 </p>
                                 <p>
                                     <i class="iconfont icon-shijian"></i>
-                                    <!-- <span v-for="(itemDate, index) in item.startDate" :key="index">{{itemDate}}</span>-<span>{{item.endDate}}</span> -->
                                     <span>{{item.campaign.campTime}}</span>
                                 </p>
                                 <p>
@@ -282,8 +284,9 @@ export default {
                         }
                     }
                     .signUp{
-                        width: 100px;
+                        min-width: 100px;
                         height: 30px;
+                        padding: 0 1%;
                         text-align: center;
                         line-height: 30px;
                         background: #006960;

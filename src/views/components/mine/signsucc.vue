@@ -58,7 +58,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/login');
+                            this.$router.push('/testlogin');
                         }
                     }))
                     
@@ -74,7 +74,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/login');
+                            this.$router.push('/testlogin');
                         }
                     }))
                 }).catch((err) => {

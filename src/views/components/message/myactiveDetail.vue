@@ -73,23 +73,20 @@
                             <!-- 联系电话 -->
                             <span>{{lang === 'zh' ? '联系电话' : 'Contact number'}}</span>：<span>{{this.items.campaign.activityLeaderPhone}}</span>
                         </p>
-                        <div class="pic" v-if="this.items.enrolmentAttachment[0].attachmentUrl != []">
-                            <img :src="this.items.enrolmentAttachment[0].attachmentUrl" alt="">
-                        </div>
                     </div>
                 </div>
                 <!-- 会场图片 -->
                 <div class="picwrap">
                     <div class="tit">{{lang === 'zh' ? '会场图片' : 'Venue photos'}}</div>
                     <div class="picDiv">
+                        <div class="picT" v-if="this.items.enrolmentAttachment[0].attachmentUrl != ''">
+                            <img :src="this.items.enrolmentAttachment[0].attachmentUrl" alt="">
+                        </div>
                         <div class="picT" v-if="this.items.enrolmentAttachment[1].attachmentUrl != ''">
                             <img :src="this.items.enrolmentAttachment[1].attachmentUrl" alt="">
                         </div>
                         <div class="picT" v-if="this.items.enrolmentAttachment[2].attachmentUrl != ''">
                             <img :src="this.items.enrolmentAttachment[2].attachmentUrl" alt="">
-                        </div>
-                        <div class="picT" v-if="this.items.enrolmentAttachment[3].attachmentUrl != ''">
-                            <img :src="this.items.enrolmentAttachment[3].attachmentUrl" alt="">
                         </div>
                     </div>
                 </div>
@@ -151,7 +148,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/login');
+                            this.$router.push('/testlogin');
                         }
                     }))
                     
@@ -167,7 +164,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/login');
+                            this.$router.push('/testlogin');
                         }
                     }))
                 }).catch((err) => {
@@ -180,19 +177,19 @@ export default {
             // let params = {
             //     reasonwhy: this.textarea
             // };
-            // cancenlBtn()
         },
         cancenlBtn () {
             if (this.textarea != "") {
                 let params = {
                     reasonwhy: this.textarea,
-                    eid: this.reid
+                    eid: this.$route.query.enroId
                 };
                 cancelSign(params).then((res) => {
                     if (res.statu == 1) {
                         if (this.lang == "zh") {
                             this.$message.success('取消成功！');
                             this.centerDialogVisible = false;
+                            this.$router.push("/mine");
                         } else {
                             this.$message.success('Cancel successfully!');
                             this.centerDialogVisible = false;
