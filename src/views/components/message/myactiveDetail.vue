@@ -148,7 +148,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/testlogin');
+                            this.$router.push('/login');
                         }
                     }))
                     
@@ -164,7 +164,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/testlogin');
+                            this.$router.push('/login');
                         }
                     }))
                 }).catch((err) => {
@@ -222,7 +222,6 @@ export default {
         })
 
         let params = this.$route.query;
-        console.log(params);
         wdbmxxjl(params).then((res) => {
             this.statu = res.data.spzt;
             this.reid = res.data.eid;

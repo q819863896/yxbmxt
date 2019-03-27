@@ -290,7 +290,6 @@ export default {
             })
         },
         checkSchool (val) {
-            console.log(val);
             this.detailedInfo.schoolId = val;
         },
         cancelBtn () {
@@ -361,7 +360,6 @@ export default {
         },
         // 验证第二次
         checkAgin (e) {
-            console.log(this.changePass.csPass);
             if (e.target.value !== this.changePass.newPass && e.target.value != this.changePass.csPass) {
                 this.againTit = true;
                 this.disFlag = true;
@@ -392,7 +390,7 @@ export default {
                                 type: 'success'
                             });
                         })
-                        this.$router.push("/testlogin");
+                        this.$router.push("/login");
                     }
                 }
             } else {
@@ -412,7 +410,7 @@ export default {
                                 type: 'success'
                             });
                         });
-                        this.$router.push("/testlogin");
+                        this.$router.push("/login");
                     }
                 }
             }

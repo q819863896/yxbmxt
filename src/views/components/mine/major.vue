@@ -128,7 +128,6 @@ export default {
         },
         // 按时间
         timeType(val) {
-            console.log(this.allAreaValue);
             this.createvalue = val;
             let params = {
                 date: this.createvalue,

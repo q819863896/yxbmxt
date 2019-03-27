@@ -20,6 +20,7 @@
         </div>
         <div class="content">
             <persons @change="setSty" v-if="asd" />
+            <!-- <div @click="toScroll">asd</div> -->
             <el-tabs @change="setSty" v-if="asd" type="card">
                 <el-tab-pane :label="lang=='zh' ? '教育展' : 'Education Fair'" >
                     <education />
@@ -70,7 +71,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/testlogin');
+                            this.$router.push('/login');
                         }
                     }))
                     
@@ -86,13 +87,16 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/testlogin');
+                            this.$router.push('/login');
                         }
                     }))
                 }).catch((err) => {
                     console.error('loginErr', err);
                 });
             }
+        },
+        toScroll () {
+            this.$router.push("/scrll");
         },
         setSty () {
             this.$emit("transferSty", this.asd);

@@ -17,10 +17,8 @@ export default {
         showLang() {
             let language = (navigator.browserLanguage || navigator.language).toLowerCase();
             if(language.indexOf('zh')>-1){
-                console.log('中文');
                 localStorage.setItem("lange", "zh");
             }else if(language.indexOf('en')>-1){
-                console.log('英文');
                 localStorage.setItem("lange", "en");
             }else{
                 console.log('其他语言');
@@ -36,7 +34,7 @@ export default {
                 const fullPath = this.$route.fullPath;
                 // const query = this.$Base64.encode(fullPath);
                 this.$router.push({
-                    path: "/testlogin",
+                    path: "/login",
                     // query: {
                     //     type: query
                     // }

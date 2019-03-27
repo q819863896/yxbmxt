@@ -118,7 +118,6 @@ export default {
         },
         changeMonth (val) {
             this.items = [];
-            console.log(val);
             if (val == null) {
                 let params = {
                     type: "教育"
@@ -179,7 +178,6 @@ export default {
         // 按时间
         timeType(val) {
             this.items = [];
-            console.log(this.allAreaValue);
             this.createvalue = val;
             let params = {
                 date: this.createvalue,

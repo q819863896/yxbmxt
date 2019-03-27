@@ -33,16 +33,16 @@ Vue.use(router);
 // Vue.use(VueHighcharts);
 
 router.beforeEach((to, from, next) => {
-    const nextRoute = ['/testlogin', "/retrievepass", "/register"];
-    if (to.path === '/testlogin') {
+    const nextRoute = ['/login', "/retrievepass", "/register"];
+    if (to.path === '/login') {
         sessionStorage.removeItem('changeUser');
     }
 
     let user = sessionStorage.getItem('changeUser');
     if (nextRoute.indexOf(to.path) !== -1) {
         next();
-    } else if (!user && to.path !== '/testlogin') {
-        next({ path: '/testlogin' });
+    } else if (!user && to.path !== '/login') {
+        next({ path: '/login' });
     } else {
         next();
     }

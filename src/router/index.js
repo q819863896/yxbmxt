@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 const Login = () => import('../views/account/login.vue');   // // 登录\
-const Testlogin = () => import('../views/account/testLogin.vue');   // // 登录\
+// const Testlogin = () => import('../views/account/testLogin.vue');   // // 登录\
 const Register = () => import('../views/account/register.vue');   // 注册
 const Retrievepass = () => import('../views/account/retrievepass.vue'); // 忘记密码
 
@@ -22,6 +22,7 @@ const Myactivedetail = () => import('../views/components/message/myactiveDetail.
 const NotFound = () => import('../views/exception/404.vue');
 
 const studys = () => import('../views/components/lx/demo.vue');
+const Scrll = () => import("../views/components/lx/vuescroll.vue");
 
 Vue.use(Router);
 
@@ -29,13 +30,18 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'Testlogin',
-            component: Testlogin,
+            name: 'Login',
+            component: Login,
         },
+        // {
+        //     path: '/testlogin',
+        //     name: 'Testlogin',
+        //     component: Testlogin,
+        // },
         {
-            path: '/testlogin',
-            name: 'Testlogin',
-            component: Testlogin,
+            path: '/scrll',
+            name: 'Scrll',
+            component: Scrll,
         },
         {
             path: '/login',

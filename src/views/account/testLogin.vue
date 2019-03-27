@@ -76,7 +76,6 @@ export default {
                         this.logining = true;
                         if (res.message == "密码正确") {
                             sessionStorage.setItem("changeUser", this.loginInfo.account);
-                            console.log(this.$router);
                             this.$router.push("/mine");
                             this.logining = false;
                         } else {

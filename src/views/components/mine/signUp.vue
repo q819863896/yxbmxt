@@ -290,7 +290,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/testlogin');
+                            this.$router.push('/login');
                         }
                     }))
                 }).catch((err) => {
@@ -305,7 +305,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/testlogin');
+                            this.$router.push('/login');
                         }
                     }))
                 }).catch((err) => {

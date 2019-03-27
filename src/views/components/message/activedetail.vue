@@ -127,7 +127,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/testlogin');
+                            this.$router.push('/login');
                         }
                     }))
                     
@@ -143,7 +143,7 @@ export default {
                         if (res.statu == 1) {
                             sessionStorage.removeItem('changeUser');
                             sessionStorage.removeItem("lange");
-                            this.$router.push('/testlogin');
+                            this.$router.push('/login');
                         }
                     }))
                 }).catch((err) => {
@@ -169,12 +169,10 @@ export default {
         })
 
         this.queryId = window.location.href.split("=")[1];
-        console.log(this.queryId);
         sessionStorage.setItem("activeDeId", this.queryId);
 
         let params = this.$route.query;
         sessionStorage.setItem("ccid", this.$route.query.cid);
-        console.log(params);
         xxjl(params).then((res) => {
             this.statu = res.data.statu;
             this.items = res.data;

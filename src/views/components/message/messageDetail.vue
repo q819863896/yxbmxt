@@ -4,7 +4,7 @@
         <h4>{{lang == "zh" ? "消息通知" : "Message Notification"}}</h4>
         <div class="detail">
             <p>
-                {{this.items.isApproval}}
+                {{this.items.notification.title}}
             </p>
             <p class="time">
                 {{this.items.campaign.startDate}}

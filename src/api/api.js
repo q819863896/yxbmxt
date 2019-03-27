@@ -11,7 +11,7 @@ axios.defaults.validateStatus = statu => {
         if (res.status === 401) {
            sessionStorage.removeItem('changeUser');
         //    sessionStorage.removeItem('token');
-            router.push({path: '/testlogin'});
+            router.push({path: '/login'});
            return res;
         } else {
            return res;
@@ -23,7 +23,9 @@ axios.defaults.validateStatus = statu => {
 
 // axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
 // axios.defaults.baseURL = "http://10.150.116.209:8080";     // 李元吉
-axios.defaults.baseURL = "http://10.150.104.16:8080/XDF-0.0.1-SNAPSHOT";  // 测试
+// axios.defaults.baseURL = "http://10.149.0.208:8080";     // 来昌
+// axios.defaults.baseURL = "http://10.150.104.16:8080/Portal";  // 测试1
+axios.defaults.baseURL = "http://10.150.104.16:8081/Portal";  // 测试2
 
 axios.defaults.timeout = 1000 * 50;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -34,6 +36,11 @@ axios.defaults.headers.get['Content-Type'] = 'application/json';
 // 登录
 export const Login = params => {
     return axios.post('/login/log.do', stringify(params)).then(res => res.data);
+}
+
+// 中英文切换
+export const cun = params => {
+    return axios.post('/campaign/cun.do', stringify(params)).then(res => res.data);
 }
 
 // 登出

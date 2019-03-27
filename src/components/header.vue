@@ -14,32 +14,51 @@
 
 <script>
 import "../lang/index.js";
+import { cun } from "../api/api.js";
 export default {
     data() {
         return {
-            value: "zh",
+            value: "",
             options: [
                 {
                     value: 'zh',
-                    label: '中文'
+                    label: '中文',
+                    id: 0
                 },
                 {
                     value: 'en',
-                    label: 'English'
+                    label: 'English',
+                    id: 1
                 }
             ]
         }
     },
     created() {
-        console.log(localStorage.lange);
         this.value = localStorage.lange;
     },
     methods: {
         handleLange(e) {
-            console.log(e);
-            console.log(this.$i18n.locale);
             localStorage.setItem('lange',e);
             this.$i18n.locale = localStorage.lange;
+            if (e == "en") {
+                let params = {
+                    language: 1
+                };
+                console.log(params);
+                sessionStorage.setItem("changeLang", params.language);
+                cun(params).then((res) => {
+
+                })
+            } else if (e == "zh") {
+                let params = {
+                    language: 0
+                };
+                console.log(params);
+                sessionStorage.setItem("changeLang", params.language);
+                cun(params).then((res) => {
+                    
+                })
+            }
         }
     }
 }
