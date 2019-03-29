@@ -85,12 +85,17 @@ export default {
                             this.logining = false;
                         }
                     })
-                    let langeCun = sessionStorage.getItem("changeLang");
-                    console.log(langeCun);
-                    let langParams = {
-                        
-                    };
-                    // async cun()
+                    // let langeCun = sessionStorage.getItem("changeLang");
+                    // console.log(langeCun);
+                    // let langParams = {
+                    //     language: langeCun
+                    // };
+                    // async handleClick (langParams) {
+
+                    // }
+                    // await cun(langParams).then((res) => {
+
+                    // })
                 }
             })
         },

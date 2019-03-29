@@ -22,7 +22,7 @@
         <div class="wrap">
             <p class="back" @click="backBtn">
                 <i class="iconfont icon-fanhui"></i>
-                {{lang === 'zh' ? '返回活动列表' : 'Returns the list of activities'}}
+                {{this.lang === 'zh' ? '返回活动列表' : 'Returns the list of activities'}}
             </p>
             <div class="top">
                 <div class="left">
@@ -39,21 +39,46 @@
                 </div>
             </div>
             <div class="details">
-                <div class="itemDetail">
+                <div class="itemDetail" v-if="lang === 'zh'">
                     <p>
-                        <span>{{lang === 'zh' ? '活动名称' : 'Event Name'}}</span>：<span>{{this.items.campaign.name}}</span>
+                        <!-- {{lang === 'zh' ? '活动名称' : 'Event Name'}} -->
+                        <span>活动名称</span>：<span>{{this.items.campaign.name}}</span>
                     </p>
                     <p>
-                        <span>{{lang === 'zh' ? '所在地点' : 'Location'}}</span>：<span>{{this.items.campaign.city}}</span>
+                        <!-- {{lang === 'zh' ? '所在地点' : 'Location'}} -->
+                        <span>所在地点</span>：<span>{{this.items.campaign.city}}</span>
                     </p>
                     <p>
-                        <span>{{lang === 'zh' ? '活动地点' : 'Venue Address'}}</span>：<span>{{this.items.campaign.area}}</span>
+                        <!-- {{lang === 'zh' ? '活动地点' : 'Venue Address'}} -->
+                        <span>活动地点</span>：<span>{{this.items.campaign.area}}</span>
                     </p>
                     <p>
-                        <span>{{lang === 'zh' ? '详细地址' : 'Address Details'}}</span>：<span>{{this.items.campaign.building}}</span>
+                        <!-- {{lang === 'zh' ? '详细地址' : 'Address Details'}} -->
+                        <span>详细地址</span>：<span>{{this.items.campaign.building}}</span>
                     </p>
                     <p>
-                        <span>{{lang === 'zh' ? '活动时间' : 'Event Time'}}</span>：<span>{{this.items.campaign.startDate}}-{{this.items.campaign.endDate}}</span>
+                        <!-- {{lang === 'zh' ? '活动时间' : 'Event Time'}} -->
+                        <span>活动时间</span>：<span>{{this.items.campaign.startDate}}-{{this.items.campaign.endDate}}</span>
+                    </p>
+                </div>
+                <div class="itemDetail" v-else>
+                    <p>
+                        <span>Event Name</span>：<span>{{this.items.campaign.name}}</span>
+                    </p>
+                    <p>
+                        <!-- {{lang === 'zh' ? '所在地点' : 'Location'}} -->
+                        <span>Location</span>：<span>{{this.items.campaign.cityEname}}</span>
+                    </p>
+                    <p>
+                        <!-- {{lang === 'zh' ? '活动地点' : 'Venue Address'}} -->
+                        <span>Venue Address</span>：<span>{{this.items.campaign.eAddress}}</span>
+                    </p>
+                    <!-- <p>
+                        <span>Address Details</span>：<span>{{this.items.campaign.building}}</span>
+                    </p> -->
+                    <p>
+                        <!-- {{lang === 'zh' ? '活动时间' : 'Event Time'}} -->
+                        <span>Event Time</span>：<span>{{this.items.campaign.startDate}}-{{this.items.campaign.endDate}}</span>
                     </p>
                 </div>
                 <!-- 活动介绍 -->
@@ -213,9 +238,15 @@ export default {
     },
     created() {
         // this.lang = sessionStorage.getItem("lange");
+
+        // this.lang = localStorage.getItem("changeLang");
         this.lang = localStorage.getItem("lange");
         
     },
+    // beforeCreate() {
+    //     this.lang = sessionStorage.getItem("yytype");
+    //     console.log(this.lang);
+    // },
     mounted () {
         updateCount().then((res) => {
             this.count = res.data;

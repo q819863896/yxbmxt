@@ -36,6 +36,16 @@ export default {
     created() {
         this.value = localStorage.lange;
     },
+    mounted() {
+        let params = {
+            language: 0
+        };
+        console.log(params);
+        sessionStorage.setItem("changeLang", params.language);
+        cun(params).then((res) => {
+            
+        })
+    },
     methods: {
         handleLange(e) {
             localStorage.setItem('lange',e);
@@ -46,6 +56,7 @@ export default {
                 };
                 console.log(params);
                 sessionStorage.setItem("changeLang", params.language);
+                sessionStorage.setItem("yytype", "en");
                 cun(params).then((res) => {
 
                 })
@@ -55,6 +66,7 @@ export default {
                 };
                 console.log(params);
                 sessionStorage.setItem("changeLang", params.language);
+                sessionStorage.setItem("yytype", "zh");
                 cun(params).then((res) => {
                     
                 })

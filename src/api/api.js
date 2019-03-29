@@ -7,25 +7,25 @@ axios.defaults.validateStatus = statu => {
 }
 
 // 接口错误拦截
-    axios.interceptors.response.use(res => {
-        if (res.status === 401) {
-           sessionStorage.removeItem('changeUser');
-        //    sessionStorage.removeItem('token');
-            router.push({path: '/login'});
-           return res;
-        } else {
-           return res;
-           next();
-        }
-    }, err => {
-        return Promise.reject(err)
-    })
+axios.interceptors.response.use(res => {
+    if (res.status === 401) {
+        sessionStorage.removeItem('changeUser');
+    //    sessionStorage.removeItem('token');
+        router.push({path: '/login'});
+        return res;
+    } else {
+        return res;
+        next();
+    }
+}, err => {
+    return Promise.reject(err)
+})
 
 // axios.defaults.baseURL = "http://10.150.117.151:8080";   // 韩磊
-// axios.defaults.baseURL = "http://10.150.116.209:8080";     // 李元吉
+axios.defaults.baseURL = "http://10.150.116.209:8080";     // 李元吉
 // axios.defaults.baseURL = "http://10.149.0.208:8080";     // 来昌
 // axios.defaults.baseURL = "http://10.150.104.16:8080/Portal";  // 测试1
-axios.defaults.baseURL = "http://10.150.104.16:8081/Portal";  // 测试2
+// axios.defaults.baseURL = "http://10.150.104.16:8081/Portal";  // 测试2
 
 axios.defaults.timeout = 1000 * 50;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -65,6 +65,11 @@ export const forgetPwd = params => {
 // 注册 
 export const regiset = params => {
     return axios.post('/regiset/insert.do', stringify(params)).then(res => res.data);
+}
+
+// 获取验证码
+export const getvcf = params => {
+    return axios.post('/regiset/getvcf.do', stringify(params)).then(res => res.data);
 }
 
 // 注册---获取所有国家

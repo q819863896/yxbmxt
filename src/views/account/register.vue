@@ -15,9 +15,11 @@
                     <div class="greetitle" v-if="titletrue">{{titletruetxt}}</div>
                     <div class="redtitle" v-if="titlefalse">{{titlefalsetxt}}</div>
                 </el-form-item>
+                <p v-if="codestatus1" class="tips">{{lang == "zh" ? "已发送邮箱验证码" : "Sended Mailbox Verification Code"}}</p>
+                <p v-if="codestatus2" class="tips">{{lang == "zh" ? "请在邮箱中查看验证码 30分钟有效" : "Please check the validation code in the mailbox  Effective within 30 minutes"}}</p>
                 <!-- 电话 -->
                 <el-form-item :label="lang === 'zh' ? '电话' : 'Contact Number'" prop="tel">
-                    <el-input v-model.number="ruleForm.tel"></el-input>
+                    <el-input v-model.number="ruleForm.tel" ></el-input>
                 </el-form-item>
                 <!-- 国别 -->
                 <el-form-item :label="lang === 'zh' ? '国别' : 'Country'" prop="country">
@@ -49,11 +51,14 @@
                 <el-form-item :label="lang === 'zh' ? '密码' : 'password'" prop="password">
                     <el-input type="password" v-model="ruleForm.password"></el-input>
                 </el-form-item>
+                <!-- 验证码 -->
+                <el-form-item :label="lang === 'zh' ? '请输入邮箱验证码' : 'Please enter the mailbox verification code'" prop="password">
+                    <el-input type="password" v-model="ruleForm.vercode"></el-input>
+                </el-form-item>
                 <div class="agreeClick">
                     <el-checkbox v-model="checked" @change="flagSubmitBtn">{{lang == "zh" ? "点击快速注册则表示您同意本网站" : "By clicking quick registration, you agree with the website "}}</el-checkbox>
                     <p class="server">{{lang == "zh" ? "服务条款" : "terms of service"}}</p>
                 </div>
-                
             </el-form>
             <el-button @click="submitForm('ruleForm')" :disabled="disFlag">{{lang == "zh" ? "快速注册" : "Rapid registration"}}</el-button>
         <!-- </div> -->
@@ -61,7 +66,8 @@
 </template>
 
 <script>
-import { regiset, allCountry, allSchool, checkemail } from "../../api/api.js";
+import { regiset, allCountry, allSchool, checkemail, getvcf } from "../../api/api.js";
+import SIdentify from "../components/viewcode/identify.vue";
 export default {
     name: "register",
     data() {
@@ -78,6 +84,8 @@ export default {
         }
         return {
             lang: "",
+            codestatus1: false,
+            codestatus2: false,
             ruleForm: {
                 name: "",
                 email: "",
@@ -86,6 +94,7 @@ export default {
                 schoolName: "",
                 position: "",
                 password: "",
+                vercode: ""
             },
             zhloginRules: {
                 name: [
@@ -146,7 +155,7 @@ export default {
             schId: "",
             schoolNameOptions: [],
             checked: true,
-            disFlag: false
+            disFlag: false,
         }
     },
     methods: {
@@ -161,21 +170,30 @@ export default {
             } else {
                 let mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
                 if (mailReg.test(txt)) {
-                    checkemail(params).then((res) => {
+                    this.titlefalse = false;
+                    this.codestatus1 = true;
+                    this.codestatus2 = false;
+                    getvcf(params).then((res) => {
                         if (res.statu == 1) {
-                            // 此邮箱可以注册
-                            this.titletrue = true;
-                            this.titlefalse = false;
-                            this.titletruetxt = res.message;
-                            this.disFlag = false;
-                        } else {
-                            // 此邮箱已被注册
-                            this.titletrue = false;
-                            this.titlefalse = true;
-                            this.titlefalsetxt = res.message;
-                            this.disFlag = true;
+                            this.codestatus1 = false;
+                            this.codestatus2 = true;
                         }
                     })
+                    // checkemail(params).then((res) => {
+                    //     if (res.statu == 1) {
+                    //         // 此邮箱可以注册
+                    //         this.titletrue = true;
+                    //         this.titlefalse = false;
+                    //         this.titletruetxt = res.message;
+                    //         this.disFlag = false;
+                    //     } else {
+                    //         // 此邮箱已被注册
+                    //         this.titletrue = false;
+                    //         this.titlefalse = true;
+                    //         this.titlefalsetxt = res.message;
+                    //         this.disFlag = true;
+                    //     }
+                    // })
                 } else {
                     this.titletrue = false;
                     this.titlefalse = false;
@@ -226,17 +244,18 @@ export default {
         submitForm() {
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
+                    this.centerDialogVisible = true;
                     let params = {
-                        name: this.ruleForm.name,
-                        email: this.ruleForm.email,
-                        phone: this.ruleForm.tel,
+                        name: this.ruleForm.name,                       // 用户名
+                        email: this.ruleForm.email,                     // 邮箱
+                        phone: this.ruleForm.tel,                       // 手机
                         // country: this.ruleForm.country,
-                        countryCode: this.counCode,
-
-                        schoolId: this.schId,
-                        schoolCode: this.schCode,
-                        post: this.ruleForm.position,
-                        password: this.$md5(this.ruleForm.password)
+                        countryCode: this.counCode,                     // 国别
+                        schoolId: this.schId,                           // 学校id
+                        schoolCode: this.schCode,                       // 学校
+                        post: this.ruleForm.position,                   // 职位
+                        password: this.$md5(this.ruleForm.password),    // 密码
+                        confirmatioCode: this.ruleForm.vercode          // 验证码
                     };
 
                     regiset(params).then((res) => {
@@ -257,7 +276,15 @@ export default {
                     return false;
                 }
             })
-        }
+        },
+        // 点击-获取验证码
+        getCode () {
+            
+        },
+        // 验证码点击-确定
+        cancenlBtn () {
+
+        },
     },
     computed: {
         
@@ -269,6 +296,8 @@ export default {
     mounted() {
         this.flagSubmitBtn();
         this.getCountry();
+        // 点击-获取验证码
+        this.getCode();
     }
 }
 </script>
@@ -316,6 +345,20 @@ export default {
                     color: #F56C6C;
                 }
                 
+            }
+            .tips{
+                font-size: 14px;
+                color: #ffed00;
+                margin-top: -10px;
+                background-image: -webkit-linear-gradient(left, #147B96, #E6D205 25%, #147B96 50%, #E6D205 75%, #147B96);
+                -webkit-text-fill-color: transparent;
+                -webkit-background-clip: text;
+                -webkit-background-size: 200% 100%;
+                -webkit-animation: masked-animation 4s infinite linear;
+            }
+            @-webkit-keyframes masked-animation {
+                0%{ background-position: 0 0;}
+                100% { background-position: -100% 0;}
             }
             
             .agreeClick{
@@ -367,6 +410,29 @@ export default {
         border-radius: 5px;
         margin:  8% 45% 8% 45%;
         cursor: pointer;
+    }
+    .code-wrap{
+        display: flex;
+        .el-input{
+            width: 80%;
+        }
+        .codebody{
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    .dialog-footer{
+        display: inline-block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        button{
+            width: 20%;
+            margin: 0;
+        }
     }
 }
 </style>
